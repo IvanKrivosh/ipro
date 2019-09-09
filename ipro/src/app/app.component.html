@@ -1,0 +1,5 @@
+<nav mat-tab-nav-bar>
+  <a class ="btn btn-outline-primary" *ngFor="let e of forms" [routerLink]="e.link"> {{ e.label  | uppercase}} </a>
+</nav>
+
+<router-outlet></router-outlet>
