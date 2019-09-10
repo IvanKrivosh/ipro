@@ -1,6 +1,6 @@
-//Раздел ИПР
+//Субъект Федерации
 module.exports = (sequelize, DataTypes) => {
-  return sequelize.define('investmentSection', {
+  return sequelize.define('federationEntity', {
     name: {type: DataTypes.STRING}
   });
 };

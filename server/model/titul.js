@@ -1,11 +1,6 @@
-const Department = require('./department').Department;
-const InvestmentDirection = require('./investmentDirection').InvestmentDirection;
-const InvestmentSection = require('./investmentSection').InvestmentSection;
-const TitulStatus = require('./titulStatus').TitulStatus;
-
 //Титул
 module.exports = (sequelize, DataTypes) => {
-  const Titul = sequelize.define('titul', {
+  return sequelize.define('titul', {
     name: {type: DataTypes.STRING},                   //Название
     number: {type: DataTypes.STRING},                 //Номер титула
     statusId: {                                       //Статус титула
@@ -19,6 +14,13 @@ module.exports = (sequelize, DataTypes) => {
     startMonth: {type: DataTypes.INTEGER},            //Месяц начала
     endYear: {type: DataTypes.INTEGER},               //Год окончания
     endMonth: {type: DataTypes.INTEGER},              //Месяц окончания
+    federationEntityId: {                             //Субъект Федерации
+      type: DataTypes.INTEGER,
+      references: {
+        model: 'federationEntities',
+        key: 'id'
+      }
+    },
     customerId: {                                     //Заказчик
       type: DataTypes.INTEGER,
       references: {
@@ -61,5 +63,4 @@ module.exports = (sequelize, DataTypes) => {
     address: {type: DataTypes.STRING},                //Адрес
     comments: {type: DataTypes.STRING}                //Примечания
   });
-  return Titul;
 };

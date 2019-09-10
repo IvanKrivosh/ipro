@@ -19,5 +19,11 @@ db.investmentDirections = require('../model/investmentDirection.js')(sequelize, 
 db.investmentSections = require('../model/investmentSection.js')(sequelize, Sequelize);
 db.tituls = require('../model/titul.js')(sequelize, Sequelize);
 db.titulStatuses = require('../model/titulStatus.js')(sequelize, Sequelize);
+db.federationEntities = require('../model/federationEntity.js')(sequelize, Sequelize);
+db.documents = require('../model/document.js')(sequelize, Sequelize);
+db.documentKinds = require('../model/documentKind.js')(sequelize, Sequelize);
+db.documentTypes = require('../model/documentType.js')(sequelize, Sequelize);
+db.files = require('../model/file.js')(sequelize, Sequelize);
+db.vatPercents = require('../model/vatPercent.js')(sequelize, Sequelize);
 
 module.exports = db;

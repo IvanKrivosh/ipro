@@ -1,6 +1,6 @@
-//Раздел ИПР
+//Вид документа
 module.exports = (sequelize, DataTypes) => {
-  return sequelize.define('investmentSection', {
+  return sequelize.define('documentKind', {
     name: {type: DataTypes.STRING}
   });
 };
