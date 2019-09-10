@@ -1,1 +1,83 @@
-<p>tituls works!</p>
+<div class="left_group">
+  <h4>Панель фильтров</h4>
+  <div class="mat-elevation-z10 container" style="height: 85vh">
+    <input [(ngModel)]="NumProject" style="margin-left: 5px; margin-top: 5px; width: 95%;" type="text" class="inputText" placeholder="№ проекта" id="NumProject">
+    <input [(ngModel)]="NameProject" style="margin-left: 5px; margin-top: 5px; width: 95%;" type="text" class="inputText" placeholder="Наименование проекта" id="NameProject">
+
+    <div class="custom-control custom-radio custom-control-inline" style="margin-top: 5px;">
+      <input type="radio" class="custom-control-input" id="defaultInline1" name="inlineDefaultRadiosExample">
+      <label class="custom-control-label" for="defaultInline1">Заказчик</label>
+    </div>
+
+    <div class="custom-control custom-radio custom-control-inline">
+      <input type="radio" class="custom-control-input" id="defaultInline2" name="inlineDefaultRadiosExample">
+      <label class="custom-control-label" for="defaultInline2">Исполнитель</label>
+    </div>
+
+    <select class="browser-default custom-select inputText" style="margin-left: 5px; margin-top: 5px; width: 95%;">
+      <option *ngFor="let title of orgs" [value]="title.id">
+        {{title.name}}
+      </option>
+    </select>
+
+    <input [(ngModel)]="Year" style="margin-left: 5px; margin-top: 5px; width: 47%;" type="number" min="2000" max="2025" step="1" class="inputText" placeholder="Год реализации" id="Year">
+    <br>
+    <hr>
+    <button class ="btn btn-outline-success" type="button" style="margin-top: 5px; margin-left: 5px; margin-right: 5px; width: 47%; float: left;" (click)="applyFilter()">Применить фильтр</button>
+    <button class ="btn btn-outline-secondary" type="button" style="margin-top: 5px; margin-left: 5px; margin-right: 5px; width: 47%; float: right;" (click)="clearFilter()">Сбросить фильтры</button>
+  </div>
+</div>
+
+<div class="right_group">
+  <h4>Список титулов</h4>
+<table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+
+  <ng-container matColumnDef="id">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> </th>
+    <td mat-cell *matCellDef="let element">
+      <button class ="btn btn-outline-dark" type="button" style="width: 35px;" (click)="OpenTitul(element)"> + </button>
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="num_titul">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> № титула </th>
+    <td mat-cell *matCellDef="let element"> {{element.num_titul}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="type">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>  </th>
+    <td mat-cell *matCellDef="let element"> {{element.type}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="name_titul">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Наименование титула </th>
+    <td mat-cell *matCellDef="let element"> {{element.name_titul}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="direct_customer">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Подразделение заказчик </th>
+    <td mat-cell *matCellDef="let element"> {{element.direct_customer}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="direct_executor">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Подразделение исполнитель </th>
+    <td mat-cell *matCellDef="let element"> {{element.direct_executor}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="begin">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Начало </th>
+    <td mat-cell *matCellDef="let element"> {{element.begin}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="end">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Конец </th>
+    <td mat-cell *matCellDef="let element"> {{element.end}} </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
+  <mat-paginator [length]="count" [pageSize]="pageSize"
+                 (page)="getPaginatorData($event)">
+  </mat-paginator>
+</div>

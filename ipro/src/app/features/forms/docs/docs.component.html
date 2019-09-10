@@ -1,1 +1,63 @@
-<p>docs works!</p>
+<div>
+  <h4>Список документов</h4>
+  <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> </th>
+      <td mat-cell *matCellDef="let element">
+        <button class ="btn btn-outline-dark" type="button" style="width: 35px;" (click)="OpenTitul(element)"> + </button>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="num_titul">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> № титула </th>
+      <td mat-cell *matCellDef="let element"> {{element.num_titul}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="type_doc">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Тип документа </th>
+      <td mat-cell *matCellDef="let element"> {{element.type_doc}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="num_doc">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> № документа </th>
+      <td mat-cell *matCellDef="let element"> {{element.num_doc}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="prim">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Описание </th>
+      <td mat-cell *matCellDef="let element"> {{element.prim}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="date">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Дата документа </th>
+      <td mat-cell *matCellDef="let element"> {{element.date | date:'HH:mm dd.MM.yyyy'}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="sum">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>  </th>
+      <td mat-cell *matCellDef="let element"> {{element.sum}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="sum_nds">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>  </th>
+      <td mat-cell *matCellDef="let element"> {{element.sum_nds}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="direct">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>  </th>
+      <td mat-cell *matCellDef="let element"> {{element.direct}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="close">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>  </th>
+      <td mat-cell *matCellDef="let element"> {{element.close}} </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+  <mat-paginator [length]="count" [pageSize]="pageSize"
+                 (page)="getPaginatorData($event)">
+  </mat-paginator>
+</div>

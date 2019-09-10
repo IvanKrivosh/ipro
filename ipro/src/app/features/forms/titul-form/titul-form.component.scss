@@ -1,0 +1,15 @@
+@import '~@angular/material/theming';
+@import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
+@import '~bootstrap/scss/bootstrap';
+
+.purple-border textarea {
+  border: 1px solid #dddddd;
+}
+
+.inputText {
+  width: 100%;
+  font-size: 13px;
+  padding: 5px 5px 5px 5px;
+  border: 1px solid #dddddd;
+}
+

@@ -1,0 +1,93 @@
+@import '~@angular/material/theming';
+@import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
+@import '~bootstrap/scss/bootstrap';
+
+.mat-cell {
+  font-size: 12px;
+  max-height: 20px;
+  text-align: center;
+  border-right: 1px solid gainsboro;
+}
+
+table {
+  text-align: center !important;
+}
+
+:host ::ng-deep .mat-sort-header-container {
+  display: flex;
+  justify-content: center;
+}
+.mat-table {
+  width: 100%;
+}
+
+.mat-header-cell {
+  text-align: center;
+}
+
+.mat-column-id {
+  max-width: 30px;
+}
+
+.mat-column-num_titul {
+  min-width: 40px;
+  max-width: 50px;
+}
+
+.mat-column-type_doc {
+  min-width: 100px;
+  max-width: 120px;
+}
+
+.mat-column-num_doc {
+  min-width: 100px;
+  max-width: 120px;
+}
+
+.mat-column-prim {
+  min-width: 80px;
+  max-width: 100px;
+}
+
+.mat-column-direct_executor {
+  max-width: 100px;
+}
+
+.mat-column-date_start,
+.mat-column-date_end
+{
+  min-width: 40px;
+  max-width: 60px;
+}
+
+.mat-column-sum,
+.mat-column-sum_nds
+{
+  min-width: 40px;
+  max-width: 60px;
+}
+
+.left_group {
+  margin-left: 10px;
+  height: 80vh;
+  width: 20%;
+  float: left;
+  white-space: pre-wrap;
+  white-space: -moz-pre-wrap;
+  white-space: -o-pre-wrap;
+  word-wrap: break-word;
+}
+.right_group {
+  margin-right: 10px;
+  height: 75vh;
+  width: 78%;
+  float: right;
+}
+
+.inputText {
+  width: 100%;
+  font-size: 13px;
+  padding: 5px 5px 5px 5px;
+  border: 1px solid #dddddd;
+}
+

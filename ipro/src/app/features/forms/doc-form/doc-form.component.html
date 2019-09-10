@@ -1,0 +1,158 @@
+<h4>Карточка документа</h4>
+  <div class="container mat-elevation-z10">
+    <div class="row">
+      <div class="col-md-6">
+
+        <div class="row">
+          <div class="col">
+            <label for="date_start"> Дата документа </label>
+          </div>
+          <div class="col">
+            <input [(ngModel)]="docInfo.date_start" type="text" class="inputText" id="date_start">
+          </div>
+
+          <div class="col">
+            <label for="close"> Закрыт </label>
+          </div>
+          <div class="col">
+            <input [(ngModel)]="docInfo.close" type="checkbox" class="form-check-input" id="close">
+          </div>
+        </div>
+
+
+        <div class="row" style="margin-top: 5px">
+          <div class="col col-lg-4">
+            <label for="id_type_doc"> Тип документа </label>
+          </div>
+          <div class="col">
+
+            <select class="browser-default custom-select inputText" id ="id_type_doc" [(ngModel)]="docInfo.id_type_doc">
+              <option *ngFor="let title of typesDoc" [value]="title.id">
+                {{title.name}}
+              </option>
+            </select>
+
+          </div>
+        </div>
+
+        <div class="row" style="margin-top: 5px">
+          <div class="col col-lg-4">
+            <label for="id_vid_doc"> Вид документа </label>
+          </div>
+          <div class="col">
+            <select class="browser-default custom-select inputText" id ="id_vid_doc" [(ngModel)]="docInfo.id_vid_doc">
+              <option *ngFor="let title of vidsDoc" [value]="title.id">
+                {{title.name}}
+              </option>
+            </select>
+          </div>
+        </div>
+
+        <div class="row" style="margin-top: 5px">
+          <div class="col col-lg-4">
+            <label for="num_doc"> № документа </label>
+          </div>
+          <div class="col">
+            <input [(ngModel)]="docInfo.num_doc" type="text" class="inputText" id="num_doc">
+          </div>
+        </div>
+
+        <div class="form-group purple-border">
+          <label for="spec">Описание документа</label>
+          <textarea class="form-control" id="spec" rows="3"> {{docInfo.spec}} </textarea>
+        </div>
+
+        <div class="row">
+          <div class="col col-lg-6">
+            <label for="customerId">Подразделение составившее документ</label>
+          </div>
+          <div class="col">
+            <select class="browser-default custom-select inputText" id ="customerId" [(ngModel)]="docInfo.id_direct">
+              <option *ngFor="let title of orgs" [value]="title.id">
+                {{title.name}}
+              </option>
+            </select>
+          </div>
+        </div>
+
+        <div class="row" style="margin-top: 5px">
+          <div class="col col-lg-4">
+            <label for="name_doc"> Ссылка на документ </label>
+          </div>
+          <div class="col">
+            <input [(ngModel)]="docInfo.name_doc" type="text" class="inputText" id="name_doc">
+          </div>
+        </div>
+
+        <div class="row" style="margin-top: 5px">
+          <div class="col col-lg-3">
+            <label for="sum"> Сумма документа </label>
+          </div>
+          <div class="col">
+            <input [(ngModel)]="docInfo.sum" type="text" class="inputText" id="sum">
+          </div>
+          <div class="col col-lg-3">
+            <label for="sum_nds"> Сумма с НДС </label>
+          </div>
+          <div class="col">
+            <input [(ngModel)]="docInfo.sum_nds" type="text" class="inputText" id="sum_nds">
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col col-lg-3">
+            <label for="proc_nds">Процент НДС</label>
+          </div>
+          <div class="col col-lg-3">
+            <select class="browser-default custom-select inputText" id ="proc_nds" [(ngModel)]="docInfo.proc_nds">
+              <option *ngFor="let title of proc_nds" [value]="title.id">
+                {{title.name}}
+              </option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group purple-border">
+          <label for="prim">Примечание</label>
+          <textarea class="form-control" id="prim" rows="3"> {{docInfo.prim}} </textarea>
+        </div>
+
+      </div>
+
+      <div class="col">
+        <h5>Список доп. документов</h5>
+        <button class ="btn btn-outline-success" type="button" style="width: 100px;"> Добавить </button>
+        <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+
+          <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> </th>
+            <td mat-cell *matCellDef="let element">
+              <button class ="btn btn-outline-dark" type="button" style="width: 35px;" (click)="OpenDoc(element)"> + </button>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="type_doc">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Тип документа </th>
+            <td mat-cell *matCellDef="let element"> {{element.type_doc}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="num_doc">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> № документа </th>
+            <td mat-cell *matCellDef="let element"> {{element.num_doc}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="date_start">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Дата документа </th>
+            <td mat-cell *matCellDef="let element"> {{element.date | date:'HH:mm dd.MM.yyyy'}}  </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+
+
+

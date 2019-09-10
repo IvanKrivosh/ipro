@@ -1,0 +1,212 @@
+<div>
+<hr>
+
+  <div class="container mat-elevation-z10" style="height: 90vh">
+    <div class="row">
+      <div class="col">
+        <label for="titul_num"> № титула </label>
+        <input [(ngModel)]="titul.number" type="text" class="inputText" id="titul_num" style="width: 120px; margin-left: 5px">
+        <label for="titul_status" style="margin-left: 5px"> Статус </label>
+        <input [(ngModel)]="titul.statusId" type="text" class="inputText" id="titul_status" style="width: 120px; margin-left: 5px" readonly="true">
+
+        <div class="form-group purple-border">
+          <label for="titul_name">Наименование титула</label>
+          <textarea class="form-control" id="titul_name" rows="3"> {{titul.name}} </textarea>
+        </div>
+
+        <div class="container">
+
+          <div class="row">
+            <div class="col col-lg-3">
+              <label for="customerId">Заказчик</label>
+            </div>
+            <div class="col">
+              <select class="browser-default custom-select inputText" id ="customerId">
+                <option *ngFor="let title of orgs" [value]="title.id">
+                  {{title.name}}
+                </option>
+              </select>
+            </div>
+          </div>
+
+          <div class="row" style="margin-top: 15px">
+            <div class="col col-lg-3">
+              <label for="performerId" >Исполнитель</label>
+            </div>
+            <div class="col">
+              <select class="browser-default custom-select inputText" id ="performerId">
+                <option *ngFor="let title of orgs" [value]="title.id">
+                  {{title.name}}
+                </option>
+              </select>
+            </div>
+          </div>
+
+          <div class="row" style="margin-top: 15px">
+            <div class="col col-lg-4">
+              <label for="titul_sf"> Субъект федерации </label>
+            </div>
+            <div class="col">
+              <input type="text" class="inputText" id="titul_sf">
+            </div>
+          </div>
+
+          <div class="row" style="margin-top: 15px">
+            <div class="col col-lg-4">
+              <label for="investmentDirectionId"> Направление инвестиций </label>
+            </div>
+            <div class="col">
+              <select class="browser-default custom-select inputText" id ="investmentDirectionId" [(ngModel)]="titul.investmentDirectionId">
+                <option *ngFor="let title of directions" [value]="title.id">
+                  {{title.name}}
+                </option>
+              </select>
+
+            </div>
+          </div>
+
+          <div class="row" style="margin-top: 5px">
+            <div class="col col-lg-4">
+              <label for="investmentSectionId"> Раздел ИПР </label>
+            </div>
+            <div class="col">
+
+              <select class="browser-default custom-select inputText" id ="investmentSectionId" [(ngModel)]="titul.investmentSectionId">
+                <option *ngFor="let title of typesIPR" [value]="title.id">
+                  {{title.name}}
+                </option>
+              </select>
+
+            </div>
+          </div>
+
+          <div class="row" style="margin-top: 15px">
+            <div class="col col-lg-4">
+              <label for="belonging"> Принадл. к важным объектам</label>
+            </div>
+            <div class="col">
+              <input [(ngModel)]="titul.belonging" type="text" class="inputText" id="belonging">
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col col-lg-4">
+              <label for="includeCriteria"> Критерий включения в ИПР </label>
+            </div>
+            <div class="col">
+              <input [(ngModel)]="titul.includeCriteria" type="text" class="inputText" id="includeCriteria">
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col col-lg-4">
+              <label for="includePriority"> Приоритет включения </label>
+            </div>
+            <div class="col">
+              <input [(ngModel)]="titul.includePriority" type="text" class="inputText" id="includePriority">
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col col-lg-4">
+              <label for="targetProgram"> Целевая программа </label>
+            </div>
+            <div class="col">
+              <input [(ngModel)]="titul.targetProgram" type="text" class="inputText" id="targetProgram">
+            </div>
+          </div>
+
+          <div class="row" style="margin-top: 15px">
+            <div class="col col-lg-4">
+              <label for="minenergoCriteria"> Критерий Минэнерго </label>
+            </div>
+            <div class="col">
+              <input [(ngModel)]="titul.minenergoCriteria" type="text" class="inputText" id="minenergoCriteria">
+            </div>
+          </div>
+
+          <div class="row" style="margin-top: 15px">
+            <div class="col col-lg-4">
+              <label for="sociallySignificant"> Признак социально значимого объекта </label>
+            </div>
+            <div class="col">
+              <input [(ngModel)]="titul.sociallySignificant" type="text" class="inputText" id="sociallySignificant">
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col col-lg-4">
+              <label for="titulType"> Тип титула </label>
+            </div>
+            <div class="col">
+              <input [(ngModel)]="titul.titulType" type="text" class="inputText" id="titulType">
+            </div>
+          </div>
+
+          <div class="row"  style="margin-top: 15px">
+            <div class="col col-lg-4">
+              <label for="importance"> Степень важности </label>
+            </div>
+            <div class="col">
+              <input [(ngModel)]="titul.importance" type="text" class="inputText" id="importance">
+            </div>
+          </div>
+
+          <div class="row"  style="margin-top: 15px">
+            <div class="col col-lg-4">
+              <label for="curator"> Куратор </label>
+            </div>
+            <div class="col">
+              <input [(ngModel)]="titul.curator" type="text" class="inputText" id="curator">
+            </div>
+          </div>
+          </div>
+        </div>
+      <div class="col-sm">
+
+        <label for="startMonth" style="width: 80px"> Начало </label>
+        <select class="browser-default custom-select inputText" id ="startMonth" [(ngModel)]="titul.startMonth" style="width: 100px; height: 30px">
+          <option *ngFor="let title of months" [value]="title.id">
+            {{title.name}}
+          </option>
+        </select>
+        <input [(ngModel)]="titul.startYear" type="text" class="inputText" id="startYear" style="width: 120px; margin-left: 5px; height: 30px">
+
+        <br>
+
+        <label for="endMonth" style="width: 80px"> Окончание </label>
+        <select class="browser-default custom-select inputText" id ="endMonth" [(ngModel)]="titul.endMonth" style="width: 100px; height: 30px">
+          <option *ngFor="let title of months" [value]="title.id">
+            {{title.name}}
+          </option>
+        </select>
+        <input [(ngModel)]="titul.endYear" type="text" class="inputText" id="endYear" style="width: 120px; margin-left: 5px; height: 30px">
+          <hr>
+        <div class="form-group purple-border">
+          <label for="aims">Цели проекта</label>
+          <textarea class="form-control" id="aims" style="height: 100px"> {{titul.aims}} </textarea>
+        </div>
+        <hr>
+        <div class="form-group purple-border">
+          <label for="problems">Решаемые задачи</label>
+          <textarea class="form-control" id="problems" style="height: 100px"> {{titul.problems}} </textarea>
+        </div>
+        <hr>
+        <div class="form-group purple-border">
+          <label for="comments">Примечания</label>
+          <textarea class="form-control" id="comments" style="height: 100px"> {{titul.comments}} </textarea>
+        </div>
+        <hr>
+        <div class="form-group purple-border">
+          <label for="address">Адрес</label>
+          <textarea class="form-control" id="address" style="height: 100px"> {{titul.address}} </textarea>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
+</div>
+
+
