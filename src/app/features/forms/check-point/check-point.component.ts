@@ -1,5 +1,37 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
+import {MatSort} from '@angular/material/sort';
+import {MatTableDataSource} from '@angular/material/table';
+
+export interface CheckPointElement {
+  pp: string;
+  vd: string;
+  nm: string;
+  pb: string;
+  pe: string;
+  pd: string;
+  fb: string;
+  fe: string;
+  fd: string;
+  ot: string;
+  pr: string;
+  kr: string;
+  ps: string;
+  fs: string;
+  pv: string;
+  sd: string;
+}
+
+const ELEMENT_DATA: CheckPointElement[] = [
+  {pp: '1', vd: '1', nm: '1', pb: '1', pe: '1', pd: '1', fb: '1', fe: '1',
+    fd: '1', ot: '1', pr: '1', kr: '1', ps: '1', fs: '1', pv: '1', sd: '1'},
+  {pp: '2', vd: '1', nm: '1', pb: '1', pe: '1', pd: '1', fb: '1', fe: '1',
+    fd: '1', ot: '1', pr: '1', kr: '1', ps: '1', fs: '1', pv: '1', sd: '1'},
+  {pp: '3', vd: '1', nm: '1', pb: '1', pe: '1', pd: '1', fb: '1', fe: '1',
+    fd: '1', ot: '1', pr: '1', kr: '1', ps: '1', fs: '1', pv: '1', sd: '1'},
+  {pp: '4', vd: '1', nm: '1', pb: '1', pe: '1', pd: '1', fb: '1', fe: '1',
+    fd: '1', ot: '1', pr: '1', kr: '1', ps: '1', fs: '1', pv: '1', sd: '1'}
+];
 
 @Component({
   selector: 'app-check-point',
@@ -7,15 +39,22 @@ import {ActivatedRoute, Router} from '@angular/router';
   styleUrls: ['./check-point.component.scss']
 })
 export class CheckPointComponent implements OnInit {
+  displayedColumns: string[] = ['pp', 'vd', 'nm', 'pb', 'pe', 'pd', 'fb', 'fe', 'fd', 'ot', 'pr', 'kr', 'ps', 'fs', 'pv', 'sd'];
+  dataSource = new MatTableDataSource(ELEMENT_DATA);
+
   ID;
-  constructor(private activatedRoute: ActivatedRoute) { }
+
+  constructor(private activatedRoute: ActivatedRoute) {
+  }
+
+  @ViewChild(MatSort, {static: true}) sort: MatSort;
 
   ngOnInit() {
     this.ID = this.activatedRoute.snapshot.paramMap.get('id');
+    this.dataSource.sort = this.sort;
   }
 
   Return() {
     window.history.back();
   }
-
 }
