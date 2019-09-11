@@ -15,9 +15,9 @@ import {
 } from "@angular/material";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {NgxMatSelectSearchModule} from "ngx-mat-select-search";
 import { TitulFormComponent } from './features/forms/titul-form/titul-form.component';
 import { DocFormComponent } from './features/forms/doc-form/doc-form.component';
+import { UploadFileComponent } from './features/forms/upload-file/upload-file.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +25,8 @@ import { DocFormComponent } from './features/forms/doc-form/doc-form.component';
     TitulsComponent,
     DocsComponent,
     TitulFormComponent,
-    DocFormComponent
+    DocFormComponent,
+    UploadFileComponent
   ],
   imports: [
     BrowserModule,
@@ -36,7 +37,6 @@ import { DocFormComponent } from './features/forms/doc-form/doc-form.component';
     BrowserAnimationsModule,
     FormsModule,
     MatRadioModule,
-    NgxMatSelectSearchModule,
     MatFormFieldModule,
     MatSelectModule,
     ReactiveFormsModule

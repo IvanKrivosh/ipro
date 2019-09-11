@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {DocInfo} from "../../../models/doc-model";
+import {MatDialog} from "@angular/material";
+import {UploadFileComponent} from "../upload-file/upload-file.component";
 
 @Component({
   selector: 'app-doc-form',
@@ -9,7 +11,7 @@ import {DocInfo} from "../../../models/doc-model";
 export class DocFormComponent implements OnInit {
 
   docInfo : DocInfo;
-  constructor() { }
+  constructor (public dialog: MatDialog) { }
   typesDoc = [{name: 'Тип №1', id : 1}, {name: 'Тип №2', id : 2}, {name: 'Тип №3', id : 3}];
   vidsDoc = [{name: 'Общий', id : 1}, {name: 'Уникальный для проекта', id : 2}];
   orgs = [{name: 'Подразделение №1', id : 1}, {name: 'Подразделение №2', id : 2}, {name: 'Подразделение №3', id : 3}];
@@ -28,6 +30,32 @@ export class DocFormComponent implements OnInit {
 
   OpenDoc(element) {
 
+  }
+
+  uploadDocs() {
+
+    /*const dialogRef = this.dialog.open(UploadFileComponent, {
+      width: '550px',
+      data: {
+        permissions: this.
+      }
+    });
+
+    dialogRef.afterClosed().subscribe( result => {
+      if (result && result.length > 0) {
+        this.serv.saveRoles(user.id, result).subscribe( value => {
+          const roles = [];
+          for (const r of result)
+            if (r.status === 'save' || r.status === 'insert')
+              roles.push(r.id);
+          user.roles = roles;
+          this.changeDetector('Прва доступа пользователя ' + user.login + ' успешно обновлены');
+        }, error => {
+          alert(this.str_error);
+          this.changeDetector(this.str_error);
+        });
+      }
+    });*/
   }
 
 
