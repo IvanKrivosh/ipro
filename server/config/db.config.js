@@ -29,5 +29,9 @@ db.completionActs = require('../model/completionAct.js')(sequelize, Sequelize);
 db.contracts = require('../model/contract.js')(sequelize, Sequelize);
 db.costTypes = require('../model/costType.js')(sequelize, Sequelize);
 db.paymentOrders = require('../model/paymentOrder.js')(sequelize, Sequelize);
+db.controlStepJobs = require('../model/controlStepJob.js')(sequelize, Sequelize);
+db.controlStepTemplates = require('../model/controlStepTemplate.js')(sequelize, Sequelize);
+db.titulControlSteps = require('../model/titulControlStep.js')(sequelize, Sequelize);
+db.titulControlStepJobs = require('../model/titulControlStepJob.js')(sequelize, Sequelize);
 
 module.exports = db;

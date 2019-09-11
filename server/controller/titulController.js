@@ -1,5 +1,4 @@
 const db = require('../config/db.config.js');
-
 const Titul = db.tituls;
 
 exports.getTitulById = (req, res) => {
