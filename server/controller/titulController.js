@@ -15,7 +15,10 @@ exports.getTitulById = (req, res) => {
 };
 
 exports.getTituls = (req, res) => {
-  Titul.findAll({raw: true}).then(tituls => {
+  Titul.findAll({
+    where: req.query,
+    raw: true
+  }).then(tituls => {
     res.json(tituls);
   }).catch(err => {
     console.log(err);
