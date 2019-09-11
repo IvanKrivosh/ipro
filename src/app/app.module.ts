@@ -4,20 +4,23 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { DocsComponent } from './features/forms/docs/docs.component';
-import {TitulsComponent} from "./features/forms/tituls/tituls.component";
 import {
+  MatDialogModule,
   MatFormFieldModule,
-  MatPaginatorModule,
+  MatPaginatorModule, MatProgressBarModule,
   MatRadioModule,
   MatSelectModule,
   MatSortModule,
   MatTableModule
-} from "@angular/material";
-import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
-import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+} from '@angular/material';
+
 import { TitulFormComponent } from './features/forms/titul-form/titul-form.component';
 import { DocFormComponent } from './features/forms/doc-form/doc-form.component';
 import { UploadFileComponent } from './features/forms/upload-file/upload-file.component';
+import {TitulsComponent} from './features/forms/tituls/tituls.component';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {HttpClientModule} from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -28,6 +31,7 @@ import { UploadFileComponent } from './features/forms/upload-file/upload-file.co
     DocFormComponent,
     UploadFileComponent
   ],
+  entryComponents: [UploadFileComponent, DocFormComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -39,7 +43,10 @@ import { UploadFileComponent } from './features/forms/upload-file/upload-file.co
     MatRadioModule,
     MatFormFieldModule,
     MatSelectModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatDialogModule,
+    MatProgressBarModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

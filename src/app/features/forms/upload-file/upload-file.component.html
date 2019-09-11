@@ -1,1 +1,39 @@
-<p>upload-file works!</p>
+<div class="container">
+  <h3>Загрузка файлов</h3>
+  <div id="table-scroll">
+  <table class="table table-striped">
+    <thead>
+    <tr>
+      <td width="200"><b>Файл</b></td>
+      <td width="80"></td>
+      <td></td>
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr *ngFor="let file of this.data.files">
+      <ng-template [ngTemplateOutlet]="teplateUpload"
+                   [ngTemplateOutletContext]="{ $implicit: file}">
+      </ng-template>
+    </tr>
+    </tbody>
+  </table>
+
+  <ng-template #teplateUpload let-file>
+    <td>{{file.name}}</td>
+    <td><button type="button" class="btn btn-outline-danger" style="width: 40px">X</button></td>
+    <td>
+      <mat-progress-bar
+        class="audio-progress-bar"
+        *ngIf="progress"
+        mode="determinate"
+        [value]="progress[file.name].progress | async"
+      ></mat-progress-bar>
+    </td>
+  </ng-template>
+</div>
+  <hr>
+  <button type="button" class="btn btn-outline-success" style="width: 150px; alignment: right" (click)="uploadFile()">Загрузить файлы</button>
+  <button type="button" class="btn btn-outline-danger" style="width: 150px; margin-left: 5px; alignment: right" (click)="closeForm()">Отмена</button>
+</div>
+

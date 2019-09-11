@@ -8,7 +8,7 @@
             <label for="date_start"> Дата документа </label>
           </div>
           <div class="col">
-            <input [(ngModel)]="docInfo.date_start" type="text" class="inputText" id="date_start">
+            <input [(ngModel)]="docInfo.date" type="text" class="inputText" id="date_start">
           </div>
 
           <div class="col">
@@ -105,7 +105,7 @@
           </div>
           <div class="col col-lg-3">
             <select class="browser-default custom-select inputText" id ="proc_nds" [(ngModel)]="docInfo.proc_nds">
-              <option *ngFor="let title of proc_nds" [value]="title.id">
+              <option *ngFor="let title of procNds" [value]="title.id">
                 {{title.name}}
               </option>
             </select>
@@ -121,7 +121,7 @@
 
       <div class="col">
         <h5>Список доп. документов</h5>
-        <button class ="btn btn-outline-success" type="button" style="width: 100px;"> Добавить </button>
+        <button class ="btn btn-outline-success" type="button" style="width: 100px;" (click)="uploadDocs()"> Добавить </button>
         <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
 
           <ng-container matColumnDef="id">
@@ -153,6 +153,12 @@
     </div>
   </div>
 
-
+<input
+  type="file"
+  #file
+  style="display: none"
+  (change)="onFilesAdded()"
+  multiple
+/>
 
 

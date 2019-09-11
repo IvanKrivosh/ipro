@@ -1,8 +1,9 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {PeriodicElement} from "../tituls/tituls.component";
-import {MatPaginator, MatSort, MatTableDataSource} from "@angular/material";
-import {Router} from "@angular/router";
-import {DocInfo} from "../../../models/doc-model";
+import {DocInfo} from '../../../models/doc-model';
+import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
+import {PeriodicElement} from '../tituls/tituls.component';
+import {Router} from '@angular/router';
+
 
 const ELEMENT_DATA: DocInfo[] = [
   { id: 1, id_titul: 1113, num_titul: 1000256366, id_type_doc: 1, type_doc: 'Карта схема-объекта', id_vid_doc: 1, num_doc: 'б/н', prim: '----', date : new Date(), sum: 500, sum_nds: 26, direct: 'ДтИПР', close: 1, id_direct: 3, name_doc: 'doc_1.pdf', proc_nds: 20, spec: ''},
@@ -20,10 +21,10 @@ export class DocsComponent implements OnInit {
   activePageDataChunk = [];
   dataSource = new MatTableDataSource(ELEMENT_DATA);
   count = 0;
-  pageIndex:number = 0;
-  pageSize:number = 15;
-  lowValue:number = 0;
-  highValue:number = 15;
+  pageIndex = 0;
+  pageSize = 15;
+  lowValue = 0;
+  highValue = 15;
 
   @ViewChild(MatSort, {static: true}) sort: MatSort;
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
@@ -32,7 +33,7 @@ export class DocsComponent implements OnInit {
 
   ngOnInit() {
     this.count = ELEMENT_DATA.length;
-    this.activePageDataChunk = ELEMENT_DATA.slice(0,this.pageSize);
+    this.activePageDataChunk = ELEMENT_DATA.slice(0, this.pageSize);
     this.dataSource = new MatTableDataSource(this.activePageDataChunk);
     this.dataSource.sort = this.sort;
 
@@ -43,26 +44,26 @@ export class DocsComponent implements OnInit {
     this.paginator._intl.previousPageLabel = 'Предыдущая страница';
   }
 
-  getPaginatorData(event){
-    if(event.pageIndex === this.pageIndex + 1){
+  getPaginatorData(event) {
+    if (event.pageIndex === this.pageIndex + 1) {
       this.lowValue = this.lowValue + this.pageSize;
       this.highValue =  this.highValue + this.pageSize;
-    }
-    else if(event.pageIndex === this.pageIndex - 1){
+    } else if (event.pageIndex === this.pageIndex - 1) {
       this.lowValue = this.lowValue - this.pageSize;
       this.highValue =  this.highValue - this.pageSize;
     }
     this.pageIndex = event.pageIndex;
 
-    let firstCut = event.pageIndex * event.pageSize;
-    let secondCut = firstCut + event.pageSize;
+    const firstCut = event.pageIndex * event.pageSize;
+    const secondCut = firstCut + event.pageSize;
 
     this.activePageDataChunk = ELEMENT_DATA.slice(firstCut, secondCut);
     this.dataSource = new MatTableDataSource(this.activePageDataChunk);
     this.dataSource.sort = this.sort;
   }
 
-  OpenTitul(elem: PeriodicElement){
+  openDoc(elem: PeriodicElement) {
+    console.log(elem.id);
     this.router.navigate(['/docs/', elem.id]);
   }
 
