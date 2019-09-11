@@ -25,5 +25,9 @@ db.documentKinds = require('../model/documentKind.js')(sequelize, Sequelize);
 db.documentTypes = require('../model/documentType.js')(sequelize, Sequelize);
 db.files = require('../model/file.js')(sequelize, Sequelize);
 db.vatPercents = require('../model/vatPercent.js')(sequelize, Sequelize);
+db.completionActs = require('../model/completionAct.js')(sequelize, Sequelize);
+db.contracts = require('../model/contract.js')(sequelize, Sequelize);
+db.costTypes = require('../model/costType.js')(sequelize, Sequelize);
+db.paymentOrders = require('../model/paymentOrder.js')(sequelize, Sequelize);
 
 module.exports = db;
