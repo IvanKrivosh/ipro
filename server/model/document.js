@@ -11,6 +11,13 @@ module.exports = (sequelize, DataTypes) => {
       }
     },
     description: {type: DataTypes.STRING},  //Описание
+    titulId: {                              //Титул
+      type: DataTypes.INTEGER,
+      references: {
+        model: 'tituls',
+        key: 'id'
+      }
+    },
     departmentId: {                         //Подразделение, составившее документ
       type: DataTypes.INTEGER,
       references: {
