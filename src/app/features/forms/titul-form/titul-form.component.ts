@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {ActivatedRoute} from "@angular/router";
-import {TitulInfo} from "../../../models/titul-model";
+import {TitulInfo} from '../../../models/titul-model';
+import {ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'app-titul-form',
@@ -11,7 +11,7 @@ export class TitulFormComponent implements OnInit {
   titul : TitulInfo;
   ID = '0';
   constructor(private activatedRoute: ActivatedRoute) { }
-
+  checkpoint = 'checkpoint';
   orgs = [{name: 'Подразделение №1', id : 1}, {name: 'Подразделение №2', id : 2}, {name: 'Подразделение №3', id : 3}];
   typesIPR = [{name: 'Раздел №1', id : 1}, {name: 'Раздел №2', id : 2}, {name: 'Раздел №3', id : 3}];
   directions = [{name: 'Направление №1', id : 1}, {name: 'Направление №2', id : 2}, {name: 'Направление №3', id : 3}];
@@ -59,6 +59,10 @@ export class TitulFormComponent implements OnInit {
     address: '*Адрес',
     comments: '*Примечания'
   }
+  }
+
+  openCheckPoint() {
+
   }
 
 }

@@ -1,0 +1,33 @@
+@import '~@angular/material/theming';
+@import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
+@import '~bootstrap/scss/bootstrap';
+
+.mat-table {
+  height: 50px;
+  overflow-x: scroll;
+  width: 100%;
+}
+
+table tr.mat-row {
+  height: 35px;
+}
+
+.mat-cell {
+  font-size: 12px;
+  max-height: 20px;
+  text-align: center;
+  border-right: 1px solid gainsboro;
+}
+
+table {
+  text-align: center !important;
+}
+
+:host ::ng-deep .mat-sort-header-container {
+  display: flex;
+  justify-content: center;
+}
+
+.mat-header-cell {
+  text-align: center;
+}

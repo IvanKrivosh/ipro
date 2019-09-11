@@ -1,19 +1,18 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {MatSort} from "@angular/material";
 import {MatTableDataSource} from '@angular/material/table';
-import {MatPaginator} from "@angular/material";
-import {FormControl} from "@angular/forms";
-import {Router} from "@angular/router";
+import {MatPaginator, MatSort} from '@angular/material';
+import {Router} from '@angular/router';
+
 
 export interface PeriodicElement {
   id: number;
-  num_titul: number,
-  type : string,
-  name_titul : string,
-  direct_customer : string,
-  direct_executor : string,
-  begin : string,
-  end : string
+  num_titul: number;
+  type: string;
+  name_titul: string;
+  direct_customer: string;
+  direct_executor: string;
+  begin: string;
+  end: string;
 }
 
 const ELEMENT_DATA: PeriodicElement[] = [
@@ -30,18 +29,18 @@ export class TitulsComponent implements OnInit {
 
   orgs = [{name: 'Подразделение №1', id : 1}, {name: 'Подразделение №2', id : 2}, {name: 'Подразделение №3', id : 3}];
 
-  NumProject : string;
-  NameProject : string;
-  Year : number;
+  NumProject: string;
+  NameProject: string;
+  Year: number;
 
   displayedColumns: string[] = ['id', 'num_titul', 'type', 'name_titul', 'direct_customer', 'direct_executor', 'begin', 'end'];
   activePageDataChunk = [];
   dataSource = new MatTableDataSource(ELEMENT_DATA);
   count = 0;
-  pageIndex:number = 0;
-  pageSize:number = 15;
-  lowValue:number = 0;
-  highValue:number = 15;
+  pageIndex = 0;
+  pageSize = 15;
+  lowValue = 0;
+  highValue = 15;
 
   @ViewChild(MatSort, {static: true}) sort: MatSort;
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
@@ -50,7 +49,7 @@ export class TitulsComponent implements OnInit {
 
   ngOnInit() {
     this.count = ELEMENT_DATA.length;
-    this.activePageDataChunk = ELEMENT_DATA.slice(0,this.pageSize);
+    this.activePageDataChunk = ELEMENT_DATA.slice(0, this.pageSize);
     this.dataSource = new MatTableDataSource(this.activePageDataChunk);
     this.dataSource.sort = this.sort;
 
@@ -64,22 +63,21 @@ export class TitulsComponent implements OnInit {
   applyFilter() {
   }
 
-  clearFilter(){
+  clearFilter() {
   }
 
-  getPaginatorData(event){
-    if(event.pageIndex === this.pageIndex + 1){
+  getPaginatorData(event) {
+    if (event.pageIndex === this.pageIndex + 1) {
       this.lowValue = this.lowValue + this.pageSize;
       this.highValue =  this.highValue + this.pageSize;
-    }
-    else if(event.pageIndex === this.pageIndex - 1){
+    } else if (event.pageIndex === this.pageIndex - 1) {
       this.lowValue = this.lowValue - this.pageSize;
       this.highValue =  this.highValue - this.pageSize;
     }
     this.pageIndex = event.pageIndex;
 
-    let firstCut = event.pageIndex * event.pageSize;
-    let secondCut = firstCut + event.pageSize;
+    const firstCut = event.pageIndex * event.pageSize;
+    const secondCut = firstCut + event.pageSize;
 
     this.activePageDataChunk = ELEMENT_DATA.slice(firstCut, secondCut);
     this.dataSource = new MatTableDataSource(this.activePageDataChunk);

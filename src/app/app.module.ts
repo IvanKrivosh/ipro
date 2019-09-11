@@ -21,6 +21,8 @@ import {TitulsComponent} from './features/forms/tituls/tituls.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {HttpClientModule} from '@angular/common/http';
+import { DogovorsComponent } from './features/forms/dogovors/dogovors.component';
+import { CheckPointComponent } from './features/forms/check-point/check-point.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +31,9 @@ import {HttpClientModule} from '@angular/common/http';
     DocsComponent,
     TitulFormComponent,
     DocFormComponent,
-    UploadFileComponent
+    UploadFileComponent,
+    DogovorsComponent,
+    CheckPointComponent
   ],
   entryComponents: [UploadFileComponent, DocFormComponent],
   imports: [
