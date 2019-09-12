@@ -20,6 +20,15 @@ exports.getActs = (req, res) => {
     'ON ct."id" = a."costTypeId" ' +
     'JOIN "documentTypes" dt ' +
     'ON dt."id" = a."documentTypeId"';
+
+  if (req.query.contractId != null) {
+    query += ` WHERE a."contractId" = ${req.query.contractId}`;
+  }
+
+  if (req.query.id != null) {
+    query += ` WHERE a."id" = ${req.query.id}`;
+  }
+
   db.sequelize.query(query, {type: db.sequelize.QueryTypes.SELECT})
     .then(acts => {
       res.json(acts);
@@ -37,6 +46,15 @@ exports.getOrders = (req, res) => {
     'ON c."id" = o."contractId" ' +
     'JOIN "costTypes" ct ' +
     'ON ct."id" = o."costTypeId"';
+
+  if (req.query.contractId != null) {
+    query += ` WHERE o."contractId" = ${req.query.contractId}`;
+  }
+
+  if (req.query.id != null) {
+    query += ` WHERE o."id" = ${req.query.id}`;
+  }
+
   db.sequelize.query(query, {type: db.sequelize.QueryTypes.SELECT})
     .then(orders => {
       res.json(orders);
