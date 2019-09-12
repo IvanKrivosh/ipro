@@ -49,13 +49,12 @@ export class CheckPointComponent implements OnInit {
   displayedColumns: string[] = ['pp', 'vd', 'nm', 'pb', 'pe', 'pd', 'fb', 'fe', 'fd', 'ot', 'pr', 'kr', 'ps', 'fs', 'pv', 'sd'];
   dataSource = new MatTableDataSource(ELEMENT_DATA);
 
-  ID;
+  @ViewChild(MatSort, {static: true}) sort: MatSort;
 
   constructor(private activatedRoute: ActivatedRoute, private router: Router) {
   }
 
-  @ViewChild(MatSort, {static: true}) sort: MatSort;
-
+  ID;
   ngOnInit() {
     this.ID = this.activatedRoute.snapshot.paramMap.get('id');
     this.dataSource.sort = this.sort;
