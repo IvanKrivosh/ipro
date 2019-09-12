@@ -25,6 +25,22 @@ module.exports = (sequelize, DataTypes) => {
     },
     documentDate: {type: DataTypes.DATEONLY},         //Дата документа
     sum: {type: DataTypes.DECIMAL(10, 2)},            //Сумма по документу
-    vat: {type: DataTypes.DECIMAL(10, 2)}             //В т.ч. НДС
+    vat: {type: DataTypes.DECIMAL(10, 2)},            //В т.ч. НДС
+    estimateText: {type: DataTypes.TEXT},             //Текст сметы
+    estimateFileId: {                                 //Файл сметы
+      type: DataTypes.INTEGER,
+      references: {
+        model: 'files',
+        key: 'id'
+      }
+    },
+    ks2Text: {type: DataTypes.TEXT},                  //Текст КС-2
+    ks2FileId: {                                      //Файл КС-2
+      type: DataTypes.INTEGER,
+      references: {
+        model: 'files',
+        key: 'id'
+      }
+    },
   });
 };
