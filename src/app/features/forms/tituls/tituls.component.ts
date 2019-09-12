@@ -61,7 +61,7 @@ export class TitulsComponent implements OnInit {
       }
     }
     if (this.Year != null) {
-      filterVlaue.push({name: 'startYear', value: this.Year});
+      filterVlaue.push({name: 'year', value: this.Year});
     }
     this.titulservice.getTituls(filterVlaue).subscribe( data => {
       this.tituls = data;

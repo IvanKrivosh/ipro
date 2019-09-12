@@ -1,16 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import {TitulInfo} from '../../../models/titul-model';
 import {ActivatedRoute} from '@angular/router';
+import {TitulService} from '../../../services/titul-service';
 
 @Component({
   selector: 'app-titul-form',
   templateUrl: './titul-form.component.html',
-  styleUrls: ['./titul-form.component.scss']
+  styleUrls: ['./titul-form.component.scss'],
+  providers: [TitulService]
 })
 export class TitulFormComponent implements OnInit {
-  titul : TitulInfo;
-  ID = '0';
-  constructor(private activatedRoute: ActivatedRoute) { }
+  titul: TitulInfo;
+  ID = 0;
+  constructor(private activatedRoute: ActivatedRoute, private titulservice: TitulService) { }
   checkpoint = 'checkpoint';
   orgs = [{name: 'Подразделение №1', id : 1}, {name: 'Подразделение №2', id : 2}, {name: 'Подразделение №3', id : 3}];
   typesIPR = [{name: 'Раздел №1', id : 1}, {name: 'Раздел №2', id : 2}, {name: 'Раздел №3', id : 3}];
@@ -32,37 +34,12 @@ export class TitulFormComponent implements OnInit {
     ];
 
   ngOnInit() {
-    this.ID = this.activatedRoute.snapshot.paramMap.get('id');
-    this.titul = {id: 123,
-    name: '123        22222222222222222222222 222222222222222222222222222222222221231e12e12e12e12 12312312312312312312312312312322222222222222222222',
-    number: '100001231230',
-    statusId: '1',
-    startYear: 2000,
-    startMonth: 1,
-    endYear: 2020,
-    endMonth: 12,
-    customerId: 1,
-    performerId: 2,
-    investmentDirectionId: 2,
-    investmentSectionId: 3,
-    belonging: '*Принадлежность к важным объектам, программам',
-    includeCriteria: '*Критерий включения в ИПР',
-    includePriority: '*Приоритет включения',
-    targetProgram: '*Целевая программа',
-    minenergoCriteria: '*Критерий Минэнерго',
-    sociallySignificant: '*Признак социально значимого объекта',
-    titulType: '*Тип титула',
-    importance: '*Степень важности',
-    curator: '*Куратор',
-    aims: '*Цели проекта',
-    problems: '*Решаемые задачи',
-    address: '*Адрес',
-    comments: '*Примечания'
-  }
-  }
-
-  openCheckPoint() {
-
+    this.ID = Number(this.activatedRoute.snapshot.paramMap.get('id'));
+    const filterVlaue: Array<{name: string, value: any}> = new Array<{name: string, value: string}>();
+    filterVlaue.push({name: 'id', value: this.ID});
+    this.titulservice.getTituls(filterVlaue).subscribe( data => {
+      this.titul = data[0];
+    });
   }
 
 }

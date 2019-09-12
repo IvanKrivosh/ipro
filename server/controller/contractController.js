@@ -36,7 +36,7 @@ exports.getOrders = (req, res) => {
     'JOIN "contracts" c ' +
     'ON c."id" = o."contractId" ' +
     'JOIN "costTypes" ct ' +
-    'ON ct."id" = o."costTypeId" ';
+    'ON ct."id" = o."costTypeId"';
   db.sequelize.query(query, {type: db.sequelize.QueryTypes.SELECT})
     .then(orders => {
       res.json(orders);
