@@ -1,5 +1,12 @@
 <hr>
-<a class ="btn btn-outline-primary"  (click)="Return()"> Назад </a>
+
+<table>
+  <tr>
+    <td> <a class ="btn btn-outline-primary"  (click)="Return()"> Назад </a> </td>
+    <td> <span><a class ="btn btn-outline-primary"  [routerLink]="checkpointsh"> Шаблоны заполнения контрольных этапов </a></span> </td>
+  </tr>
+</table>
+
 <p>&#8195;</p>
 <mat-form-field class="example-user-input">
   <mat-select placeholder="Выберите шаблон" [formControl]="position">

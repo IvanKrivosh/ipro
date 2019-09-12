@@ -41,6 +41,7 @@ const ELEMENT_DATA: CheckPointElement[] = [
   styleUrls: ['./check-point.component.scss']
 })
 export class CheckPointComponent implements OnInit {
+  checkpointsh = 'checkpointsh';
   // @ts-ignore
   positionOptions: TooltipPosition[] = ['Шаблон №1', 'Шаблон №2'];
   position = new FormControl(this.positionOptions[0]);
