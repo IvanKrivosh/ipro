@@ -40,7 +40,7 @@ export class UploadFileComponent implements OnInit {
 
     this.uploading = true;
 
-    this.uploadService.upload(this.data.files, this.data.idDoc.toString());
+    this.progress = this.uploadService.upload(this.data.files, this.data.idDoc.toString());
 
     const allProgressObservables = [];
     for (const key of Object.keys(this.progress)) {

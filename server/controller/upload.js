@@ -7,24 +7,26 @@ module.exports = function upload(req, res) {
   form.maxFileSize = 200 * 1024 * 1024;
   form.uploadDir = "./uploads";
 
-  form.on('error', function(err) {
-    throw err;
-  });
+form.on('error', function(err) {
+  throw err;
+});
 
-  form.on('fileBegin', function(name, file){
-    file.path = form.uploadDir + "/" + file.name;
-  });
+form.on('fileBegin', function(name, file){
+  file.path = form.uploadDir + "/" + file.name;
+});
 
-  form.on('file', (field, file) => {
-    console.log('ID doc: ' + req.query.id);
-  });
+form.on('file', (field, file) => {
+  console.log('ID doc: ' + req.query.id);
+});
 
-  form.on('progress', function(bytesReceived, bytesExpected) {
-  });
+form.on('progress', function(bytesReceived, bytesExpected) {
+  var percent = (bytesReceived / bytesExpected * 100) | 0;
+  process.stdout.write('Uploading: %' + percent + '\r');
+});
 
-  form.on('end', () => {
-    res.json();
-  });
+form.on('end', () => {
+  res.json();
+});
 
-  form.parse(req);
+form.parse(req);
 };
