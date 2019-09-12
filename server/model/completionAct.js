@@ -23,6 +23,13 @@ module.exports = (sequelize, DataTypes) => {
         key: 'id'
       }
     },
+    objectId: {                                       //Объект
+      type: DataTypes.INTEGER,
+      references: {
+        model: 'objects',
+        key: 'id'
+      }
+    },
     documentDate: {type: DataTypes.DATEONLY},         //Дата документа
     sum: {type: DataTypes.DECIMAL(10, 2)},            //Сумма по документу
     vat: {type: DataTypes.DECIMAL(10, 2)},            //В т.ч. НДС
