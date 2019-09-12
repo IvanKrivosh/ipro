@@ -1,4 +1,17 @@
-@import '~@angular/material/theming';
-@import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
-@import '~bootstrap/scss/bootstrap';
+.view_doc {
+  height: 58vh;
+  margin-left: 5px;
+  white-space: pre-wrap;
+  white-space: -moz-pre-wrap;
+  white-space: -o-pre-wrap;
+  word-wrap: break-word;
+}
 
+table, th, td {
+  border: 1px solid black;
+}
+
+td {
+  height: 50px;
+  vertical-align: bottom;
+}

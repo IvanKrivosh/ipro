@@ -1,7 +1,7 @@
 <hr>
-<h6>Список договоров</h6>
+<h6 id="TEST">Список договоров</h6>
 <div style="height: 200px; overflow: auto;">
-<table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8 table-container">
+<table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8 table-container" >
 
   <ng-container matColumnDef="num_dog">
     <th mat-header-cell *matHeaderCellDef mat-sort-header> № договора </th>
@@ -64,7 +64,7 @@
   </ng-container>
 
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selectRow(row)"></tr>
 </table>
 </div>
 <mat-paginator [length]="count" [pageSize]="pageSize"

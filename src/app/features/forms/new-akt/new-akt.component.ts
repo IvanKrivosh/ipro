@@ -82,6 +82,7 @@ export class NewAktComponent implements OnInit {
       index = this.xlsxModel.toString().indexOf('</tr>', index);
       this.xlsxModel = this.xlsxModel.toString().substring(0, index + 5);
       this.xlsxModel += '</table></body></html>';
+      console.log( this.xlsxModel);
     };
   }
 

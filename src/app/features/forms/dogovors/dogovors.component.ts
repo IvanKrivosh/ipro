@@ -95,11 +95,12 @@ export class DogovorsComponent implements OnInit, AfterViewInit {
   }
 
   OpenDetal(element) {
-
     const dialogRef = this.dialog.open(ViewDetalComponent, {
-      width: '700px',
+      id: 'DialogDetal',
+      width: '1500px',
+      height: '80vh',
       data: {
-        idContract: element.id
+        ID: element.id
       }
     });
     dialogRef.afterClosed().subscribe(result => {
@@ -108,13 +109,21 @@ export class DogovorsComponent implements OnInit, AfterViewInit {
 
   AddAkt() {
     const dialogRef = this.dialog.open(NewAktComponent, {
-      width: '1500px',
+      width: '700px',
       data: {
         idContract: this.currentDog.id
       }
     });
     dialogRef.afterClosed().subscribe(result => {
     });
+  }
+
+  selectRow(row) {
+    alert(row.id);
+    if (this.currentDog.id !== row.id) {
+      this.currentDog = row;
+      this.fillChildTable();
+    }
   }
 
 

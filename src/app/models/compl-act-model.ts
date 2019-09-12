@@ -1,15 +1,15 @@
 export interface ComplActModel {
-    ContractId: number;       // Договор
-    DocumentNumber: string;   // Номер документа
-    DocumentTypeId: number;   // Тип документа
-    DocumentTypeName: string;  // Наименование типа документа
-    CostTypeId: number;       // Вид затрат
-    CostTypeName: string;      // Наименование вид затрат
-    DocumentDate: Date;       // Дата документа
-    Sum: number;              // Сумма по документу
-    Vat: number;              // В т.ч. НДС
-    EstimateText: string;    // Текст сметы
-    EstimateFileId: number;  // Файл сметы
-    Ks2Text: string;         // Текст КС-2
-    Ks2FileId: number;      // Файл КС-2
+    contractId: number;       // Договор
+    documentNumber: string;   // Номер документа
+    documentTypeId: number;   // Тип документа
+    documentTypeName: string;  // Наименование типа документа
+    costTypeId: number;       // Вид затрат
+    costTypeName: string;      // Наименование вид затрат
+    documentDate: Date;       // Дата документа
+    sum: number;              // Сумма по документу
+    vat: number;              // В т.ч. НДС
+    estimateText: string;    // Текст сметы
+    estimateFileId: number;  // Файл сметы
+    ks2Text: string;         // Текст КС-2
+    ks2FileId: number;      // Файл КС-2
 }

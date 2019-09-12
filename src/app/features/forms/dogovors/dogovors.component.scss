@@ -16,9 +16,8 @@ table tr.mat-row {
   text-align: center;
   border-right: 1px solid gainsboro;
 }
-
-table {
-  text-align: center !important;
+ table, th, td {
+  border: 1px solid gainsboro;
 }
 
 :host ::ng-deep .mat-sort-header-container {
