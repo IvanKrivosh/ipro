@@ -1,8 +1,8 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {DocInfo} from '../../../models/doc-model';
 import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
-import {PeriodicElement} from '../tituls/tituls.component';
 import {Router} from '@angular/router';
+import {TitulInfo} from '../../../models/titul-model';
 
 
 const ELEMENT_DATA: DocInfo[] = [
@@ -62,7 +62,7 @@ export class DocsComponent implements OnInit {
     this.dataSource.sort = this.sort;
   }
 
-  openDoc(elem: PeriodicElement) {
+  openDoc(elem: TitulInfo) {
     console.log(elem.id);
     this.router.navigate(['/docs/', elem.id]);
   }

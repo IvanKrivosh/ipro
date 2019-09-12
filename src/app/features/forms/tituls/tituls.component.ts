@@ -1,29 +1,15 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {ChangeDetectorRef, Component, OnInit, ViewChild} from '@angular/core';
 import {MatTableDataSource} from '@angular/material/table';
 import {MatPaginator, MatSort} from '@angular/material';
 import {Router} from '@angular/router';
-
-
-export interface PeriodicElement {
-  id: number;
-  num_titul: number;
-  type: string;
-  name_titul: string;
-  direct_customer: string;
-  direct_executor: string;
-  begin: string;
-  end: string;
-}
-
-const ELEMENT_DATA: PeriodicElement[] = [
-  { id: 1123, num_titul: 1000256366, type: 'О', name_titul: 'цуа уа цу цуацуацуацуа цуаукукп', direct_customer: 'ДирДСО', direct_executor : 'ДирДСО', begin: 'январь 2004', end: 'декабрь 2021'},
-  { id: 1223, num_titul: 1002356366, type: 'О', name_titul: 'аиукп23кп 23к 23к 23к', direct_customer: 'ДирДСО', direct_executor : 'ДирДСО', begin: 'январь 2006', end: 'декабрь 2029'}
-];
+import {TitulService} from '../../../services/titul-service';
+import {TitulInfo} from '../../../models/titul-model';
 
 @Component({
   selector: 'app-tituls',
   templateUrl: './tituls.component.html',
-  styleUrls: ['./tituls.component.scss']
+  styleUrls: ['./tituls.component.scss'],
+  providers: [TitulService]
 })
 export class TitulsComponent implements OnInit {
 
@@ -32,10 +18,13 @@ export class TitulsComponent implements OnInit {
   NumProject: string;
   NameProject: string;
   Year: number;
+  IdOrg: number;
+  TypeOrg = 1;
 
-  displayedColumns: string[] = ['id', 'num_titul', 'type', 'name_titul', 'direct_customer', 'direct_executor', 'begin', 'end'];
+  displayedColumns: string[] = ['id', 'number', 'type', 'name', 'direct_customer', 'direct_executor', 'begin', 'end'];
   activePageDataChunk = [];
-  dataSource = new MatTableDataSource(ELEMENT_DATA);
+  tituls: TitulInfo[];
+  dataSource = new MatTableDataSource(this.tituls);
   count = 0;
   pageIndex = 0;
   pageSize = 15;
@@ -45,13 +34,9 @@ export class TitulsComponent implements OnInit {
   @ViewChild(MatSort, {static: true}) sort: MatSort;
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private titulservice: TitulService, private changeDetectorRefs: ChangeDetectorRef) { }
 
   ngOnInit() {
-    this.count = ELEMENT_DATA.length;
-    this.activePageDataChunk = ELEMENT_DATA.slice(0, this.pageSize);
-    this.dataSource = new MatTableDataSource(this.activePageDataChunk);
-    this.dataSource.sort = this.sort;
 
     this.paginator._intl.itemsPerPageLabel = 'Кол-во на страницу: ';
     this.paginator._intl.firstPageLabel = 'Первая страница';
@@ -61,6 +46,33 @@ export class TitulsComponent implements OnInit {
   }
 
   applyFilter() {
+    const filterVlaue: Array<{name: string, value: any}> = new Array<{name: string, value: string}>();
+    if (this.NumProject != null && this.NumProject.length > 0) {
+      filterVlaue.push({name: 'number', value: this.NumProject});
+    }
+    if (this.NameProject != null && this.NameProject.length > 0) {
+      filterVlaue.push({name: 'name', value: this.NameProject});
+    }
+    if (this.IdOrg != null) {
+      if (this.TypeOrg === 1) {
+          filterVlaue.push({name: 'customerId', value: this.IdOrg});
+        } else {
+          filterVlaue.push({name: 'performerId', value: this.IdOrg});
+      }
+    }
+    if (this.Year != null) {
+      filterVlaue.push({name: 'startYear', value: this.Year});
+    }
+    this.titulservice.getTituls(filterVlaue).subscribe( data => {
+      this.tituls = data;
+      console.log(data);
+      this.count = this.tituls.length;
+      this.activePageDataChunk = this.tituls.slice(0, this.pageSize);
+      this.dataSource = new MatTableDataSource(this.activePageDataChunk);
+      this.dataSource.sort = this.sort;
+
+      this.changeDetectorRefs.detectChanges();
+    });
   }
 
   clearFilter() {
@@ -79,12 +91,12 @@ export class TitulsComponent implements OnInit {
     const firstCut = event.pageIndex * event.pageSize;
     const secondCut = firstCut + event.pageSize;
 
-    this.activePageDataChunk = ELEMENT_DATA.slice(firstCut, secondCut);
+    this.activePageDataChunk = this.tituls.slice(firstCut, secondCut);
     this.dataSource = new MatTableDataSource(this.activePageDataChunk);
     this.dataSource.sort = this.sort;
   }
 
-  OpenTitul(elem: PeriodicElement){
+  OpenTitul(elem: TitulInfo) {
     this.router.navigate(['/tituls/', elem.id]);
   }
 }
