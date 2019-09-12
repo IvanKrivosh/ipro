@@ -8,6 +8,8 @@ const InvestmentDirection = db.investmentDirections;
 const InvestmentSection = db.investmentSections;
 const TitulStatus = db.titulStatuses;
 const VatPercent = db.vatPercents;
+const CostType = db.costTypes;
+const LimitType = db.limitTypes;
 
 exports.getDepartments = (req, res) => {
   Department.findAll({raw: true}).then(departments => {
@@ -75,6 +77,24 @@ exports.getTitulStatuses = (req, res) => {
 exports.getVatPercents = (req, res) => {
   VatPercent.findAll({raw: true}).then(vatPercents => {
     res.json(vatPercents);
+  }).catch(err => {
+    console.log(err);
+    res.status(500).json({msg: "error", details: err});
+  });
+};
+
+exports.getCostTypes = (req, res) => {
+  CostType.findAll({raw: true}).then(costTypes => {
+    res.json(costTypes);
+  }).catch(err => {
+    console.log(err);
+    res.status(500).json({msg: "error", details: err});
+  });
+};
+
+exports.getLimitTypes = (req, res) => {
+  LimitType.findAll({raw: true}).then(limitTypes => {
+    res.json(limitTypes);
   }).catch(err => {
     console.log(err);
     res.status(500).json({msg: "error", details: err});

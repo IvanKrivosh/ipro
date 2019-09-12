@@ -30,11 +30,11 @@ exports.getTituls = (req, res) => {
   let clauses = [];
 
   if (req.query.number != null) {
-    clauses.push('t."number" LIKE \'' + req.query.number + '%\'');
+    clauses.push(`t."number" LIKE \'${req.query.number}%\'`);
   }
 
   if (req.query.name != null) {
-    clauses.push('t."name" LIKE \'%' + req.query.name + '%\'');
+    clauses.push(`t."name" LIKE \'%${req.query.name}%\'`);
   }
 
   if (req.query.customerId != null) {
@@ -46,7 +46,7 @@ exports.getTituls = (req, res) => {
   }
 
   if (req.query.year != null) {
-    clauses.push('t."startYear" <= ' + req.query.year + ' AND t."endYear" >= ' + req.query.year);
+    clauses.push(`t."startYear" <= ${req.query.year} AND t."endYear" >= ${req.query.year}`);
   }
 
   if (clauses.length > 0) {
