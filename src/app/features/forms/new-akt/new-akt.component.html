@@ -3,32 +3,47 @@
   <hr>
   <div class="row">
       <div class="col-lg-3">
-        <input [(ngModel)]="NumContract" style="margin-top: 5px; width: 100%" type="text" class="inputText" placeholder="№ договора" id="NumContract">
+        <label>№ договора</label>
+        <input [(ngModel)]="data.numContract" style="width: 100%" type="text" class="inputText" placeholder="№ договора" id="NumContract">
       </div>
       <div class="col-lg-3">
-        <input [(ngModel)]="NumDoc" style="margin-top: 5px; width: 100%" type="text" class="inputText" placeholder="№ документа" id="NumDoc">
+        <label style="margin-top: 5px;">№ документа</label>
+        <input [(ngModel)]="this.comlAkt.documentNumber" style="width: 100%" type="text" class="inputText" placeholder="№ документа" id="NumDoc">
       </div>
     <div class="col">
-      <input [(ngModel)]="Object" style="margin-top: 5px; width: 100%" type="text" class="inputText" placeholder="Объект" id="Object">
     </div>
   </div>
 
   <div class="row">
     <div class="col">
-      <input [(ngModel)]="Sum" style="margin-top: 5px; width: 100%" type="number" class="inputText" placeholder="Сумма" id="Sum">
+      <label style="margin-top: 5px;">Сумма</label>
+      <input [(ngModel)]="this.comlAkt.sum" style="width: 100%" type="number" class="inputText" placeholder="Сумма" id="Sum">
     </div>
     <div class="col">
-      <input [(ngModel)]="Vat" style="margin-top: 5px; width: 100%" type="number" class="inputText" placeholder="В т.ч. НДС" id="Vat">
+      <label style="margin-top: 5px;">В т.ч. НДС</label>
+      <input [(ngModel)]="this.comlAkt.vat" style="width: 100%" type="number" class="inputText" placeholder="В т.ч. НДС" id="Vat">
     </div>
   </div>
 
+  <div class="row" style="margin-top: 5px">
+    <div class="col col-lg-3">
+      <label for="idTypeCont"> Объкект </label>
+    </div>
+    <div class="col">
+      <select class="browser-default custom-select inputText" id ="idObject" [(ngModel)]="this.comlAkt.objectId">
+        <option *ngFor="let title of objects" [value]="title.id">
+          {{title.name}}
+        </option>
+      </select>
+    </div>
+  </div>
 
   <div class="row" style="margin-top: 5px">
     <div class="col col-lg-3">
       <label for="idTypeCont"> Вид затрат </label>
     </div>
     <div class="col">
-      <select class="browser-default custom-select inputText" id ="idTypeCont" [(ngModel)]="idTypeCont">
+      <select class="browser-default custom-select inputText" id ="idTypeCont" [(ngModel)]="this.comlAkt.costTypeId">
         <option *ngFor="let title of typeCost" [value]="title.id">
           {{title.name}}
         </option>
@@ -41,8 +56,8 @@
       <label for="idTypeDoc"> Тип документа  </label>
     </div>
     <div class="col">
-      <select class="browser-default custom-select inputText" id ="idTypeDoc" [(ngModel)]="idTypeDoc">
-        <option *ngFor="let title of typeDoc" [value]="title.id">
+      <select class="browser-default custom-select inputText" id ="idTypeDoc" [(ngModel)]="this.comlAkt.documentTypeId" >
+        <option *ngFor="let title of typeDoc" [value]="title.id" style="width:auto;">
           {{title.name}}
         </option>
       </select>
@@ -54,7 +69,7 @@
       <label for="inputDate">Дата документа</label>
     </div>
     <div class="col">
-      <input type="date" class="form-control" id ="inputDate">
+      <input type="date" class="form-control" id ="inputDate" [(ngModel)]="this.comlAkt.documentDate">
     </div>
   </div>
 

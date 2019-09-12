@@ -11,6 +11,7 @@ import {InvestmentSectionInfo} from '../models/investment-section-model';
 import {LimitTypeInfo} from '../models/limit-type-model';
 import {TitulStatusInfo} from '../models/titul-status-model';
 import {VatPercentInfo} from '../models/vat-percent-model';
+import {ObjectModel} from '../models/object-model';
 
 const api = '/api';
 
@@ -58,4 +59,9 @@ export class DictionaryService {
   public getVatPercents(): Observable<Array<VatPercentInfo>> {
     return this.http.get<Array<VatPercentInfo>>(`${api}/vatPercents`);
   }
+
+  public getObjects(): Observable<Array<ObjectModel>> {
+    return this.http.get<Array<ObjectModel>>(`${api}/objects`);
+  }
+
 }

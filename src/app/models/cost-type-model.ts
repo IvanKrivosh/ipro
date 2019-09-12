@@ -1,4 +1,4 @@
 export interface CostTypeInfo {
-  CostTypeId: number;
-  Name: string;
+  id: number;
+  name: string;
 }

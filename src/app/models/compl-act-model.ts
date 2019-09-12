@@ -3,8 +3,9 @@ export interface ComplActModel {
     documentNumber: string;   // Номер документа
     documentTypeId: number;   // Тип документа
     documentTypeName: string;  // Наименование типа документа
-    costTypeId: number;       // Вид затрат
+    costTypeId: number;        // Вид затрат
     costTypeName: string;      // Наименование вид затрат
+    objectId: number;         // Объект
     documentDate: Date;       // Дата документа
     sum: number;              // Сумма по документу
     vat: number;              // В т.ч. НДС

@@ -16,6 +16,10 @@ export class ContractService {
     return this.http.get<Array<DogInfo>>(`${api}/contracts`);
   }
 
+  public postAkt(akt: ComplActModel): Observable<ComplActModel> {
+    return this.http.post<ComplActModel>(`${api}/act`, akt);
+  }
+
   public getComplAkts(filterVlaue: Array<{name: string, value: any}>): Observable<Array<ComplActModel>> {
     let httpParams = new HttpParams();
     if (filterVlaue) {

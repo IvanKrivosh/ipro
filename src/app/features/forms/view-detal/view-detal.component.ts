@@ -13,7 +13,6 @@ export class ViewDetalComponent implements OnInit, AfterViewInit {
 
   complakt: ComplActModel;
   TypeView = 1;
-  detalInfo = 'qwqwdqw';
 
   constructor(
     private contractservoce: ContractService,

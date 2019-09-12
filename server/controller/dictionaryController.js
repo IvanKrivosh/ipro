@@ -10,6 +10,7 @@ const TitulStatus = db.titulStatuses;
 const VatPercent = db.vatPercents;
 const CostType = db.costTypes;
 const LimitType = db.limitTypes;
+const Objects = db.objects;
 
 exports.getDepartments = (req, res) => {
   Department.findAll({raw: true}).then(departments => {
@@ -95,6 +96,15 @@ exports.getCostTypes = (req, res) => {
 exports.getLimitTypes = (req, res) => {
   LimitType.findAll({raw: true}).then(limitTypes => {
     res.json(limitTypes);
+  }).catch(err => {
+    console.log(err);
+    res.status(500).json({msg: "error", details: err});
+  });
+};
+
+exports.getObjects = (req, res) => {
+  Objects.findAll({raw: true}).then(objects => {
+    res.json(objects);
   }).catch(err => {
     console.log(err);
     res.status(500).json({msg: "error", details: err});

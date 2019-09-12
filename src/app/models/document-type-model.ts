@@ -1,4 +1,4 @@
 export interface DocumentTypeInfo {
-  DocumentTypeId: number;
-  Name: string;
+  id: number;
+  name: string;
 }

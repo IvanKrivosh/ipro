@@ -17,6 +17,7 @@ import {ContractService} from '../../../services/contract-service';
 })
 export class DogovorsComponent implements OnInit, AfterViewInit {
 
+  NumDoc = '';
   currentDog: DogInfo;
   dogs: DogInfo[];
   rno: RNOInfo[];
@@ -46,6 +47,7 @@ export class DogovorsComponent implements OnInit, AfterViewInit {
     this.contractservoce.getContracts().subscribe(data => {
       this.dogs = data;
       this.currentDog = this.dogs[0];
+      this.NumDoc = this.currentDog.number;
       this.count = this.dogs.length;
       this.activePageDataChunk = this.dogs.slice(0, this.pageSize);
       this.dataSource = new MatTableDataSource(this.activePageDataChunk);
@@ -57,13 +59,13 @@ export class DogovorsComponent implements OnInit, AfterViewInit {
   fillChildTable() {
     if (this.currentDog != null) {
 
-      this.contractservoce.getComplAkts([{name: 'ContractId', value: this.currentDog.id}]).subscribe( data => {
+      this.contractservoce.getComplAkts([{name: 'contractId', value: this.currentDog.id}]).subscribe( data => {
         this.akts = data;
         this.dataSourceAkts = new MatTableDataSource(this.akts);
         this.changeDetectorRefs.detectChanges();
       });
 
-      this.contractservoce.getComplRNO([{name: 'ContractId', value: this.currentDog.id}]).subscribe( data => {
+      this.contractservoce.getComplRNO([{name: 'contractId', value: this.currentDog.id}]).subscribe( data => {
         this.rno = data;
         this.dataSourceRNO = new MatTableDataSource(this.rno);
         this.changeDetectorRefs.detectChanges();
@@ -111,17 +113,21 @@ export class DogovorsComponent implements OnInit, AfterViewInit {
     const dialogRef = this.dialog.open(NewAktComponent, {
       width: '700px',
       data: {
+        numContract: this.currentDog.number,
         idContract: this.currentDog.id
       }
     });
     dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.fillChildTable();
+      }
     });
   }
 
   selectRow(row) {
-    alert(row.id);
     if (this.currentDog.id !== row.id) {
       this.currentDog = row;
+      this.NumDoc = this.currentDog.number;
       this.fillChildTable();
     }
   }
