@@ -16,14 +16,17 @@ exports.getTitulById = (req, res) => {
 
 exports.getTituls = (req, res) => {
   let query =
-    'SELECT t.*, e."name" as "entityName", c."name" as "customerName", p."name" as "performerName" ' +
+    'SELECT t.*, e."name" as "entityName", c."name" as "customerName", p."name" as "performerName", ' +
+    'to_char(to_timestamp("startMonth"::text, \'MM\'), \'TMmonth\') || \' \' || "startYear" as "start",' +
+    'to_char(to_timestamp("endMonth"::text, \'MM\'), \'TMmonth\') || \' \' || "endYear" as "end" ' +
     'FROM "tituls" t ' +
-    'JOIN "departments" c ' +
+    'LEFT JOIN "departments" c ' +
     'ON c."id" = t."customerId" ' +
-    'JOIN "departments" p ' +
+    'LEFT JOIN "departments" p ' +
     'ON p."id" = t."performerId" ' +
-    'JOIN "federationEntities" e ' +
+    'LEFT JOIN "federationEntities" e ' +
     'ON e."id" = t."federationEntityId"';
+
   let clauses = [];
 
   if (req.query.number != null) {
