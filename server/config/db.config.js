@@ -33,5 +33,9 @@ db.controlStepJobs = require('../model/controlStepJob.js')(sequelize, Sequelize)
 db.controlStepTemplates = require('../model/controlStepTemplate.js')(sequelize, Sequelize);
 db.titulControlSteps = require('../model/titulControlStep.js')(sequelize, Sequelize);
 db.titulControlStepJobs = require('../model/titulControlStepJob.js')(sequelize, Sequelize);
+db.objects = require('../model/object')(sequelize, Sequelize);
+db.financePlanSections = require('../model/financePlanSection.js')(sequelize, Sequelize);
+db.limits = require('../model/limit.js')(sequelize, Sequelize);
+db.limitTypes = require('../model/limitType.js')(sequelize, Sequelize);
 
 module.exports = db;
