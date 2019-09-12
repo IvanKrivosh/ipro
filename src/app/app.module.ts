@@ -11,7 +11,16 @@ import {
   MatRadioModule,
   MatSelectModule,
   MatSortModule,
-  MatTableModule
+  MatTableModule,
+  MatTooltipModule,
+  MatExpansionModule,
+  MatCheckboxModule,
+  MatTabsModule,
+  MatButtonModule,
+  MatSidenavModule,
+  MatCardModule,
+  MatToolbarModule,
+  MatIconModule
 } from '@angular/material';
 
 import { TitulFormComponent } from './features/forms/titul-form/titul-form.component';
@@ -25,7 +34,6 @@ import { DogovorsComponent } from './features/forms/dogovors/dogovors.component'
 import { CheckPointComponent } from './features/forms/check-point/check-point.component';
 import { CheckPointShComponent } from './features/forms/check-point-sh/check-point-sh.component';
 import { NewAktComponent } from './features/forms/new-akt/new-akt.component';
-import {MatTooltipModule} from '@angular/material/tooltip';
 import { ViewDetalComponent } from './features/forms/view-detal/view-detal.component';
 
 @NgModule({
@@ -58,7 +66,15 @@ import { ViewDetalComponent } from './features/forms/view-detal/view-detal.compo
     MatDialogModule,
     MatProgressBarModule,
     HttpClientModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatExpansionModule,
+    MatCheckboxModule,
+    MatTabsModule,
+    MatButtonModule,
+    MatSidenavModule,
+    MatCardModule,
+    MatToolbarModule,
+    MatIconModule
   ],
   providers: [],
   bootstrap: [AppComponent]

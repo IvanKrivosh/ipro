@@ -19,6 +19,8 @@ router.get('/investmentDirections', dictionaryController.getInvestmentDirections
 router.get('/investmentSections', dictionaryController.getInvestmentSections);
 router.get('/titulStatuses', dictionaryController.getTitulStatuses);
 router.get('/vatPercents', dictionaryController.getVatPercents);
+router.get('/costTypes', dictionaryController.getCostTypes);
+router.get('/limitTypes', dictionaryController.getLimitTypes);
 
 router.get('/contracts', contractController.getContracts);
 router.get('/acts', contractController.getActs);
