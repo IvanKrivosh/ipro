@@ -1,8 +1,27 @@
 <div class="container">
   <h3>Новый акт</h3>
   <hr>
-  <input [(ngModel)]="NumContract" style="margin-top: 5px; width: 100%" type="text" class="inputText" placeholder="№ договора" id="NumContract">
-  <input [(ngModel)]="Object" style="margin-top: 5px; width: 100%" type="text" class="inputText" placeholder="Объект" id="Object">
+  <div class="row">
+      <div class="col-lg-3">
+        <input [(ngModel)]="NumContract" style="margin-top: 5px; width: 100%" type="text" class="inputText" placeholder="№ договора" id="NumContract">
+      </div>
+      <div class="col-lg-3">
+        <input [(ngModel)]="NumDoc" style="margin-top: 5px; width: 100%" type="text" class="inputText" placeholder="№ документа" id="NumDoc">
+      </div>
+    <div class="col">
+      <input [(ngModel)]="Object" style="margin-top: 5px; width: 100%" type="text" class="inputText" placeholder="Объект" id="Object">
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col">
+      <input [(ngModel)]="Sum" style="margin-top: 5px; width: 100%" type="number" class="inputText" placeholder="Сумма" id="Sum">
+    </div>
+    <div class="col">
+      <input [(ngModel)]="Vat" style="margin-top: 5px; width: 100%" type="number" class="inputText" placeholder="В т.ч. НДС" id="Vat">
+    </div>
+  </div>
+
 
   <div class="row" style="margin-top: 5px">
     <div class="col col-lg-3">
@@ -32,7 +51,7 @@
 
   <div class="row" style="margin-top: 5px">
     <div class="col col-lg-3">
-      <label for="inputDate">Введите дату:</label>
+      <label for="inputDate">Дата документа</label>
     </div>
     <div class="col">
       <input type="date" class="form-control" id ="inputDate">

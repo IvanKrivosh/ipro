@@ -11,13 +11,18 @@ import * as XLSX from 'xlsx';
 export class NewAktComponent implements OnInit {
 
   NumContract: string;
+  NumDoc: string;
   Object: string;
+  Sum: number;
+  Vat: number;
   idTypeCont: number;
   idTypeDoc: number;
-  typeCost = [{name: 'Вид затрат №1', id : 1}, {name: 'Вид затрат №2', id : 2}, {name: 'Вид затрат №3', id : 3}];
-  typeDoc = [{name: 'Тип №1', id : 1}, {name: 'Тип №2', id : 2}, {name: 'Тип №3', id : 3}];
   FileKS2: File;
   FileSmet: File;
+
+  typeCost = [{name: 'Вид затрат №1', id : 1}, {name: 'Вид затрат №2', id : 2}, {name: 'Вид затрат №3', id : 3}];
+  typeDoc = [{name: 'Тип №1', id : 1}, {name: 'Тип №2', id : 2}, {name: 'Тип №3', id : 3}];
+
   xlsxModel: any;
   NameKS2 = 'Файл КС2';
   NameSMETA = 'Файл сметы';
@@ -45,7 +50,8 @@ export class NewAktComponent implements OnInit {
       this.FileKS2 = this.fileKS2.nativeElement.files[0];
       this.NameKS2 = this.FileKS2.name;
       this.files = this.fileKS2.nativeElement.files;
-      this.parseXLSX(this.FileKS2);
+      this.parseXLSXtoJSON(this.FileKS2);
+      this.parseXLSXtoHTML(this.FileKS2);
     } else {
       console.log(this.fileSmeta.nativeElement.files);
       this.FileSmet = this.fileSmeta.nativeElement.files[0];
@@ -53,7 +59,7 @@ export class NewAktComponent implements OnInit {
     }
   }
 
-  parseXLSX(file: File) {
+  parseXLSXtoHTML(file: File) {
     const data = {};
     let firstsheet = '';
     const reader = new FileReader();
@@ -76,10 +82,30 @@ export class NewAktComponent implements OnInit {
       index = this.xlsxModel.toString().indexOf('</tr>', index);
       this.xlsxModel = this.xlsxModel.toString().substring(0, index + 5);
       this.xlsxModel += '</table></body></html>';
-      console.log(this.xlsxModel);
     };
+  }
 
-
+  parseXLSXtoJSON(file: File) {
+    const data = {};
+    let firstsheet = '';
+    const reader = new FileReader();
+    reader.onload = (file: any) => {
+      const wb = XLSX.read(file.target.result,{ type: 'binary' });
+      wb.SheetNames.forEach((name) => {
+        data[name.trim()] = XLSX.utils.sheet_to_json(wb.Sheets[name]);
+        if (!firstsheet) { firstsheet = name.trim(); }
+      });
+    };
+    reader.readAsBinaryString(file);
+    reader.onloadend = () => {
+      const json = data[firstsheet];
+      const JsonSum =  json.find(item => item.__EMPTY === 'ВСЕГО по акту');
+      this.Sum = Number(JsonSum.__EMPTY_28);
+      const JsonVat =  json.find((item) => item.__EMPTY != null && String(item.__EMPTY).includes('НДС') );
+      this.Vat = Number(JsonVat.__EMPTY_28);
+      const JsonNum =  json.find(item => item.__rowNum__ === 20);
+      this.NumDoc = String(JsonNum.__EMPTY_23);
+    };
   }
 
 }

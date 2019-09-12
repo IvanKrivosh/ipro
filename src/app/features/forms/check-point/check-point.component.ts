@@ -51,7 +51,7 @@ export class CheckPointComponent implements OnInit {
 
   ID;
 
-  constructor(private activatedRoute: ActivatedRoute) {
+  constructor(private activatedRoute: ActivatedRoute, private router: Router) {
   }
 
   @ViewChild(MatSort, {static: true}) sort: MatSort;
@@ -63,5 +63,9 @@ export class CheckPointComponent implements OnInit {
 
   Return() {
     window.history.back();
+  }
+
+  redirect() {
+    this.router.navigateByUrl('/checkpointsh');
   }
 }
