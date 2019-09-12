@@ -1,1 +1,15 @@
-<p>view-detal works!</p>
+<h4>Детализация</h4>
+<hr>
+<div class="custom-control custom-radio custom-control-inline" style="margin-top: 5px;">
+  <input type="radio" [value]="1" class="custom-control-input" id="customerId" [(ngModel)]="TypeView">
+  <label class="custom-control-label" for="customerId">Акт КС-2</label>
+</div>
+
+<div class="custom-control custom-radio custom-control-inline">
+  <input type="radio" [value]="2" class="custom-control-input" id="performerId" [(ngModel)]="TypeView">
+  <label class="custom-control-label" for="performerId">Локальная смета</label>
+</div>
+<hr>
+<pre>
+{{ detalInfo }}
+</pre>

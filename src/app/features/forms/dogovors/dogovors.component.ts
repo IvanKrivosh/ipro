@@ -1,24 +1,27 @@
-import {ChangeDetectionStrategy, Component, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
+import {AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
 import {DogInfo} from '../../../models/dog-model';
 import {MatDialog, MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 import {RNOInfo} from '../../../models/rno-model';
 import {ComplActModel} from '../../../models/compl-act-model';
 import {NewAktComponent} from '../new-akt/new-akt.component';
+import {ViewDetalComponent} from '../view-detal/view-detal.component';
+import {ContractService} from '../../../services/contract-service';
 
 @Component({
   selector: 'app-dogovors',
   templateUrl: './dogovors.component.html',
   styleUrls: ['./dogovors.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
+  providers: [ContractService]
 })
-export class DogovorsComponent implements OnInit {
+export class DogovorsComponent implements OnInit, AfterViewInit {
 
   currentDog: DogInfo;
   dogs: DogInfo[];
   rno: RNOInfo[];
   akts: ComplActModel[];
-  constructor(public dialog: MatDialog) { }
+  constructor(public dialog: MatDialog, private contractservoce: ContractService, private changeDetectorRefs: ChangeDetectorRef) { }
 
   @ViewChild(MatSort, {static: true}) sort: MatSort;
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
@@ -36,222 +39,40 @@ export class DogovorsComponent implements OnInit {
 
   displayedColumns: string[] = ['num_dog', 'worker', 'subject', 'date_sig', 'date_begin', 'date_end', 'sum', 'sum_compl', 'sum_opl', 'sum_dolg_kred', 'sum_dolg_deb', 'id_status'];
   displayedColumnsRNO: string[] = ['Number', 'CostTypeName', 'PaymentType', 'PaymentDate', 'Sum', 'Vat'];
-  displayedColumnsAkts: string[] = ['DocumentNumber', 'DocumentTypeName', 'CostTypeName', 'DocumentDate', 'Sum', 'Vat', 'ContractId'];
+  displayedColumnsAkts: string[] = ['documentNumber', 'documentTypeName', 'costTypeName', 'documentDate', 'sum', 'vat', 'contractId'];
+
+  ngAfterViewInit(): void {
+
+    this.contractservoce.getContracts().subscribe(data => {
+      this.dogs = data;
+      this.currentDog = this.dogs[0];
+      this.count = this.dogs.length;
+      this.activePageDataChunk = this.dogs.slice(0, this.pageSize);
+      this.dataSource = new MatTableDataSource(this.activePageDataChunk);
+      this.dataSource.sort = this.sort;
+      this.fillChildTable();
+    });
+  }
+
+  fillChildTable() {
+    if (this.currentDog != null) {
+
+      this.contractservoce.getComplAkts([{name: 'ContractId', value: this.currentDog.id}]).subscribe( data => {
+        this.akts = data;
+        this.dataSourceAkts = new MatTableDataSource(this.akts);
+        this.changeDetectorRefs.detectChanges();
+      });
+
+      this.contractservoce.getComplRNO([{name: 'ContractId', value: this.currentDog.id}]).subscribe( data => {
+        this.rno = data;
+        this.dataSourceRNO = new MatTableDataSource(this.rno);
+        this.changeDetectorRefs.detectChanges();
+      });
+
+    }
+  }
 
   ngOnInit() {
-
-    this.rno = [{
-      ContractId: 123,
-      NumContract: 'ljwujw',
-      Number: 'qwqwd',
-      CostTypeId: 1,
-      CostTypeName: 'Проектно-изысканные работы',
-      PaymentType: 'погашение КЗ',
-      PaymentDate: new Date(),
-      Sum: 500,
-      Vat: 15
-    }];
-
-    this.akts = [
-      {
-        ContractId: 123,
-        DocumentNumber: '123123',
-        DocumentTypeId: 11,
-        DocumentTypeName: 'КС-2',
-        CostTypeId: 1,
-        CostTypeName: 'wefwefwe',
-        DocumentDate: new Date(),
-        Sum: 1231,
-        Vat: 52
-      }
-    ];
-
-    this.dataSourceRNO = new MatTableDataSource(this.rno);
-    this.dataSourceAkts = new MatTableDataSource(this.akts);
-
-    this.dogs = [
-      {
-        id: 123,
-        num_dog: '13241234123',
-        id_worker: 1,
-        worker: 'Подрядчик',
-        subject: 'Предмет',
-        date_sig: new Date(),
-        date_begin: new Date(),
-        date_end: new Date(),
-        sum: 150000,
-        sum_compl: 15000,
-        sum_opl: 10000,
-        sum_dolg_kred: 500,
-        sum_dolg_deb: 0,
-        id_status: 'Выполнен'
-      },
-      {
-        id: 123,
-        num_dog: '13241234123',
-        id_worker: 1,
-        worker: 'Подрядчик',
-        subject: 'Предмет',
-        date_sig: new Date(),
-        date_begin: new Date(),
-        date_end: new Date(),
-        sum: 150000,
-        sum_compl: 15000,
-        sum_opl: 10000,
-        sum_dolg_kred: 500,
-        sum_dolg_deb: 0,
-        id_status: 'Выполнен'
-      },
-      {
-        id: 123,
-        num_dog: '13241234123',
-        id_worker: 1,
-        worker: 'Подрядчик',
-        subject: 'Предмет',
-        date_sig: new Date(),
-        date_begin: new Date(),
-        date_end: new Date(),
-        sum: 150000,
-        sum_compl: 15000,
-        sum_opl: 10000,
-        sum_dolg_kred: 500,
-        sum_dolg_deb: 0,
-        id_status: 'Выполнен'
-      },
-      {
-        id: 123,
-        num_dog: '13241234123',
-        id_worker: 1,
-        worker: 'Подрядчик',
-        subject: 'Предмет',
-        date_sig: new Date(),
-        date_begin: new Date(),
-        date_end: new Date(),
-        sum: 150000,
-        sum_compl: 15000,
-        sum_opl: 10000,
-        sum_dolg_kred: 500,
-        sum_dolg_deb: 0,
-        id_status: 'Выполнен'
-      },
-      {
-        id: 123,
-        num_dog: '13241234123',
-        id_worker: 1,
-        worker: 'Подрядчик',
-        subject: 'Предмет',
-        date_sig: new Date(),
-        date_begin: new Date(),
-        date_end: new Date(),
-        sum: 150000,
-        sum_compl: 15000,
-        sum_opl: 10000,
-        sum_dolg_kred: 500,
-        sum_dolg_deb: 0,
-        id_status: 'Выполнен'
-      },
-      {
-        id: 123,
-        num_dog: '13241234123',
-        id_worker: 1,
-        worker: 'Подрядчик',
-        subject: 'Предмет',
-        date_sig: new Date(),
-        date_begin: new Date(),
-        date_end: new Date(),
-        sum: 150000,
-        sum_compl: 15000,
-        sum_opl: 10000,
-        sum_dolg_kred: 500,
-        sum_dolg_deb: 0,
-        id_status: 'Выполнен'
-      },
-      {
-        id: 123,
-        num_dog: '13241234123',
-        id_worker: 1,
-        worker: 'Подрядчик',
-        subject: 'Предмет',
-        date_sig: new Date(),
-        date_begin: new Date(),
-        date_end: new Date(),
-        sum: 150000,
-        sum_compl: 15000,
-        sum_opl: 10000,
-        sum_dolg_kred: 500,
-        sum_dolg_deb: 0,
-        id_status: 'Выполнен'
-      },
-      {
-        id: 123,
-        num_dog: '13241234123',
-        id_worker: 1,
-        worker: 'Подрядчик',
-        subject: 'Предмет',
-        date_sig: new Date(),
-        date_begin: new Date(),
-        date_end: new Date(),
-        sum: 150000,
-        sum_compl: 15000,
-        sum_opl: 10000,
-        sum_dolg_kred: 500,
-        sum_dolg_deb: 0,
-        id_status: 'Выполнен'
-      },
-      {
-        id: 123,
-        num_dog: '13241234123',
-        id_worker: 1,
-        worker: 'Подрядчик',
-        subject: 'Предмет',
-        date_sig: new Date(),
-        date_begin: new Date(),
-        date_end: new Date(),
-        sum: 150000,
-        sum_compl: 15000,
-        sum_opl: 10000,
-        sum_dolg_kred: 500,
-        sum_dolg_deb: 0,
-        id_status: 'Выполнен'
-      },{
-        id: 123,
-        num_dog: '13241234123',
-        id_worker: 1,
-        worker: 'Подрядчик',
-        subject: 'Предмет',
-        date_sig: new Date(),
-        date_begin: new Date(),
-        date_end: new Date(),
-        sum: 150000,
-        sum_compl: 15000,
-        sum_opl: 10000,
-        sum_dolg_kred: 500,
-        sum_dolg_deb: 0,
-        id_status: 'Выполнен'
-      },
-      {
-        id: 123,
-        num_dog: '13241234123',
-        id_worker: 1,
-        worker: 'Подрядчик',
-        subject: 'Предмет',
-        date_sig: new Date(),
-        date_begin: new Date(),
-        date_end: new Date(),
-        sum: 150000,
-        sum_compl: 15000,
-        sum_opl: 10000,
-        sum_dolg_kred: 500,
-        sum_dolg_deb: 0,
-        id_status: 'Выполнен'
-      }];
-
-    this.currentDog = this.dogs[0];
-    this.count = this.dogs.length;
-    this.activePageDataChunk = this.dogs.slice(0, this.pageSize);
-    this.dataSource = new MatTableDataSource(this.activePageDataChunk);
-    this.dataSource.sort = this.sort;
-
     this.paginator._intl.itemsPerPageLabel = 'Кол-во на страницу: ';
   }
 
@@ -274,19 +95,27 @@ export class DogovorsComponent implements OnInit {
   }
 
   OpenDetal(element) {
+
+    const dialogRef = this.dialog.open(ViewDetalComponent, {
+      width: '700px',
+      data: {
+        idContract: element.id
+      }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+    });
   }
 
   AddAkt() {
     const dialogRef = this.dialog.open(NewAktComponent, {
-      width: '700px',
+      width: '1500px',
       data: {
         idContract: this.currentDog.id
       }
     });
     dialogRef.afterClosed().subscribe(result => {
-
-
     });
   }
+
 
 }

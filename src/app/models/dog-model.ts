@@ -1,16 +1,17 @@
 export interface DogInfo {
   id: number;
-  num_dog: string;
-  id_worker: number;
-  worker: string;
-  subject: string;
-  date_sig: Date;
-  date_begin: Date;
-  date_end: Date;
-  sum: number;
-  sum_compl: number;
-  sum_opl: number;
-  sum_dolg_kred: number;
-  sum_dolg_deb: number;
-  id_status: string;
+  number: string; // Номер договора
+  titulId: number; // Титул
+  contractor: string; // Подрядчик
+  subject: string; // Предмет договора
+  signDate: Date;  // Дата подписания
+  startDate: Date; // Дата начала работ
+  endDate: Date;  // Дата окончания работ
+  sum: number;    // Сумма по договору
+  completedSum: number; // Выполнено
+  payment: number;      // Оплата с учетом аванса и возврата
+  debtor: number;       // Задолженность дебиторская
+  creditor: number;     // Задолженность кредиторская
+  status: string;       // Статус
 }
+

@@ -16,7 +16,6 @@ export class TitulService {
           httpParams = httpParams.append(filter.name, filter.value);
       }
     }
-    console.log(httpParams);
     return this.http.get<Array<TitulInfo>>(`${api}/tituls`, { params: httpParams });
   }
 }
