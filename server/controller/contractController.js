@@ -1,5 +1,6 @@
 const db = require('../config/db.config.js');
 const Contract = db.contracts;
+const Act = db.completionActs;
 
 exports.getContracts = (req, res) => {
   Contract.findAll({raw: true}).then(contracts => {
@@ -33,6 +34,16 @@ exports.getActs = (req, res) => {
     .then(acts => {
       res.json(acts);
     }).catch(err => {
+    console.log(err);
+    res.status(500).json({msg: "error", details: err});
+  });
+};
+
+exports.postAct = (req, res) => {
+  Act.create(req.body).then(act => {
+    console.log(act);
+    res.status(201).json(act.dataValues);
+  }).catch(err => {
     console.log(err);
     res.status(500).json({msg: "error", details: err});
   });

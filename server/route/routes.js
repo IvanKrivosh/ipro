@@ -25,6 +25,7 @@ router.get('/limitTypes', dictionaryController.getLimitTypes);
 router.get('/contracts', contractController.getContracts);
 router.get('/acts', contractController.getActs);
 router.get('/orders', contractController.getOrders);
+router.post('/act', contractController.postAct);
 
 module.exports = router;
 
