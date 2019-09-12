@@ -24,6 +24,7 @@ import {HttpClientModule} from '@angular/common/http';
 import { DogovorsComponent } from './features/forms/dogovors/dogovors.component';
 import { CheckPointComponent } from './features/forms/check-point/check-point.component';
 import { NewAktComponent } from './features/forms/new-akt/new-akt.component';
+import {MatTooltipModule} from "@angular/material/tooltip";
 
 @NgModule({
   declarations: [
@@ -52,7 +53,8 @@ import { NewAktComponent } from './features/forms/new-akt/new-akt.component';
     ReactiveFormsModule,
     MatDialogModule,
     MatProgressBarModule,
-    HttpClientModule
+    HttpClientModule,
+    MatTooltipModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -2,6 +2,8 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
+import {FormControl} from '@angular/forms';
+import {TooltipPosition} from '@angular/material/tooltip';
 
 export interface CheckPointElement {
   pp: string;
@@ -39,6 +41,10 @@ const ELEMENT_DATA: CheckPointElement[] = [
   styleUrls: ['./check-point.component.scss']
 })
 export class CheckPointComponent implements OnInit {
+  // @ts-ignore
+  positionOptions: TooltipPosition[] = ['Шаблон №1', 'Шаблон №2'];
+  position = new FormControl(this.positionOptions[0]);
+
   displayedColumns: string[] = ['pp', 'vd', 'nm', 'pb', 'pe', 'pd', 'fb', 'fe', 'fd', 'ot', 'pr', 'kr', 'ps', 'fs', 'pv', 'sd'];
   dataSource = new MatTableDataSource(ELEMENT_DATA);
 
