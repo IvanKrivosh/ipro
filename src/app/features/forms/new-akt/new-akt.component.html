@@ -1,0 +1,65 @@
+<div class="container">
+  <h3>Новый акт</h3>
+  <hr>
+  <input [(ngModel)]="NumContract" style="margin-top: 5px; width: 100%" type="text" class="inputText" placeholder="№ договора" id="NumContract">
+  <input [(ngModel)]="Object" style="margin-top: 5px; width: 100%" type="text" class="inputText" placeholder="Объект" id="Object">
+
+  <div class="row" style="margin-top: 5px">
+    <div class="col col-lg-3">
+      <label for="idTypeCont"> Вид затрат </label>
+    </div>
+    <div class="col">
+      <select class="browser-default custom-select inputText" id ="idTypeCont" [(ngModel)]="idTypeCont">
+        <option *ngFor="let title of typeCost" [value]="title.id">
+          {{title.name}}
+        </option>
+      </select>
+    </div>
+  </div>
+
+  <div class="row" style="margin-top: 5px">
+    <div class="col col-lg-3">
+      <label for="idTypeDoc"> Тип документа  </label>
+    </div>
+    <div class="col">
+      <select class="browser-default custom-select inputText" id ="idTypeDoc" [(ngModel)]="idTypeDoc">
+        <option *ngFor="let title of typeDoc" [value]="title.id">
+          {{title.name}}
+        </option>
+      </select>
+    </div>
+  </div>
+
+  <div class="row" style="margin-top: 5px">
+    <div class="col col-lg-3">
+      <label for="inputDate">Введите дату:</label>
+    </div>
+    <div class="col">
+      <input type="date" class="form-control" id ="inputDate">
+    </div>
+  </div>
+
+  <div class="input-group" style="margin-top: 5px">
+    <div class="custom-file">
+      <input #fileKS2 type="file" class="custom-file-input" id="inputGroupFile01"
+             aria-describedby="inputGroupFileAddon01"
+             (change)="AddFile(1)">
+      <label class="custom-file-label" for="inputGroupFile01" data-browse="Обзор">{{ NameKS2 }}</label>
+    </div>
+  </div>
+
+  <div class="input-group" style="margin-top: 5px">
+    <div class="custom-file">
+      <input #fileSmeta type="file" class="custom-file-input" id="inputGroupFile02"
+             aria-describedby="inputGroupFileAddon01"
+             (change)="AddFile(2)">
+      <label class="custom-file-label" for="inputGroupFile02" data-browse="Обзор">{{ NameSMETA }}</label>
+    </div>
+  </div>
+
+
+  <hr>
+  <button type="button" class="btn btn-outline-success" style="width: 150px; alignment: right" (click)="saveDocument()">Сохранить</button>
+  <button type="button" class="btn btn-outline-danger" style="width: 150px; margin-left: 5px; alignment: right" (click)="closeForm()">Отмена</button>
+</div>
+

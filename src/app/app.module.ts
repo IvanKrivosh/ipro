@@ -23,6 +23,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {HttpClientModule} from '@angular/common/http';
 import { DogovorsComponent } from './features/forms/dogovors/dogovors.component';
 import { CheckPointComponent } from './features/forms/check-point/check-point.component';
+import { NewAktComponent } from './features/forms/new-akt/new-akt.component';
 
 @NgModule({
   declarations: [
@@ -33,9 +34,10 @@ import { CheckPointComponent } from './features/forms/check-point/check-point.co
     DocFormComponent,
     UploadFileComponent,
     DogovorsComponent,
-    CheckPointComponent
+    CheckPointComponent,
+    NewAktComponent
   ],
-  entryComponents: [UploadFileComponent, DocFormComponent],
+  entryComponents: [UploadFileComponent, DocFormComponent, NewAktComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,

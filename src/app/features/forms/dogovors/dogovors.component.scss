@@ -3,9 +3,7 @@
 @import '~bootstrap/scss/bootstrap';
 
 .mat-table {
-  height: 50px;
-  overflow-x: scroll;
-  width: 100%;
+  width: 99%;
 }
 
 table tr.mat-row {
@@ -30,4 +28,10 @@ table {
 
 .mat-header-cell {
   text-align: center;
+}
+
+.mat-column-ContractId {
+  min-width: 50px;
+  max-width: 60px;
+  align-items: center;
 }

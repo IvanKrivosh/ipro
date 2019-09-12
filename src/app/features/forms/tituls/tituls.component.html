@@ -15,10 +15,10 @@
     </div>
 
     <select class="browser-default custom-select inputText" style="margin-left: 5px; margin-top: 5px; width: 95%;">
-      <option *ngFor="let title of orgs" [value]="title.id">
-        {{title.name}}
-      </option>
-    </select>
+    <option *ngFor="let title of orgs" [value]="title.id">
+      {{title.name}}
+    </option>
+  </select>
 
     <input [(ngModel)]="Year" style="margin-left: 5px; margin-top: 5px; width: 47%;" type="number" min="2000" max="2025" step="1" class="inputText" placeholder="Год реализации" id="Year">
     <br>
