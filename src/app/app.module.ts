@@ -26,6 +26,7 @@ import { CheckPointComponent } from './features/forms/check-point/check-point.co
 import { CheckPointShComponent } from './features/forms/check-point-sh/check-point-sh.component';
 import { NewAktComponent } from './features/forms/new-akt/new-akt.component';
 import {MatTooltipModule} from '@angular/material/tooltip';
+import { ViewDetalComponent } from './features/forms/view-detal/view-detal.component';
 
 @NgModule({
   declarations: [
@@ -38,9 +39,10 @@ import {MatTooltipModule} from '@angular/material/tooltip';
     DogovorsComponent,
     CheckPointComponent,
     CheckPointShComponent,
-    NewAktComponent
+    NewAktComponent,
+    ViewDetalComponent
   ],
-  entryComponents: [UploadFileComponent, DocFormComponent, NewAktComponent],
+  entryComponents: [UploadFileComponent, DocFormComponent, NewAktComponent, ViewDetalComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
