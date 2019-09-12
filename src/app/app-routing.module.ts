@@ -6,6 +6,7 @@ import {DocsComponent} from './features/forms/docs/docs.component';
 import {DocFormComponent} from './features/forms/doc-form/doc-form.component';
 import {DogovorsComponent} from './features/forms/dogovors/dogovors.component';
 import {CheckPointComponent} from './features/forms/check-point/check-point.component';
+import {CheckPointShComponent} from './features/forms/check-point-sh/check-point-sh.component';
 
 const routes: Routes = [
   { path: '',   redirectTo: '/tituls', pathMatch: 'full' },
@@ -14,7 +15,8 @@ const routes: Routes = [
   { path: 'docs', component: DocsComponent },
   { path: 'docs/:id', component: DocFormComponent },
   { path: 'dogs', component: DogovorsComponent },
-  { path: 'tituls/:id/checkpoint', component: CheckPointComponent }
+  { path: 'tituls/:id/checkpoint', component: CheckPointComponent },
+  { path: 'checkpointsh', component: CheckPointShComponent }
 ];
 
 @NgModule({
