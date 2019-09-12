@@ -4,7 +4,6 @@ import {MatDialog, MatPaginator, MatSort, MatTableDataSource} from '@angular/mat
 import {RNOInfo} from '../../../models/rno-model';
 import {ComplActModel} from '../../../models/compl-act-model';
 import {NewAktComponent} from '../new-akt/new-akt.component';
-import * as XLSX from 'xlsx';
 
 @Component({
   selector: 'app-dogovors',
@@ -276,7 +275,7 @@ export class DogovorsComponent implements OnInit {
 
   OpenDetal(element) {
   }
-  xlsxModel: any;
+
   AddAkt() {
     const dialogRef = this.dialog.open(NewAktComponent, {
       width: '700px',
@@ -286,18 +285,7 @@ export class DogovorsComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(result => {
 
-      const data = {};
-      const target: DataTransfer = (<DataTransfer> ( result));
-      const reader = new FileReader();
-      reader.onload = (file: any) => {
-        const wb = XLSX.read(file.target.result,{ type: 'binary' });
-        wb.SheetNames.forEach((name) => {
-          data[name.trim()] = XLSX.utils.sheet_to_html(wb.Sheets[name]);
-        });
-      };
-      reader.readAsBinaryString(target[0]);
-      this.xlsxModel = data;
-      console.log(data);
+
     });
   }
 

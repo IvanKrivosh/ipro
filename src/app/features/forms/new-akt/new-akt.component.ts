@@ -1,5 +1,6 @@
 import {Component, Inject, OnInit, ViewChild} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
+import * as XLSX from 'xlsx';
 
 
 @Component({
@@ -17,6 +18,7 @@ export class NewAktComponent implements OnInit {
   typeDoc = [{name: 'Тип №1', id : 1}, {name: 'Тип №2', id : 2}, {name: 'Тип №3', id : 3}];
   FileKS2: File;
   FileSmet: File;
+  xlsxModel: any;
   NameKS2 = 'Файл КС2';
   NameSMETA = 'Файл сметы';
   @ViewChild('fileKS2', {static: true}) fileKS2;
@@ -43,11 +45,41 @@ export class NewAktComponent implements OnInit {
       this.FileKS2 = this.fileKS2.nativeElement.files[0];
       this.NameKS2 = this.FileKS2.name;
       this.files = this.fileKS2.nativeElement.files;
+      this.parseXLSX(this.FileKS2);
     } else {
       console.log(this.fileSmeta.nativeElement.files);
       this.FileSmet = this.fileSmeta.nativeElement.files[0];
       this.NameSMETA = this.FileSmet.name;
     }
+  }
+
+  parseXLSX(file: File) {
+    const data = {};
+    let firstsheet = '';
+    const reader = new FileReader();
+    reader.onload = (file: any) => {
+      const wb = XLSX.read(file.target.result,{ type: 'binary' });
+      wb.SheetNames.forEach((name) => {
+        data[name.trim()] = XLSX.utils.sheet_to_html(wb.Sheets[name]);
+        if (!firstsheet) { firstsheet = name.trim(); }
+      });
+    };
+    reader.readAsBinaryString(file);
+    reader.onloadend = () => {
+      this.xlsxModel = data[firstsheet];
+      let index = this.xlsxModel.toString().indexOf('Сметная (договорная) стоимость в соответствии с договором подряда (субподряда)');
+      this.xlsxModel = this.xlsxModel.toString().substring(index);
+      index = this.xlsxModel.toString().indexOf('</tr>');
+      this.xlsxModel = this.xlsxModel.toString().substring(index + 5);
+      this.xlsxModel = '<html><body><table>' + this.xlsxModel;
+      index = this.xlsxModel.toString().indexOf('ВСЕГО по акту');
+      index = this.xlsxModel.toString().indexOf('</tr>', index);
+      this.xlsxModel = this.xlsxModel.toString().substring(0, index + 5);
+      this.xlsxModel += '</table></body></html>';
+      console.log(this.xlsxModel);
+    };
+
+
   }
 
 }
