@@ -13,13 +13,10 @@ export class TitulService {
     let httpParams = new HttpParams();
     if (filterVlaue) {
       for (const filter of filterVlaue) {
-        if (filter.value as []) {
-          httpParams = httpParams.append(filter.name, JSON.stringify(filter.value));
-        } else {
           httpParams = httpParams.append(filter.name, filter.value);
-        }
       }
     }
+    console.log(httpParams);
     return this.http.get<Array<TitulInfo>>(`${api}/tituls`, { params: httpParams });
   }
 }

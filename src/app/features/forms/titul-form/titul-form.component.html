@@ -1,7 +1,8 @@
 <div>
 <hr>
   <a class ="btn btn-outline-primary"  [routerLink]="checkpoint"> Контрольные этапы </a>
-  <div class="container mat-elevation-z10" style="height: 90vh">
+  <div class="container mat-elevation-z10" style="height: 85vh; overflow: auto;" *ngIf="titul">
+    <br>
     <div class="row">
       <div class="col">
         <label for="titul_num"> № титула </label>
@@ -160,6 +161,7 @@
               <input [(ngModel)]="titul.curator" type="text" class="inputText" id="curator">
             </div>
           </div>
+          <br>
           </div>
         </div>
       <div class="col-sm">
