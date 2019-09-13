@@ -7,6 +7,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {DictionaryService} from '../../../services/dictionary-service';
 import {UploadService} from '../../../services/upload-service';
 import {FileInfo} from '../../../models/file-service';
+import {error} from 'util';
 
 
 @Component({
@@ -18,12 +19,33 @@ import {FileInfo} from '../../../models/file-service';
 })
 export class DocFormComponent implements OnInit, AfterViewInit {
 
-  docInfo: DocInfo;
+  docInfo: DocInfo = new class implements DocInfo {
+    comments: string;
+    date: Date;
+    departmentId: number;
+    departmentName: string;
+    description: string;
+    documentKindId: number;
+    documentTypeId: number;
+    documentTypeName: string;
+    filePath: string;
+    id: number;
+    isClosed: boolean;
+    number: string;
+    numberTitul: string;
+    sum: number;
+    titulId: number;
+    vatPercentId: number;
+    vatValue: number;
+  };
+
   ID = 0;
   typesDoc = [];
   vidsDoc = [];
   orgs = [];
   procNds = [];
+  FileDoc: File;
+  @ViewChild('fileDoc', {static: true}) fileDoc;
 
   displayedColumns: string[] = ['id', 'name', 'createdAt'];
   dataSourceFiles: FileInfo[];
@@ -114,11 +136,21 @@ export class DocFormComponent implements OnInit, AfterViewInit {
     });
   }
 
+  AddFile() {
+    this.FileDoc = this.fileDoc.nativeElement.files[0];
+    this.docInfo.filePath = this.FileDoc.name;
+  }
+
   Return() {
     this.router.navigateByUrl('/docs');
   }
 
   saveDoc() {
-
+    this.documentservice.updateDocs(this.docInfo.id, this.docInfo).subscribe(data => {
+      console.log(data);
+    },error => {
+      alert('error');
+      console.log(error);
+    } );
   }
 }

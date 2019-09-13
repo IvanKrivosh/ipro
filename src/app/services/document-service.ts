@@ -18,4 +18,9 @@ export class DocumentService {
     }
     return this.http.get<Array<DocInfo>>(`${api}/documents`, { params: httpParams });
   }
+
+  updateDocs(id: number, doc: DocInfo) {
+    const urlParams = new HttpParams().set('id', id.toString());
+    return this.http.put(`${api}/document`, doc, { params: urlParams});
+  }
 }
