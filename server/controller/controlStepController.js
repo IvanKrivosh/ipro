@@ -48,9 +48,8 @@ exports.createTitulControlSteps = async (req, res) => {
       }
     });
 
-    let titulControlStepJobs = [];
     for (let controlStepJob of controlStepJobs) {
-      let titulControlStepJob = await TitulControlStepJob.create({
+      await TitulControlStepJob.create({
         titulControlStepId: titulControlStep.id,
         controlStepJobId: controlStepJob.id,
         planStartDate: new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime())),
@@ -58,10 +57,9 @@ exports.createTitulControlSteps = async (req, res) => {
         factStartDate: new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime())),
         factEndDate: new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()))
       });
-      titulControlStepJobs.push(titulControlStepJob);
     }
 
-    res.status(201).json(titulControlStepJobs);
+    res.status(201).json(await getTitulControlStepJobs(req.query.titulId, req.query.templateId));
   } catch (err) {
     console.log(err);
     res.status(500).json({msg: "error", details: err});
@@ -74,17 +72,20 @@ exports.getTitulControlStepJobs = async (req, res) => {
     return;
   }
 
-  let query = `SELECT tj.*, j."name" AS "jobName", j."type" AS "jobType", j."number" AS "jobNumber" 
-  FROM "titulControlStepJobs" tj 
-  JOIN "controlStepJobs" j ON j."id" = tj."controlStepJobId"
-  JOIN "titulControlSteps" s ON s."id" = tj."titulControlStepId"
-  WHERE s."titulId" = ${req.query.titulId} AND j."templateId" = ${req.query.templateId}`;
-
   try {
-    let titulControlStepJobs = await db.sequelize.query(query, {type: db.sequelize.QueryTypes.SELECT});
-    res.json(titulControlStepJobs);
+    res.json(await getTitulControlStepJobs(req.query.titulId, req.query.templateId));
   } catch (err) {
     console.log(err);
     res.status(500).json({msg: "error", details: err});
   }
 };
+
+async function getTitulControlStepJobs(titulId, templateId) {
+  let query = `SELECT tj.*, j."name" AS "jobName", j."type" AS "jobType", j."number" AS "jobNumber" 
+  FROM "titulControlStepJobs" tj 
+  JOIN "controlStepJobs" j ON j."id" = tj."controlStepJobId"
+  JOIN "titulControlSteps" s ON s."id" = tj."titulControlStepId"
+  WHERE s."titulId" = ${titulId} AND j."templateId" = ${templateId}`;
+
+  return await db.sequelize.query(query, {type: db.sequelize.QueryTypes.SELECT});
+}
