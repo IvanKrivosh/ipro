@@ -7,6 +7,7 @@ import {DictionaryService} from '../../../services/dictionary-service';
 import {CostTypeInfo} from '../../../models/cost-type-model';
 import {DocumentTypeInfo} from '../../../models/document-type-model';
 import {ObjectModel} from '../../../models/object-model';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 
 
 @Component({
@@ -18,21 +19,21 @@ import {ObjectModel} from '../../../models/object-model';
 export class NewAktComponent implements OnInit, AfterViewInit {
 
   comlAkt: ComplActModel;
-  idTypeCont: number;
-  idTypeDoc: number;
   FileKS2: File;
   FileSmet: File;
 
   objects: ObjectModel[];
   typeCost: CostTypeInfo[];
   typeDoc: DocumentTypeInfo[];
+  userForm: FormGroup;
 
   xlsxModel: any;
-  NameKS2 = 'Файл КС2';
-  NameSMETA = 'Файл сметы';
+  NameKS2 = null;
+  NameSMETA = null;
   @ViewChild('fileKS2', {static: true}) fileKS2;
   @ViewChild('fileSmeta', {static: true}) fileSmeta;
   constructor(
+    private fb: FormBuilder,
     private contractservoce: ContractService,
     private dictionaryservice: DictionaryService,
     public dialogRef: MatDialogRef<NewAktComponent>,
@@ -43,9 +44,10 @@ export class NewAktComponent implements OnInit, AfterViewInit {
 
     files: File[];
   ngOnInit() {
+    this.initForm();
     this.comlAkt = {
       contractId: this.data.idContract,
-      documentNumber: '',
+      documentNumber: null,
       documentTypeId: 19,
       documentTypeName: '',
       costTypeId: null,
@@ -59,6 +61,16 @@ export class NewAktComponent implements OnInit, AfterViewInit {
       ks2Text: '',
       ks2FileId: null
   };
+  }
+
+  private initForm(): void {
+    this.userForm = this.fb.group({
+      name: [null, [
+      Validators.required,
+      Validators.pattern(/^[A-z0-9]*$/),
+      Validators.minLength(3)]
+    ]
+    });
   }
 
   ngAfterViewInit(): void {
@@ -88,17 +100,25 @@ export class NewAktComponent implements OnInit, AfterViewInit {
   }
 
   AddFile(type: number) {
-    if (type === 1) {
+    if (type === 0) {
       this.FileKS2 = this.fileKS2.nativeElement.files[0];
       this.NameKS2 = this.FileKS2.name;
       this.files = this.fileKS2.nativeElement.files;
-      this.parseXLSXtoJSON(this.FileKS2, 1);
-      this.parseXLSXtoHTML(this.FileKS2, 1);
+      this.parseXLSXtoJSON(this.FileKS2, type);
+      this.parseXLSXtoHTML(this.FileKS2, type);
     } else {
       this.FileSmet = this.fileSmeta.nativeElement.files[0];
       this.NameSMETA = this.FileSmet.name;
+      this.parseXLSXtoHTML(this.FileSmet, type);
     }
   }
+
+  checkWordStart = [
+    'Сметная (договорная) стоимость в соответствии с договором подряда (субподряда)',
+    'Составлен(а) в текущих (прогнозных) ценах по состоянию на'];
+  checkWordEnd = [
+    'ВСЕГО по акту',
+    'ВСЕГО по смете'];
 
   parseXLSXtoHTML(file: File, type: number) {
     const data = {};
@@ -113,19 +133,19 @@ export class NewAktComponent implements OnInit, AfterViewInit {
     };
     reader.readAsBinaryString(file);
     reader.onloadend = () => {
-      if (type === 1) {
         this.xlsxModel = data[firstsheet];
-        let index = this.xlsxModel.toString().indexOf('Сметная (договорная) стоимость в соответствии с договором подряда (субподряда)');
+        let index = this.xlsxModel.toString().indexOf(this.checkWordStart[type]);
         this.xlsxModel = this.xlsxModel.toString().substring(index);
         index = this.xlsxModel.toString().indexOf('</tr>');
         this.xlsxModel = this.xlsxModel.toString().substring(index + 5);
         this.xlsxModel = '<html><body><table>' + this.xlsxModel;
-        index = this.xlsxModel.toString().indexOf('ВСЕГО по акту');
+        index = this.xlsxModel.toString().indexOf(this.checkWordEnd[type]);
         index = this.xlsxModel.toString().indexOf('</tr>', index);
         this.xlsxModel = this.xlsxModel.toString().substring(0, index + 5);
         this.xlsxModel += '</table></body></html>';
-        this.comlAkt.ks2Text = this.xlsxModel;
-      }
+        if (type === 0) {
+          this.comlAkt.ks2Text = this.xlsxModel;
+        } else { this.comlAkt.estimateText = this.xlsxModel; }
     };
   }
 
@@ -142,7 +162,7 @@ export class NewAktComponent implements OnInit, AfterViewInit {
     };
     reader.readAsBinaryString(file);
     reader.onloadend = () => {
-      if (type === 1) {
+      if (type === 0) {
         const json = data[firstsheet];
         const JsonSum = json.find(item => item.__EMPTY === 'ВСЕГО по акту');
         this.comlAkt.sum = Number(JsonSum.__EMPTY_28);
@@ -152,6 +172,13 @@ export class NewAktComponent implements OnInit, AfterViewInit {
         this.comlAkt.documentNumber = String(JsonNum.__EMPTY_23);
       }
     };
+  }
+
+  valid(): boolean {
+    return !(this.comlAkt.documentNumber === null || this.comlAkt.documentNumber.toString().length === 0
+      || this.comlAkt.sum <= 0 || this.comlAkt.vat <= 0 || this.comlAkt.documentTypeId === null
+      || this.comlAkt.costTypeId == null || this.comlAkt.objectId == null || this.comlAkt.documentDate == null
+      || (this.NameKS2 == null && this.NameSMETA == null) );
   }
 
 
