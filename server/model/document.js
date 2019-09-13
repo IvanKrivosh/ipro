@@ -42,6 +42,13 @@ module.exports = (sequelize, DataTypes) => {
       model: 'documentKind',
         key: 'id'
     }
-  }
+  },
+    idFile: {                       //id файла
+      type: DataTypes.INTEGER,
+      references: {
+        model: 'file',
+        key: 'id'
+      }
+    }
   });
 };

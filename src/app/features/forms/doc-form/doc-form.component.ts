@@ -7,8 +7,9 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {DictionaryService} from '../../../services/dictionary-service';
 import {UploadService} from '../../../services/upload-service';
 import {FileInfo} from '../../../models/file-service';
-import {error} from 'util';
 
+declare function sign(): any;
+declare function verify(): any;
 
 @Component({
   selector: 'app-doc-form',
@@ -18,7 +19,7 @@ import {error} from 'util';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DocFormComponent implements OnInit, AfterViewInit {
-
+  imageSource = 'assets/images/iconEye.png';
   docInfo: DocInfo = new class implements DocInfo {
     comments: string;
     date: Date;
@@ -37,6 +38,8 @@ export class DocFormComponent implements OnInit, AfterViewInit {
     titulId: number;
     vatPercentId: number;
     vatValue: number;
+    idFile: number;
+    stringKey: string;
   };
 
   ID = 0;
@@ -47,7 +50,7 @@ export class DocFormComponent implements OnInit, AfterViewInit {
   FileDoc: File;
   @ViewChild('fileDoc', {static: true}) fileDoc;
 
-  displayedColumns: string[] = ['id', 'name', 'createdAt'];
+  displayedColumns: string[] = ['id', 'name', 'createdAt', 'delete'];
   dataSourceFiles: FileInfo[];
 
   @ViewChild('file', {static: true}) file;
@@ -67,6 +70,10 @@ export class DocFormComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
+    this.RefresData();
+  }
+
+  RefresData() {
     this.documentservice.getDocuments([{name: 'id', value: this.ID}]).subscribe(data => {
       this.docInfo = data[0];
       this.changeDetectorRefs.detectChanges();
@@ -103,8 +110,20 @@ export class DocFormComponent implements OnInit, AfterViewInit {
     });
   }
 
-  OpenDoc(element) {
-    this.uploadservice.getFile([{name: 'id', value: element.id}], element.name);
+  OpenDoc(id, name, type) {
+    if (type === 1 && this.FileDoc) {
+      const url = window.URL.createObjectURL(this.FileDoc);
+      const a = document.createElement('a');
+      document.body.appendChild(a);
+      a.setAttribute('style', 'display: none');
+      a.href = url;
+      a.download = name;
+      a.click();
+      window.URL.revokeObjectURL(url);
+      a.remove();
+    } else {
+      this.uploadservice.getFile([{name: 'id', value: id}], name);
+    }
   }
 
   uploadDocs() {
@@ -147,10 +166,42 @@ export class DocFormComponent implements OnInit, AfterViewInit {
 
   saveDoc() {
     this.documentservice.updateDocs(this.docInfo.id, this.docInfo).subscribe(data => {
-      console.log(data);
+      if (this.FileDoc) {
+        this.files = new Set<File>();
+        this.files.add(this.FileDoc);
+        this.uploadservice.upload(this.files, [{name: 'mainDocId', value: this.docInfo.id}]);
+      }
     },error => {
       alert('error');
       console.log(error);
     } );
+  }
+
+  DeleteFile(element) {
+    if (confirm('Вы действительно хотите удалить данный файл?')) {
+      this.uploadservice.deleteFile(element.id.toString()).subscribe(data => {
+        this.dataSourceFiles = this.arrayRemove(this.dataSourceFiles, element);
+        this.changeDetectorRefs.detectChanges();
+      }, error => {
+        alert(error.message());
+      });
+    }
+  }
+
+  arrayRemove(arr, value) {
+    return arr.filter((item) => {
+      return item !== value;
+    });
+  }
+
+  SigFile() {
+    // sign();
+    const stringKey = 'gen key rutoken';
+    this.uploadservice.updateFile(this.docInfo.idFile, stringKey).subscribe(data => {
+    });
+  }
+
+  VerifySign() {
+    verify();
   }
 }

@@ -6,12 +6,14 @@ exports.getDocuments = (req, res) => {
     `select d.*, t.number as "numberTitul",
 dt.name as "documentTypeName",
 dep.name as "departmentName",
-round((d.sum / 100 * v.percent), 2) as "vatValue"
+round((d.sum / 100 * v.percent), 2) as "vatValue",
+f."stringKey"
 from documents d
 join tituls t on t.id = d."titulId"
 join "documentTypes" dt on dt.id = d."documentTypeId"
 join "vatPercents" v on v.id = d."vatPercentId"
-join departments dep on dep.id = d."departmentId"`;
+join departments dep on dep.id = d."departmentId"
+left join files f on f.id = d."idFile"`;
 
   if (req.query.id != null) {
     query += ` WHERE d."id" = ${req.query.id}`;

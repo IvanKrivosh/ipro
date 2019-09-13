@@ -16,4 +16,6 @@ export interface DocInfo {
   isClosed: boolean;    // Признак "Закрыт"
   comments: string;      // Примечания
   documentKindId: number; // Вид документа
+  idFile: number;       // ID файла
+  stringKey: string;    // ключ Рутокена
 }

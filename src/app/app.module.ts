@@ -35,6 +35,7 @@ import { CheckPointComponent } from './features/forms/check-point/check-point.co
 import { CheckPointShComponent } from './features/forms/check-point-sh/check-point-sh.component';
 import { NewAktComponent } from './features/forms/new-akt/new-akt.component';
 import { ViewDetalComponent } from './features/forms/view-detal/view-detal.component';
+import { RutokentestComponent } from './rutokentest/rutokentest.component';
 
 @NgModule({
   declarations: [
@@ -48,7 +49,8 @@ import { ViewDetalComponent } from './features/forms/view-detal/view-detal.compo
     CheckPointComponent,
     CheckPointShComponent,
     NewAktComponent,
-    ViewDetalComponent
+    ViewDetalComponent,
+    RutokentestComponent
   ],
   entryComponents: [UploadFileComponent, DocFormComponent, NewAktComponent, ViewDetalComponent],
   imports: [

@@ -10,6 +10,7 @@ module.exports = (sequelize, DataTypes) => {
         key: 'id'
       }
     },
-    path: {type: DataTypes.STRING}        //Путь в файловой системе
+    path: {type: DataTypes.STRING},        //Путь в файловой системе
+    stringKey: {type: DataTypes.STRING} // Ключ Рутокена
   });
 };

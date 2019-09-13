@@ -5,4 +5,5 @@ export interface FileInfo {
     documentId: number;
     path: string;       // Путь в файловой системе
     createdAt: Date;
+    stringKey: string;
 }

@@ -3,6 +3,7 @@ import {HttpClient, HttpEventType, HttpParams, HttpRequest, HttpResponse} from '
 import {Observable, Subject} from 'rxjs';
 import {FileInfo} from '../models/file-service';
 import {map} from 'rxjs/operators';
+import {DocInfo} from '../models/doc-model';
 
 const api = '/api';
 
@@ -37,7 +38,16 @@ export class UploadService {
     });
   }
 
+  deleteFile(id: string) {
+    const urlParams = new HttpParams().set('id', id.toString());
+    return this.http.delete(`${api}/file`, { params: urlParams });
+  }
 
+  updateFile(id: number, strKey: string) {
+    const key = {stringKey: strKey};
+    const urlParams = new HttpParams().set('id', id.toString());
+    return this.http.put(`${api}/file`, key, { params: urlParams });
+  }
 
   public getFiles(filterVlaue: Array<{name: string, value: any}>): Observable<Array<FileInfo>> {
     let httpParams = new HttpParams();

@@ -14,6 +14,8 @@ router.get('/tituls', titulController.getTituls);
 router.post('/upload', uploadController.upload);
 router.get('/files', uploadController.getFiles);
 router.get('/file', uploadController.download);
+router.put('/file', uploadController.updateFile);
+router.delete('/file', uploadController.deleteFile);
 
 router.get('/departments', dictionaryController.getDepartments);
 router.get('/documentKinds', dictionaryController.getDocumentKinds);

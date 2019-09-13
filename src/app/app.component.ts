@@ -6,12 +6,13 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'ipro';
+  title = 'Инвест-Программа';
 
   forms = [
     { link: 'tituls', label: 'Журнал титулов' },
     { link: 'dogs', label: 'Журнал договоров' },
-    { link: 'docs', label: 'Журнал документов' }
+    { link: 'docs', label: 'Журнал документов' },
+    { link: 'rutokentest', label: 'Rutoken - ТЕСТ'}
   ];
 
 }

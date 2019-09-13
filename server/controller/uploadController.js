@@ -1,10 +1,8 @@
 const IncomingForm = require('formidable').IncomingForm;
 const db = require('../config/db.config.js');
-const fs = require('fs');
 const File = db.files;
 const appconfig = require('../config/app.config');
-const path = require('path');
-const mime = require('mime');
+const Document = db.documents;
 
 exports.getFiles = (req, res) => {
   let query =
@@ -60,9 +58,12 @@ exports.upload = (req, res) => {
   });
 
   form.on('file', (field, file) => {
-
+    _documentId = null;
+    _mainDocId = null;
     if(req.query.documentId)
-    _documentId = req.query.documentId;
+      _documentId = req.query.documentId;
+    if(req.query.mainDocId)
+      _mainDocId = req.query.mainDocId;
 
     tmpfile = {
       documentId: _documentId,
@@ -71,6 +72,16 @@ exports.upload = (req, res) => {
       path: file.path };
 
     File.create(tmpfile).then(_file => {
+      if(_mainDocId) {
+        const id = _mainDocId;
+        Document.update( { idFile: _file.id },
+          {
+            where: {id: id} }).then(() => {
+        }).catch(err => {
+          console.log(err);
+          res.status(500).json({msg: "error", details: err});
+        });
+      }
     }).catch(err => {
       console.log(err);
       res.status(500).json({msg: "error", details: err});
@@ -87,5 +98,29 @@ exports.upload = (req, res) => {
   });
 
   form.parse(req);
+};
+
+exports.updateFile = (req, res) => {
+  const id = req.query.id;
+  File.update( req.body,
+    {
+      where: {id: id} }).then(() => {
+    res.status(200).json({id: id});
+  }).catch(err => {
+    console.log(err);
+    res.status(500).json({msg: "error", details: err});
+  });
+};
+
+exports.deleteFile = (req, res) => {
+  const id = req.query.id;
+  File.destroy({
+    where: { id: id }
+  }).then(() => {
+    res.status(200).json( { msg: 'Deleted Successfully'} );
+  }).catch(err => {
+    console.log(err);
+    res.status(500).json({msg: "error", details: err});
+  });
 };
 
