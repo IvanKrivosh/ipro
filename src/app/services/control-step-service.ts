@@ -17,7 +17,7 @@ export class ControlStepService {
 
   public getControlStepJobs(controlStepTemplateId: number): Observable<Array<ControlStepJobModel>> {
     const httpParams = new HttpParams();
-    httpParams.append('controlStepTemplateId', controlStepTemplateId.toString());
+    httpParams.append('templateId', controlStepTemplateId.toString());
     return this.http.get<Array<ControlStepJobModel>>(`${api}/controlStepJobs`, {params: httpParams});
   }
 }

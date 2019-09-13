@@ -1,9 +1,10 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit, ViewChild, ChangeDetectorRef} from '@angular/core';
 import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
 import {SelectionModel} from '@angular/cdk/collections';
 import {ControlStepService} from '../../../services/control-step-service';
 import {ControlStepJobModel} from '../../../models/control-step-job-model';
+import {ContractService} from "../../../services/contract-service";
 
 export interface CheckPointSh1Element {
   position: number;
@@ -24,9 +25,10 @@ const ELEMENT_DATA1: CheckPointSh1Element[] = [
 })
 export class CheckPointShComponent implements OnInit {
 
-  constructor(private controlStepService: ControlStepService) {
+  constructor(private controlStepService: ControlStepService, private changeDetectorRefs: ChangeDetectorRef) {
   }
 
+  currentTemplate: CheckPointSh1Element;
   displayedColumns1: string[] = ['select', 'position', 'nm', 'ds'];
   dataSource1 = new MatTableDataSource(ELEMENT_DATA1);
   displayedColumns2: string[] = ['number', 'type', 'isHead', 'name', 'minenergoName', 'planStartDate', 'planEndDate',
@@ -38,6 +40,7 @@ export class CheckPointShComponent implements OnInit {
   selection = new SelectionModel<CheckPointSh1Element>(false, [ELEMENT_DATA1[0]]);
 
   ngOnInit() {
+    this.currentTemplate = this.dataSource1.data[0];
     this.dataSource1.sort = this.sort1;
     this.controlStepService.getControlStepJobs(1).subscribe(data => {
       this.dataSource2 = data;
@@ -46,6 +49,23 @@ export class CheckPointShComponent implements OnInit {
 
   Return() {
     window.history.back();
+  }
+
+  selectRow(row) {
+    if (this.currentTemplate.position !== row.position) {
+      this.currentTemplate = row;
+      this.fillChildTable();
+    }
+  }
+
+  fillChildTable() {
+    if (this.currentTemplate != null) {
+
+      this.controlStepService.getControlStepJobs(this.currentTemplate.position).subscribe(data => {
+        this.dataSource2 = data;
+        this.changeDetectorRefs.detectChanges();
+      });
+    }
   }
 
   /** Whether the number of selected elements matches the total number of rows. */
