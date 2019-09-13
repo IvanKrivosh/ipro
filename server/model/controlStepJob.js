@@ -20,6 +20,6 @@ module.exports = (sequelize, DataTypes) => {
     planCost: {type: DataTypes.STRING},             //Планируемая стоимость без НДС
     factCost: {type: DataTypes.STRING},             //Фактическая стоимость без НДС
     completionPercent: {type: DataTypes.STRING},    //Процент выполнения
-    documentConnection: {type: DataTypes.STRING}    //Типы документов для связи
+    documentConnection: {type: DataTypes.STRING}   //Типы документов для связи
   });
 };

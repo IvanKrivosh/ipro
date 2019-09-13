@@ -12,16 +12,17 @@ exports.getControlStepTemplates = (req, res) => {
 };
 
 exports.getControlStepJobs = (req, res) => {
-  let where = {};
+  let query =
+    'SELECT *, case "isHead" when true then \'Да\' else \'Нет\' end as "isHeadString" FROM "controlStepJobs"';
+
   if (req.query.templateId != null) {
-    where.templateId = req.query.templateId;
+    query += ` WHERE "templateId" = ${req.query.templateId}`;
   }
-  ControlStepJob.findAll({
-    raw: true,
-    where: where
-  }).then(controlStepJobs => {
-    res.json(controlStepJobs);
-  }).catch(err => {
+
+  db.sequelize.query(query, {type: db.sequelize.QueryTypes.SELECT})
+    .then(controlStepJobs => {
+      res.json(controlStepJobs);
+    }).catch(err => {
     console.log(err);
     res.status(500).json({msg: "error", details: err});
   });
