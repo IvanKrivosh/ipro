@@ -4,7 +4,6 @@ import {MatTableDataSource} from '@angular/material/table';
 import {SelectionModel} from '@angular/cdk/collections';
 import {ControlStepService} from '../../../services/control-step-service';
 import {ControlStepJobModel} from '../../../models/control-step-job-model';
-import {ContractService} from "../../../services/contract-service";
 
 export interface CheckPointSh1Element {
   position: number;
