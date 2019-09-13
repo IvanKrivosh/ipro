@@ -1,5 +1,5 @@
 <h4>Карточка документа</h4>
-  <div class="container mat-elevation-z10" *ngIf="docInfo" style="width: 80%">
+  <div class="container mat-elevation-z10">
     <a class="btn btn-outline-primary" (click)="Return()"> Назад </a>
     <button class="btn btn-outline-success" (click)="saveDoc()" style="margin-left: 10px"> Сохранить </button>
     <hr>
@@ -79,12 +79,15 @@
           </div>
         </div>
 
-        <div class="row" style="margin-top: 5px">
-          <div class="col col-lg-4">
-            <label for="name_doc"> Ссылка на документ </label>
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <button class="btn btn-outline-dark" [disabled]="docInfo.filePath === null" style="margin-left: 10px"> + </button>
           </div>
-          <div class="col">
-            <input [(ngModel)]="docInfo.filePath" type="text" class="inputText" id="name_doc">
+          <div class="custom-file">
+            <input #fileDoc type="file" class="custom-file-input" id="inputGroupFile01"
+                   aria-describedby="inputGroupFileAddon01"
+                   (change)="AddFile()">
+            <label class="custom-file-label" for="inputGroupFile01" data-browse="Обзор">{{ docInfo.filePath }}</label>
           </div>
         </div>
 

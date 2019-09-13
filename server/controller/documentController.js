@@ -26,3 +26,15 @@ join departments dep on dep.id = d."departmentId"`;
   });
 
 };
+
+exports.updateDocument = (req, res) => {
+  const id = req.query.id;
+  Document.update( req.body,
+    {
+      where: {id: id} }).then(() => {
+      res.status(200).json({id: id});
+  }).catch(err => {
+    console.log(err);
+    res.status(500).json({msg: "error", details: err});
+  });
+};
