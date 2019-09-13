@@ -29,19 +29,16 @@
           </td>
         </ng-container>
 
-        <!-- Position Column -->
         <ng-container matColumnDef="position">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> Порядковый номер </th>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Порядковый номер</th>
           <td mat-cell *matCellDef="let element"> {{element.position}} </td>
         </ng-container>
 
-        <!-- nm Column -->
         <ng-container matColumnDef="nm">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> Наименование</th>
           <td mat-cell *matCellDef="let element"> {{element.nm}} </td>
         </ng-container>
 
-        <!-- ds Column -->
         <ng-container matColumnDef="ds">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> Описание</th>
           <td mat-cell *matCellDef="let element"> {{element.ds}} </td>
@@ -62,82 +59,69 @@
 
       <table mat-table [dataSource]="dataSource2" matSort class="mat-elevation-z8 table-container">
 
-        <!-- с1 Column -->
-        <ng-container matColumnDef="c1">
+        <ng-container matColumnDef="number">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> № п/п</th>
-          <td mat-cell *matCellDef="let element"> {{element.c1}} </td>
+          <td mat-cell *matCellDef="let element"> {{element.number}} </td>
         </ng-container>
 
-        <!-- с2 Column -->
-        <ng-container matColumnDef="c2">
+        <ng-container matColumnDef="type">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> Вид этапа</th>
-          <td mat-cell *matCellDef="let element"> {{element.c2}} </td>
+          <td mat-cell *matCellDef="let element"> {{element.type}} </td>
         </ng-container>
 
-        <!-- с3 Column -->
-        <ng-container matColumnDef="c3">
+        <ng-container matColumnDef="isHead">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> Головной этап</th>
-          <td mat-cell *matCellDef="let element"> {{element.c3}} </td>
+          <td mat-cell *matCellDef="let element"> {{element.isHead}} </td>
         </ng-container>
 
-        <!-- с4 Column -->
-        <ng-container matColumnDef="c4">
+        <ng-container matColumnDef="name">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> Наименование</th>
-          <td mat-cell *matCellDef="let element"> {{element.c4}} </td>
+          <td mat-cell *matCellDef="let element"> {{element.name}} </td>
         </ng-container>
 
-        <!-- с5 Column -->
-        <ng-container matColumnDef="c5">
+        <ng-container matColumnDef="minenergoName">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> Наименование этапов Минэнерго</th>
-          <td mat-cell *matCellDef="let element"> {{element.c5}} </td>
+          <td mat-cell *matCellDef="let element"> {{element.minenergoName}} </td>
         </ng-container>
 
-        <!-- с6 Column -->
-        <ng-container matColumnDef="c6">
+        <ng-container matColumnDef="planStartDate">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> Планируемая дата начала</th>
-          <td mat-cell *matCellDef="let element"> {{element.c6}} </td>
+          <td mat-cell *matCellDef="let element"> {{element.planStartDate}} </td>
         </ng-container>
 
-        <!-- с7 Column -->
-        <ng-container matColumnDef="c7">
+        <ng-container matColumnDef="planEndDate">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> Планируемая дата окончания</th>
-          <td mat-cell *matCellDef="let element"> {{element.c7}} </td>
+          <td mat-cell *matCellDef="let element"> {{element.planEndDate}} </td>
         </ng-container>
 
-        <!-- с8 Column -->
-        <ng-container matColumnDef="c8">
+        <ng-container matColumnDef="factStartDate">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> Фактическая дата начала</th>
-          <td mat-cell *matCellDef="let element"> {{element.c8}} </td>
+          <td mat-cell *matCellDef="let element"> {{element.factStartDate}} </td>
         </ng-container>
 
-        <!-- с9 Column -->
-        <ng-container matColumnDef="c9">
+        <ng-container matColumnDef="factEndDate">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> Фактическая дата окончания</th>
-          <td mat-cell *matCellDef="let element"> {{element.c9}} </td>
+          <td mat-cell *matCellDef="let element"> {{element.factEndDate}} </td>
         </ng-container>
 
-        <!-- с10 Column -->
-        <ng-container matColumnDef="c10">
+        <ng-container matColumnDef="planCost">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> Плановая стоимость без НДС (тыс.руб.)</th>
-          <td mat-cell *matCellDef="let element"> {{element.c10}} </td>
+          <td mat-cell *matCellDef="let element"> {{element.planCost}} </td>
         </ng-container>
 
-        <!-- с11 Column -->
-        <ng-container matColumnDef="c11">
+        <ng-container matColumnDef="factCost">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> Фактическая стоимость без НДС (тыс.руб.)</th>
-          <td mat-cell *matCellDef="let element"> {{element.c11}} </td>
+          <td mat-cell *matCellDef="let element"> {{element.factCost}} </td>
         </ng-container>
 
-        <!-- с12 Column -->
-        <ng-container matColumnDef="c12">
+        <ng-container matColumnDef="completionPercent">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> Процент выполнения (%)</th>
-          <td mat-cell *matCellDef="let element"> {{element.c12}} </td>
+          <td mat-cell *matCellDef="let element"> {{element.completionPercent}} </td>
         </ng-container>
 
-        <!-- с13 Column -->
-        <ng-container matColumnDef="c13">
+        <ng-container matColumnDef="documentConnection">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> Типы документов для связи</th>
-          <td mat-cell *matCellDef="let element"> {{element.c13}} </td>
+          <td mat-cell *matCellDef="let element"> {{element.documentConnection}} </td>
         </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
