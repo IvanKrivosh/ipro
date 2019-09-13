@@ -31,7 +31,7 @@ export class CheckPointShComponent implements OnInit {
   currentTemplate: CheckPointSh1Element;
   displayedColumns1: string[] = ['select', 'position', 'nm', 'ds'];
   dataSource1 = new MatTableDataSource(ELEMENT_DATA1);
-  displayedColumns2: string[] = ['number', 'type', 'isHead', 'name', 'minenergoName', 'planStartDate', 'planEndDate',
+  displayedColumns2: string[] = ['number', 'type', 'isHeadString', 'name', 'minenergoName', 'planStartDate', 'planEndDate',
     'factStartDate', 'factEndDate', 'planCost', 'factCost', 'completionPercent', 'documentConnection'];
   dataSource2: Array<ControlStepJobModel>;
 

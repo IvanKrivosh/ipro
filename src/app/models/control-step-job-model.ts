@@ -3,7 +3,7 @@ export interface ControlStepJobModel {
   number: number;   // Номер пункта
   templateId: number;   // Шаблон контрольных этапов
   type: string;                 // Вид этапа
-  isHead: boolean;              // Признак "Головной этап"
+  isHeadString: string;         // Головной этап - Да/нет
   name: string;                 // Наименование
   minenergoName: string;        // Наименование этапов Минэнерго
   planStartDate: string;        // Планируемая дата начала

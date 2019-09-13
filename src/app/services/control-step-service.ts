@@ -3,7 +3,6 @@ import {HttpClient, HttpEventType, HttpParams, HttpRequest, HttpResponse} from '
 import {Observable, Subject} from 'rxjs';
 import {ControlStepTemplateModel} from '../models/control-step-template-model';
 import {ControlStepJobModel} from '../models/control-step-job-model';
-import {TitulInfo} from '../models/titul-model';
 
 const api = '/api';
 
