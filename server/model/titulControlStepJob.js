@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
     controlStepJobId: {                             //Работа по контрольным этапам
       type: DataTypes.INTEGER,
       references: {
-        model: 'titulControlSteps',
+        model: 'controlStepJobs',
         key: 'id'
       }
     },

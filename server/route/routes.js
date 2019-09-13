@@ -32,6 +32,7 @@ router.post('/act', contractController.postAct);
 
 router.get('/controlStepTemplates', controlStepController.getControlStepTemplates);
 router.get('/controlStepJobs', controlStepController.getControlStepJobs);
+router.post('/titulControlSteps', controlStepController.createTitulControlSteps);
 
 router.get('/documents', documentController.getDocuments);
 
