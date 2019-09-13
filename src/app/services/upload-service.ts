@@ -8,14 +8,18 @@ const api = '/api';
 export class UploadService {
   constructor(private http: HttpClient) {}
 
-  public upload(files: Set<File>, idDoc: string): { [key: string]: { progress: Observable<number> } } {
+  public upload(files: Set<File>, filterVlaue: Array<{name: string, value: any}>): { [key: string]: { progress: Observable<number> } } {
 
     const status: { [key: string]: { progress: Observable<number> } } = {};
 
     files.forEach(file => {
 
       let httpParams = new HttpParams();
-      httpParams = httpParams.append('id', idDoc);
+      if (filterVlaue) {
+        for (const filter of filterVlaue) {
+          httpParams = httpParams.append(filter.name, filter.value);
+        }
+      }
       const formData: FormData = new FormData();
       formData.append('file', file, file.name);
       const req = new HttpRequest('POST', `${api}/upload`,  formData, {

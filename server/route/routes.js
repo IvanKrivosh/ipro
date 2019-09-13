@@ -6,6 +6,7 @@ const uploadController = require('../controller/uploadController');
 const dictionaryController = require('../controller/dictionaryController');
 const contractController = require('../controller/contractController');
 const controlStepController = require('../controller/controlStepController');
+const documentController = require('../controller/documentController');
 
 router.get('/titul/:id', titulController.getTitulById);
 router.get('/tituls', titulController.getTituls);
@@ -31,6 +32,8 @@ router.post('/act', contractController.postAct);
 
 router.get('/controlStepTemplates', controlStepController.getControlStepTemplates);
 router.get('/controlStepJobs', controlStepController.getControlStepJobs);
+
+router.get('/documents', documentController.getDocuments);
 
 module.exports = router;
 
