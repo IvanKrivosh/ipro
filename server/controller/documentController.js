@@ -6,7 +6,7 @@ exports.getDocuments = (req, res) => {
     `select d.*, t.number as "numberTitul",
 dt.name as "documentTypeName",
 dep.name as "departmentName",
-(d.sum / 100 * v.percent) as "vatValue"
+round((d.sum / 100 * v.percent), 2) as "vatValue"
 from documents d
 join tituls t on t.id = d."titulId"
 join "documentTypes" dt on dt.id = d."documentTypeId"

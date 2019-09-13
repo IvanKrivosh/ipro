@@ -5,13 +5,15 @@ import {UploadFileComponent} from '../upload-file/upload-file.component';
 import {DocumentService} from '../../../services/document-service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {DictionaryService} from '../../../services/dictionary-service';
+import {UploadService} from '../../../services/upload-service';
+import {FileInfo} from '../../../models/file-service';
 
 
 @Component({
   selector: 'app-doc-form',
   templateUrl: './doc-form.component.html',
   styleUrls: ['./doc-form.component.scss'],
-  providers: [DocumentService, DictionaryService],
+  providers: [DocumentService, DictionaryService, UploadService],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DocFormComponent implements OnInit, AfterViewInit {
@@ -23,12 +25,8 @@ export class DocFormComponent implements OnInit, AfterViewInit {
   orgs = [];
   procNds = [];
 
-  displayedColumns: string[] = ['id', 'type_doc', 'num_doc', 'date_start'];
-  dataSource = [
-    {id: 1, type_doc: 'Тип 1', num_doc: '21323-123', date: new Date()},
-    {id: 2, type_doc: 'Тип 2', num_doc: '12312', date: new Date()},
-    {id: 3, type_doc: 'Тип 3', num_doc: 'б/н', date: new Date()},
-  ];
+  displayedColumns: string[] = ['id', 'name', 'createdAt'];
+  dataSourceFiles: FileInfo[];
 
   @ViewChild('file', {static: true}) file;
   files: Set<File> = new Set();
@@ -38,7 +36,9 @@ export class DocFormComponent implements OnInit, AfterViewInit {
               public dialog: MatDialog,
               private documentservice: DocumentService,
               private changeDetectorRefs: ChangeDetectorRef,
-              private router: Router) {}
+              private router: Router,
+              private uploadservice: UploadService
+              ) {}
 
   ngOnInit() {
     this.ID = Number(this.activatedRoute.snapshot.paramMap.get('id'));
@@ -70,14 +70,23 @@ export class DocFormComponent implements OnInit, AfterViewInit {
       this.changeDetectorRefs.detectChanges();
     });
 
+    this.dictionaryservice.getVatPercents().subscribe( data => {
+      this.procNds = data;
+      this.changeDetectorRefs.detectChanges();
+    });
+
+    this.uploadservice.getFiles([{name: 'documentId', value: this.ID}]).subscribe(data => {
+      this.dataSourceFiles = data;
+      this.changeDetectorRefs.detectChanges();
+    });
   }
 
   OpenDoc(element) {
-
+    this.uploadservice.getFile([{name: 'id', value: element.id}], element.name);
   }
 
   uploadDocs() {
-
+    this.files = new Set();
     this.file.nativeElement.click();
   }
 
@@ -96,7 +105,12 @@ export class DocFormComponent implements OnInit, AfterViewInit {
       }
     });
     dialogRef.afterClosed().subscribe(result => {
-
+      if (result) {
+        this.uploadservice.getFiles([{name: 'documentId', value: this.ID}]).subscribe(data => {
+          this.dataSourceFiles = data;
+          this.changeDetectorRefs.detectChanges();
+        });
+      }
     });
   }
 

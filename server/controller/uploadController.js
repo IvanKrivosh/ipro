@@ -1,6 +1,39 @@
 const IncomingForm = require('formidable').IncomingForm;
 const db = require('../config/db.config.js');
+const fs = require('fs');
 const File = db.files;
+const appconfig = require('../config/app.config');
+const path = require('path');
+const mime = require('mime');
+
+exports.getFiles = (req, res) => {
+  let query =
+    `select * from files f`;
+
+  if (req.query.documentId != null) {
+    query += ` WHERE f."documentId" = ${req.query.documentId}`;
+  }
+
+  db.sequelize.query(query, {type: db.sequelize.QueryTypes.SELECT})
+    .then(docs => {
+      res.json(docs);
+    }).catch(err => {
+    console.log(err);
+    res.status(500).json({msg: "error", details: err});
+  });
+};
+
+exports.download = (req, res) => {
+
+  File.findByPk(req.query.id).then(_file => {
+    ext = _file.name.substring(_file.name.lastIndexOf('.'));
+    filepath = appconfig.uploadpath + '\\' +_file.dataValues.uid + ext;
+    res.download(filepath, _file.name);
+  }).catch(err => {
+    console.log(err);
+    res.status(500).json({msg: "error", details: err});
+  });
+};
 
 exports.upload = (req, res) => {
   var form = new IncomingForm();
@@ -27,8 +60,9 @@ exports.upload = (req, res) => {
   });
 
   form.on('file', (field, file) => {
-    console.log(req.query);
-    _documentId = null;
+
+    if(req.query.documentId)
+    _documentId = req.query.documentId;
 
     tmpfile = {
       documentId: _documentId,
@@ -37,7 +71,6 @@ exports.upload = (req, res) => {
       path: file.path };
 
     File.create(tmpfile).then(_file => {
-
     }).catch(err => {
       console.log(err);
       res.status(500).json({msg: "error", details: err});

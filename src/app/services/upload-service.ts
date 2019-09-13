@@ -1,12 +1,53 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpEventType, HttpParams, HttpRequest, HttpResponse} from '@angular/common/http';
 import {Observable, Subject} from 'rxjs';
+import {FileInfo} from '../models/file-service';
+import {map} from 'rxjs/operators';
 
 const api = '/api';
 
 @Injectable()
 export class UploadService {
   constructor(private http: HttpClient) {}
+
+  public getFile(filterVlaue: Array<{name: string, value: any}>, name: string) {
+
+    let httpParams = new HttpParams();
+    if (filterVlaue) {
+      for (const filter of filterVlaue) {
+        httpParams = httpParams.append(filter.name, filter.value);
+      }
+    }
+
+    this.http.get(`${api}/file`, { params: httpParams, responseType: 'blob' as 'json'}).pipe(map((res => {
+      return {
+        filename: name,
+        data: res
+      };
+    }))).subscribe(res => {
+      const url = window.URL.createObjectURL(res.data);
+      const a = document.createElement('a');
+      document.body.appendChild(a);
+      a.setAttribute('style', 'display: none');
+      a.href = url;
+      a.download = res.filename;
+      a.click();
+      window.URL.revokeObjectURL(url);
+      a.remove();
+    });
+  }
+
+
+
+  public getFiles(filterVlaue: Array<{name: string, value: any}>): Observable<Array<FileInfo>> {
+    let httpParams = new HttpParams();
+    if (filterVlaue) {
+      for (const filter of filterVlaue) {
+        httpParams = httpParams.append(filter.name, filter.value);
+      }
+    }
+    return this.http.get<Array<FileInfo>>(`${api}/files`, { params: httpParams });
+  }
 
   public upload(files: Set<File>, filterVlaue: Array<{name: string, value: any}>): { [key: string]: { progress: Observable<number> } } {
 

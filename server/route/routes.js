@@ -12,6 +12,8 @@ router.get('/titul/:id', titulController.getTitulById);
 router.get('/tituls', titulController.getTituls);
 
 router.post('/upload', uploadController.upload);
+router.get('/files', uploadController.getFiles);
+router.get('/file', uploadController.download);
 
 router.get('/departments', dictionaryController.getDepartments);
 router.get('/documentKinds', dictionaryController.getDocumentKinds);
@@ -34,6 +36,7 @@ router.get('/controlStepTemplates', controlStepController.getControlStepTemplate
 router.get('/controlStepJobs', controlStepController.getControlStepJobs);
 
 router.get('/documents', documentController.getDocuments);
+
 
 module.exports = router;
 
