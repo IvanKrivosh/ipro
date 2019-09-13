@@ -1,4 +1,42 @@
+@import '~@angular/material/theming';
+@import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
 @import '~bootstrap/scss/bootstrap';
+
+td.mat-cell:first-of-type, td.mat-footer-cell:first-of-type, th.mat-header-cell:first-of-type {
+  padding-left: 0px;
+}
+
+td.mat-cell:last-of-type, td.mat-footer-cell:last-of-type, th.mat-header-cell:last-of-type {
+  padding-right: 0px;
+}
+
+.mat-table {
+  width: 99%;
+}
+
+table tr.mat-row {
+  height: 35px;
+}
+
+.mat-cell {
+  font-size: 12px;
+  max-height: 20px;
+  text-align: center;
+  border-right: 1px solid gainsboro;
+}
+
+table, th, td {
+  border: 1px solid gainsboro;
+}
+
+:host ::ng-deep .mat-sort-header-container {
+  display: flex;
+  justify-content: center;
+}
+
+.mat-header-cell {
+  text-align: center;
+}
 
 .inputText {
   width: 100%;
@@ -8,7 +46,7 @@
 }
 
 table {
-  width: 100%;
+  width: 99%;
 }
 
 th.mat-sort-header-sorted {
@@ -19,7 +57,15 @@ th.mat-sort-header-sorted {
   margin-right: 8px;
 }
 
-span{
+span {
   display: block;
   text-align: right;
+}
+
+.positive {
+  background-color: greenyellow;
+}
+
+.negative {
+  background-color: orangered;
 }

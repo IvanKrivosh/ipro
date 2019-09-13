@@ -1,11 +1,7 @@
 <hr>
 
-<table>
-  <tr>
-    <td> <a class ="btn btn-outline-primary"  (click)="Return()"> Назад </a> </td>
-    <td> <span><a class ="btn btn-outline-primary"  (click)="redirect()"> Шаблоны заполнения контрольных этапов </a></span> </td>
-  </tr>
-</table>
+<a class="btn btn-outline-primary" (click)="Return()"> Назад </a>
+<span><a class="btn btn-outline-primary" (click)="redirect()"> Шаблоны заполнения контрольных этапов </a></span>
 
 <p>&#8195;</p>
 <mat-form-field class="example-user-input">
@@ -26,97 +22,100 @@
 
   <!-- pp Column -->
   <ng-container matColumnDef="pp">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header> № п/п </th>
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> № п/п</th>
     <td mat-cell *matCellDef="let element"> {{element.pp}} </td>
   </ng-container>
 
   <!-- vd Column -->
   <ng-container matColumnDef="vd">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header> Вид этапа </th>
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Вид этапа</th>
     <td mat-cell *matCellDef="let element"> {{element.vd}} </td>
   </ng-container>
 
   <!-- nm Column -->
   <ng-container matColumnDef="nm">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header> Наименование </th>
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Наименование</th>
     <td mat-cell *matCellDef="let element"> {{element.nm}} </td>
   </ng-container>
 
   <!-- pb Column -->
   <ng-container matColumnDef="pb">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header> Планируемая дата начала </th>
-    <td mat-cell *matCellDef="let element"> {{element.pb}} </td>
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Планируемая дата начала</th>
+    <td mat-cell *matCellDef="let element"> {{element.pb | date: format}} </td>
   </ng-container>
 
   <!-- pe Column -->
   <ng-container matColumnDef="pe">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header> Планируемая дата окончания </th>
-    <td mat-cell *matCellDef="let element"> {{element.pe}} </td>
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Планируемая дата окончания</th>
+    <td mat-cell *matCellDef="let element"> {{element.pe | date: format}} </td>
   </ng-container>
 
   <!-- pd Column -->
   <ng-container matColumnDef="pd">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header> Планируемый срок выполнения (дни) </th>
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Планируемый срок выполнения (дни)</th>
     <td mat-cell *matCellDef="let element"> {{element.pd}} </td>
   </ng-container>
 
   <!-- fb Column -->
   <ng-container matColumnDef="fb">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header> Фактическая дата начала </th>
-    <td mat-cell *matCellDef="let element"> {{element.fb}} </td>
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Фактическая дата начала</th>
+    <td mat-cell *matCellDef="let element"> {{element.fb | date: format}} </td>
   </ng-container>
 
   <!-- fe Column -->
   <ng-container matColumnDef="fe">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header> Фактическая дата окончания </th>
-    <td mat-cell *matCellDef="let element"> {{element.fe}} </td>
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Фактическая дата окончания</th>
+    <td mat-cell *matCellDef="let element"
+        [ngClass]="element.fe > element.pe ? 'negative' : 'positive'">{{element.fe | date: format}}</td>
   </ng-container>
 
   <!-- fd Column -->
   <ng-container matColumnDef="fd">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header> Фактический срок выполнения (дни) </th>
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Фактический срок выполнения (дни)</th>
     <td mat-cell *matCellDef="let element"> {{element.fd}} </td>
   </ng-container>
 
   <!-- ot Column -->
   <ng-container matColumnDef="ot">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header> Отклонение по дате окончания (дни) </th>
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Отклонение по дате окончания (дни)</th>
     <td mat-cell *matCellDef="let element"> {{element.ot}} </td>
   </ng-container>
 
   <!-- pr Column -->
   <ng-container matColumnDef="pr">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header> Основные причины невыполнения </th>
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Основные причины невыполнения</th>
     <td mat-cell *matCellDef="let element"> {{element.pr}} </td>
   </ng-container>
 
   <!-- kr Column -->
   <ng-container matColumnDef="kr">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header> Предложения по корректирующим мероприятиям по устранению отставания </th>
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Предложения по корректирующим мероприятиям по устранению
+      отставания
+    </th>
     <td mat-cell *matCellDef="let element"> {{element.kr}} </td>
   </ng-container>
 
   <!-- ps Column -->
   <ng-container matColumnDef="ps">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header> Плановая стоимость без НДС (тыс.руб.) </th>
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Плановая стоимость без НДС (тыс.руб.)</th>
     <td mat-cell *matCellDef="let element"> {{element.ps}} </td>
   </ng-container>
 
   <!-- fs Column -->
   <ng-container matColumnDef="fs">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header> Фактическая стоимость без НДС (тыс.руб.) </th>
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Фактическая стоимость без НДС (тыс.руб.)</th>
     <td mat-cell *matCellDef="let element"> {{element.fs}} </td>
   </ng-container>
 
   <!-- pv Column -->
   <ng-container matColumnDef="pv">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header> Процент выполнения (%) </th>
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Процент выполнения (%)</th>
     <td mat-cell *matCellDef="let element"> {{element.pv}} </td>
   </ng-container>
 
   <!-- sd Column -->
   <ng-container matColumnDef="sd">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header> Связь с документами </th>
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Связь с документами</th>
     <td mat-cell *matCellDef="let element"> {{element.sd}} </td>
   </ng-container>
 

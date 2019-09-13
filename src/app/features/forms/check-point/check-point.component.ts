@@ -9,30 +9,54 @@ export interface CheckPointElement {
   pp: string;
   vd: string;
   nm: string;
-  pb: string;
-  pe: string;
-  pd: string;
-  fb: string;
-  fe: string;
-  fd: string;
-  ot: string;
+  pb: Date;
+  pe: Date;
+  pd: number;
+  fb: Date;
+  fe: Date;
+  fd: number;
+  ot: number;
   pr: string;
   kr: string;
-  ps: string;
-  fs: string;
+  ps: number;
+  fs: number;
   pv: string;
   sd: string;
 }
 
 const ELEMENT_DATA: CheckPointElement[] = [
-  {pp: '1', vd: '1', nm: '1', pb: '1', pe: '1', pd: '1', fb: '1', fe: '1',
-    fd: '1', ot: '1', pr: '1', kr: '1', ps: '1', fs: '1', pv: '1', sd: '1'},
-  {pp: '2', vd: '1', nm: '1', pb: '1', pe: '1', pd: '1', fb: '1', fe: '1',
-    fd: '1', ot: '1', pr: '1', kr: '1', ps: '1', fs: '1', pv: '1', sd: '1'},
-  {pp: '3', vd: '1', nm: '1', pb: '1', pe: '1', pd: '1', fb: '1', fe: '1',
-    fd: '1', ot: '1', pr: '1', kr: '1', ps: '1', fs: '1', pv: '1', sd: '1'},
-  {pp: '4', vd: '1', nm: '1', pb: '1', pe: '1', pd: '1', fb: '1', fe: '1',
-    fd: '1', ot: '1', pr: '1', kr: '1', ps: '1', fs: '1', pv: '1', sd: '1'}
+  {
+    pp: '1', vd: 'текст', nm: 'текст',
+    pb: randomDate(new Date(2000, 1, 1), new Date()),
+    pe: randomDate(new Date(2000, 1, 1), new Date()), pd: 0,
+    fb: randomDate(new Date(2000, 1, 1), new Date()),
+    fe: randomDate(new Date(2000, 1, 1), new Date()), fd: 0,
+    ot: 0, pr: 'текст', kr: 'текст', ps: 0, fs: 0, pv: 'текст', sd: 'текст'
+  },
+  {
+    pp: '1.1', vd: 'текст', nm: 'текст',
+    pb: randomDate(new Date(2000, 1, 1), new Date()),
+    pe: randomDate(new Date(2000, 1, 1), new Date()), pd: 0,
+    fb: randomDate(new Date(2000, 1, 1), new Date()),
+    fe: randomDate(new Date(2000, 1, 1), new Date()), fd: 0,
+    ot: 0, pr: 'текст', kr: 'текст', ps: 0, fs: 0, pv: 'текст', sd: 'текст'
+  },
+  {
+    pp: '1.2', vd: 'текст', nm: 'текст',
+    pb: randomDate(new Date(2000, 1, 1), new Date()),
+    pe: randomDate(new Date(2000, 1, 1), new Date()), pd: 0,
+    fb: randomDate(new Date(2000, 1, 1), new Date()),
+    fe: randomDate(new Date(2000, 1, 1), new Date()), fd: 0,
+    ot: 0, pr: 'текст', kr: 'текст', ps: 0, fs: 0, pv: 'текст', sd: 'текст'
+  },
+  {
+    pp: '2', vd: 'текст', nm: 'текст',
+    pb: randomDate(new Date(2000, 1, 1), new Date()),
+    pe: randomDate(new Date(2000, 1, 1), new Date()), pd: 0,
+    fb: randomDate(new Date(2000, 1, 1), new Date()),
+    fe: randomDate(new Date(2000, 1, 1), new Date()), fd: 0,
+    ot: 0, pr: 'текст', kr: 'текст', ps: 0, fs: 0, pv: 'текст', sd: 'текст'
+  }
 ];
 
 @Component({
@@ -55,6 +79,8 @@ export class CheckPointComponent implements OnInit {
   }
 
   ID;
+  format = 'dd/MM/yyyy';
+
   ngOnInit() {
     this.ID = this.activatedRoute.snapshot.paramMap.get('id');
     this.dataSource.sort = this.sort;
@@ -67,4 +93,8 @@ export class CheckPointComponent implements OnInit {
   redirect() {
     this.router.navigateByUrl('/checkpointsh');
   }
+}
+
+function randomDate(start, end) {
+  return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
 }
