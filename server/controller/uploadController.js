@@ -27,14 +27,17 @@ exports.upload = (req, res) => {
   });
 
   form.on('file', (field, file) => {
+    console.log(req.query);
+    _documentId = null;
 
     tmpfile = {
+      documentId: _documentId,
       uid: uid,
       name: file.name,
-      path: file.path};
+      path: file.path };
 
     File.create(tmpfile).then(_file => {
-      console.log(_file.id);
+
     }).catch(err => {
       console.log(err);
       res.status(500).json({msg: "error", details: err});
