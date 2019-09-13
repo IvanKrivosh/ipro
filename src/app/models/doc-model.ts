@@ -1,19 +1,19 @@
 export interface DocInfo {
   id: number;
-  id_titul: number;
-  num_titul: number;
-  id_type_doc: number;
-  type_doc: string;
-  id_vid_doc: number;
-  num_doc: string;
-  prim: string;
-  date: Date;
-  sum: number;
-  sum_nds: number;
-  direct: string;
-  close: number;
-  id_direct: number;
-  name_doc: string;
-  proc_nds: number;
-  spec: string;
+  number: string; // Номер документа
+  date: Date;       // Дата документа
+  documentTypeId: number; // id Тип документа
+  documentTypeName: string; // Тип документа
+  description: string;   // Описание
+  titulId: number; // Титул
+  numberTitul: string; // № титула
+  departmentId: number; // Подразделение, составившее документ
+  departmentName: string; // Подразделение, составившее документ
+  filePath: string;     // Путь к основному файлу
+  sum: number;       // Сумма документа
+  vatPercentId: number; // Процент НДС
+  vatValue: number; // Значение процента НДС
+  isClosed: boolean;    // Признак "Закрыт"
+  comments: string;      // Примечания
+  documentKindId: number; // Вид документа
 }

@@ -1,23 +1,27 @@
-import {ChangeDetectionStrategy, Component, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewChild} from '@angular/core';
 import {DocInfo} from '../../../models/doc-model';
-import {MatDialog} from '@angular/material';
+import {MatDialog, MatTableDataSource} from '@angular/material';
 import {UploadFileComponent} from '../upload-file/upload-file.component';
+import {DocumentService} from '../../../services/document-service';
+import {ActivatedRoute, Router} from '@angular/router';
+import {DictionaryService} from '../../../services/dictionary-service';
 
 
 @Component({
   selector: 'app-doc-form',
   templateUrl: './doc-form.component.html',
   styleUrls: ['./doc-form.component.scss'],
+  providers: [DocumentService, DictionaryService],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class DocFormComponent implements OnInit {
+export class DocFormComponent implements OnInit, AfterViewInit {
 
   docInfo: DocInfo;
-
-  typesDoc = [{name: 'Тип №1', id : 1}, {name: 'Тип №2', id : 2}, {name: 'Тип №3', id : 3}];
-  vidsDoc = [{name: 'Общий', id : 1}, {name: 'Уникальный для проекта', id : 2}];
-  orgs = [{name: 'Подразделение №1', id : 1}, {name: 'Подразделение №2', id : 2}, {name: 'Подразделение №3', id : 3}];
-  procNds = [{name: '20%', id : 20}, {name: '18%', id : 18}, {name: '10%', id : 10}];
+  ID = 0;
+  typesDoc = [];
+  vidsDoc = [];
+  orgs = [];
+  procNds = [];
 
   displayedColumns: string[] = ['id', 'type_doc', 'num_doc', 'date_start'];
   dataSource = [
@@ -29,10 +33,43 @@ export class DocFormComponent implements OnInit {
   @ViewChild('file', {static: true}) file;
   files: Set<File> = new Set();
 
-  constructor(public dialog: MatDialog) {}
+  constructor(private activatedRoute: ActivatedRoute,
+              private dictionaryservice: DictionaryService,
+              public dialog: MatDialog,
+              private documentservice: DocumentService,
+              private changeDetectorRefs: ChangeDetectorRef,
+              private router: Router) {}
 
   ngOnInit() {
-    this.docInfo = { id: 1, id_titul: 1113, num_titul: 1000256366, id_type_doc: 2, id_vid_doc: 1, type_doc: 'Карта схема-объекта', num_doc: 'б/н', prim: '*Примечание', date : new Date(), sum: 500, sum_nds: 26, direct: 'ДтИПР', close: 1, id_direct : 3, name_doc: 'doc_2.pdf', proc_nds: 20, spec: '*Описание'};
+    this.ID = Number(this.activatedRoute.snapshot.paramMap.get('id'));
+  }
+
+  ngAfterViewInit(): void {
+    this.documentservice.getDocuments([{name: 'id', value: this.ID}]).subscribe(data => {
+      this.docInfo = data[0];
+      this.changeDetectorRefs.detectChanges();
+    });
+
+    this.dictionaryservice.getDocumentTypes().subscribe( data => {
+      this.typesDoc = data;
+      this.changeDetectorRefs.detectChanges();
+    });
+
+    this.dictionaryservice.getDocumentKinds().subscribe( data => {
+      this.vidsDoc = data;
+      this.changeDetectorRefs.detectChanges();
+    });
+
+    this.dictionaryservice.getDepartments().subscribe( data => {
+      this.orgs = data;
+      this.changeDetectorRefs.detectChanges();
+    });
+
+    this.dictionaryservice.getVatPercents().subscribe( data => {
+      this.procNds = data;
+      this.changeDetectorRefs.detectChanges();
+    });
+
   }
 
   OpenDoc(element) {
@@ -59,9 +96,15 @@ export class DocFormComponent implements OnInit {
       }
     });
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
+
     });
   }
 
+  Return() {
+    this.router.navigateByUrl('/docs');
+  }
 
+  saveDoc() {
+
+  }
 }

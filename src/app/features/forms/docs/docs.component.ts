@@ -14,7 +14,7 @@ import {DocumentService} from '../../../services/document-service';
 export class DocsComponent implements OnInit, AfterViewInit {
 
   docs: DocInfo[];
-  displayedColumns: string[] = ['id', 'num_titul', 'type_doc', 'num_doc', 'prim', 'date', 'sum', 'sum_nds', 'direct', 'close'];
+  displayedColumns: string[] = ['id', 'numberTitul', 'documentTypeName', 'number', 'description', 'date', 'sum', 'vatValue', 'departmentName', 'close'];
   activePageDataChunk = [];
   dataSource = new MatTableDataSource(this.docs);
   count = 0;
@@ -29,7 +29,7 @@ export class DocsComponent implements OnInit, AfterViewInit {
   constructor(private router: Router, private documentservice: DocumentService) { }
 
   ngAfterViewInit(): void {
-    this.documentservice.getDocuments().subscribe(data => {
+    this.documentservice.getDocuments([]).subscribe(data => {
       this.docs = data;
       this.count = this.docs.length;
       this.activePageDataChunk = this.docs.slice(0, this.pageSize);

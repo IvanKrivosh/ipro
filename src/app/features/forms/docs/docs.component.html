@@ -9,49 +9,51 @@
       </td>
     </ng-container>
 
-    <ng-container matColumnDef="num_titul">
+    <ng-container matColumnDef="numberTitul">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> № титула </th>
-      <td mat-cell *matCellDef="let element"> {{element.num_titul}} </td>
+      <td mat-cell *matCellDef="let element"> {{element.numberTitul}} </td>
     </ng-container>
 
-    <ng-container matColumnDef="type_doc">
+    <ng-container matColumnDef="documentTypeName">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Тип документа </th>
-      <td mat-cell *matCellDef="let element"> {{element.type_doc}} </td>
+      <td mat-cell *matCellDef="let element"> {{element.documentTypeName}} </td>
     </ng-container>
 
-    <ng-container matColumnDef="num_doc">
+    <ng-container matColumnDef="number">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> № документа </th>
-      <td mat-cell *matCellDef="let element"> {{element.num_doc}} </td>
+      <td mat-cell *matCellDef="let element"> {{element.number}} </td>
     </ng-container>
 
-    <ng-container matColumnDef="prim">
+    <ng-container matColumnDef="description">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Описание </th>
-      <td mat-cell *matCellDef="let element"> {{element.prim}} </td>
+      <td mat-cell *matCellDef="let element"> {{element.description}} </td>
     </ng-container>
 
     <ng-container matColumnDef="date">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Дата документа </th>
-      <td mat-cell *matCellDef="let element"> {{element.date | date:'HH:mm dd.MM.yyyy'}} </td>
+      <td mat-cell *matCellDef="let element"> {{element.date | date:'dd.MM.yyyy'}} </td>
     </ng-container>
 
     <ng-container matColumnDef="sum">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>  </th>
-      <td mat-cell *matCellDef="let element"> {{element.sum}} </td>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Сумма документа </th>
+      <td mat-cell *matCellDef="let element"> {{element.sum | number:'.2'}} </td>
     </ng-container>
 
-    <ng-container matColumnDef="sum_nds">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>  </th>
-      <td mat-cell *matCellDef="let element"> {{element.sum_nds}} </td>
+    <ng-container matColumnDef="vatValue">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Сумма НДС </th>
+      <td mat-cell *matCellDef="let element"> {{element.vatValue | number:'.2'}} </td>
     </ng-container>
 
-    <ng-container matColumnDef="direct">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>  </th>
-      <td mat-cell *matCellDef="let element"> {{element.direct}} </td>
+    <ng-container matColumnDef="departmentName">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Подразделение </th>
+      <td mat-cell *matCellDef="let element"> {{element.departmentName}} </td>
     </ng-container>
 
     <ng-container matColumnDef="close">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>  </th>
-      <td mat-cell *matCellDef="let element"> {{element.close}} </td>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Закрыт </th>
+      <td mat-cell *matCellDef="let row">
+        <mat-checkbox [checked]="row.isClosed" disabled="true"></mat-checkbox>
+      </td>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

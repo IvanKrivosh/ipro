@@ -35,6 +35,13 @@ module.exports = (sequelize, DataTypes) => {
       }
     },
     isClosed: {type: DataTypes.BOOLEAN},    //Признак "Закрыт"
-    comments: {type: DataTypes.STRING}      //Примечания
+    comments: {type: DataTypes.STRING},      //Примечания
+    documentKindId: {                       //Вид документа
+    type: DataTypes.INTEGER,
+      references: {
+      model: 'documentKind',
+        key: 'id'
+    }
+  }
   });
 };

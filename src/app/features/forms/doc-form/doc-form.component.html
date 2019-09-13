@@ -1,21 +1,25 @@
 <h4>Карточка документа</h4>
-  <div class="container mat-elevation-z10">
+  <div class="container mat-elevation-z10" *ngIf="docInfo" style="width: 80%">
+    <a class="btn btn-outline-primary" (click)="Return()"> Назад </a>
+    <button class="btn btn-outline-success" (click)="saveDoc()" style="margin-left: 10px"> Сохранить </button>
+    <hr>
     <div class="row">
       <div class="col-md-6">
 
         <div class="row">
+
           <div class="col">
-            <label for="date_start"> Дата документа </label>
+            <label for="inputDate">Дата документа</label>
           </div>
           <div class="col">
-            <input [(ngModel)]="docInfo.date" type="text" class="inputText" id="date_start">
+            <input type="date" class="form-control" id ="inputDate" [(ngModel)]="docInfo.date">
           </div>
 
           <div class="col">
             <label for="close"> Закрыт </label>
           </div>
           <div class="col">
-            <input [(ngModel)]="docInfo.close" type="checkbox" class="form-check-input" id="close">
+            <input [(ngModel)]="docInfo.isClosed" type="checkbox" class="form-check-input" id="close">
           </div>
         </div>
 
@@ -26,7 +30,7 @@
           </div>
           <div class="col">
 
-            <select class="browser-default custom-select inputText" id ="id_type_doc" [(ngModel)]="docInfo.id_type_doc">
+            <select class="browser-default custom-select inputText" id ="id_type_doc" [(ngModel)]="docInfo.documentTypeId">
               <option *ngFor="let title of typesDoc" [value]="title.id">
                 {{title.name}}
               </option>
@@ -40,7 +44,7 @@
             <label for="id_vid_doc"> Вид документа </label>
           </div>
           <div class="col">
-            <select class="browser-default custom-select inputText" id ="id_vid_doc" [(ngModel)]="docInfo.id_vid_doc">
+            <select class="browser-default custom-select inputText" id ="id_vid_doc" [(ngModel)]="docInfo.documentKindId">
               <option *ngFor="let title of vidsDoc" [value]="title.id">
                 {{title.name}}
               </option>
@@ -53,13 +57,13 @@
             <label for="num_doc"> № документа </label>
           </div>
           <div class="col">
-            <input [(ngModel)]="docInfo.num_doc" type="text" class="inputText" id="num_doc">
+            <input [(ngModel)]="docInfo.number" type="text" class="inputText" id="num_doc">
           </div>
         </div>
 
         <div class="form-group purple-border">
           <label for="spec">Описание документа</label>
-          <textarea class="form-control" id="spec" rows="3"> {{docInfo.spec}} </textarea>
+          <textarea class="form-control" id="spec" rows="3"> {{docInfo.description}} </textarea>
         </div>
 
         <div class="row">
@@ -67,7 +71,7 @@
             <label for="customerId">Подразделение составившее документ</label>
           </div>
           <div class="col">
-            <select class="browser-default custom-select inputText" id ="customerId" [(ngModel)]="docInfo.id_direct">
+            <select class="browser-default custom-select inputText" id ="customerId" [(ngModel)]="docInfo.departmentId">
               <option *ngFor="let title of orgs" [value]="title.id">
                 {{title.name}}
               </option>
@@ -80,7 +84,7 @@
             <label for="name_doc"> Ссылка на документ </label>
           </div>
           <div class="col">
-            <input [(ngModel)]="docInfo.name_doc" type="text" class="inputText" id="name_doc">
+            <input [(ngModel)]="docInfo.filePath" type="text" class="inputText" id="name_doc">
           </div>
         </div>
 
@@ -95,7 +99,7 @@
             <label for="sum_nds"> Сумма с НДС </label>
           </div>
           <div class="col">
-            <input [(ngModel)]="docInfo.sum_nds" type="text" class="inputText" id="sum_nds">
+            <input [(ngModel)]="docInfo.sum" type="text" class="inputText" id="sum_nds">
           </div>
         </div>
 
@@ -104,7 +108,7 @@
             <label for="proc_nds">Процент НДС</label>
           </div>
           <div class="col col-lg-3">
-            <select class="browser-default custom-select inputText" id ="proc_nds" [(ngModel)]="docInfo.proc_nds">
+            <select class="browser-default custom-select inputText" id ="proc_nds" [(ngModel)]="docInfo.vatPercentId">
               <option *ngFor="let title of procNds" [value]="title.id">
                 {{title.name}}
               </option>
@@ -114,7 +118,7 @@
 
         <div class="form-group purple-border">
           <label for="prim">Примечание</label>
-          <textarea class="form-control" id="prim" rows="3"> {{docInfo.prim}} </textarea>
+          <textarea class="form-control" id="prim" rows="3"> {{docInfo.comments}} </textarea>
         </div>
 
       </div>
