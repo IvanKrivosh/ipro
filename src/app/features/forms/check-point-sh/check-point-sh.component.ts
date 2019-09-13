@@ -55,6 +55,8 @@ export class CheckPointShComponent implements OnInit {
     if (this.currentTemplate.position !== row.position) {
       this.currentTemplate = row;
       this.fillChildTable();
+    } else {
+      this.selection.select(row);
     }
   }
 
