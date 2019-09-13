@@ -35,11 +35,11 @@ export class CheckPointShComponent implements OnInit {
 
   @ViewChild(MatSort, {static: true}) sort1: MatSort;
 
-  selection = new SelectionModel<CheckPointSh1Element>(false, []);
+  selection = new SelectionModel<CheckPointSh1Element>(false, [ELEMENT_DATA1[0]]);
 
   ngOnInit() {
     this.dataSource1.sort = this.sort1;
-    this.controlStepService.getControlStepJobs(0).subscribe(data => {
+    this.controlStepService.getControlStepJobs(1).subscribe(data => {
       this.dataSource2 = data;
     });
   }
