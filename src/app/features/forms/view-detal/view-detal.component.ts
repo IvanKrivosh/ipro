@@ -27,18 +27,27 @@ export class ViewDetalComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    const viewDoc = document.getElementById('viewDoc');
     this.contractservoce.getComplAkts([{ name: 'id', value: this.data.ID }]).subscribe(
       data => {
         this.complakt = data[0];
-        viewDoc.insertAdjacentHTML('afterbegin', this.complakt.ks2Text);
-        this.changeDetectorRefs.detectChanges();
+        this.viewDetal();
       }
     );
+  }
+
+  viewDetal() {
+    const viewDoc = document.getElementById('viewDoc');
+    viewDoc.innerHTML = '';
+    if ( this.TypeView === 1 ) {
+      viewDoc.insertAdjacentHTML('afterbegin', this.complakt.ks2Text);
+      this.changeDetectorRefs.detectChanges();
+    } else {
+      viewDoc.insertAdjacentHTML('afterbegin', this.complakt.estimateText);
+      this.changeDetectorRefs.detectChanges();
+    }
   }
 
   Close() {
     this.dialogRef.close();
   }
-
 }

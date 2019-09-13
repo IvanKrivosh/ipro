@@ -7,7 +7,7 @@
         <input [(ngModel)]="data.numContract" style="width: 100%" type="text" class="inputText" placeholder="№ договора" id="NumContract">
       </div>
       <div class="col-lg-3">
-        <label style="margin-top: 5px;">№ документа</label>
+        <label style="margin-top: 5px;">№ документа</label><span style="color: red">*</span>
         <input [(ngModel)]="this.comlAkt.documentNumber" style="width: 100%" type="text" class="inputText" placeholder="№ документа" id="NumDoc">
       </div>
     <div class="col">
@@ -16,18 +16,18 @@
 
   <div class="row">
     <div class="col">
-      <label style="margin-top: 5px;">Сумма</label>
+      <label style="margin-top: 5px;">Сумма</label><span style="color: red">*</span>
       <input [(ngModel)]="this.comlAkt.sum" style="width: 100%" type="number" class="inputText" placeholder="Сумма" id="Sum">
     </div>
     <div class="col">
-      <label style="margin-top: 5px;">В т.ч. НДС</label>
+      <label style="margin-top: 5px;">В т.ч. НДС</label><span style="color: red">*</span>
       <input [(ngModel)]="this.comlAkt.vat" style="width: 100%" type="number" class="inputText" placeholder="В т.ч. НДС" id="Vat">
     </div>
   </div>
 
   <div class="row" style="margin-top: 5px">
     <div class="col col-lg-3">
-      <label for="idTypeCont"> Объкект </label>
+      <label for="idTypeCont"> Объкект </label><span style="color: red">*</span>
     </div>
     <div class="col">
       <select class="browser-default custom-select inputText" id ="idObject" [(ngModel)]="this.comlAkt.objectId">
@@ -40,7 +40,7 @@
 
   <div class="row" style="margin-top: 5px">
     <div class="col col-lg-3">
-      <label for="idTypeCont"> Вид затрат </label>
+      <label for="idTypeCont"> Вид затрат </label><span style="color: red">*</span>
     </div>
     <div class="col">
       <select class="browser-default custom-select inputText" id ="idTypeCont" [(ngModel)]="this.comlAkt.costTypeId">
@@ -53,7 +53,7 @@
 
   <div class="row" style="margin-top: 5px">
     <div class="col col-lg-3">
-      <label for="idTypeDoc"> Тип документа  </label>
+      <label for="idTypeDoc"> Тип документа  </label><span style="color: red">*</span>
     </div>
     <div class="col">
       <select class="browser-default custom-select inputText" id ="idTypeDoc" [(ngModel)]="this.comlAkt.documentTypeId" >
@@ -66,19 +66,20 @@
 
   <div class="row" style="margin-top: 5px">
     <div class="col col-lg-3">
-      <label for="inputDate">Дата документа</label>
+      <label for="inputDate">Дата документа</label><span style="color: red">*</span>
     </div>
     <div class="col">
       <input type="date" class="form-control" id ="inputDate" [(ngModel)]="this.comlAkt.documentDate">
     </div>
   </div>
+  <span style="color: red; font-size: 10px">* Необходимо наличие хотя бы одного файла</span>
 
   <div class="input-group" style="margin-top: 5px">
     <div class="custom-file">
       <input #fileKS2 type="file" class="custom-file-input" id="inputGroupFile01"
              aria-describedby="inputGroupFileAddon01"
-             (change)="AddFile(1)">
-      <label class="custom-file-label" for="inputGroupFile01" data-browse="Обзор">{{ NameKS2 }}</label>
+             (change)="AddFile(0)">
+      <label class="custom-file-label" for="inputGroupFile01" data-browse="Акт КС-2">{{ NameKS2 }}</label>
     </div>
   </div>
 
@@ -86,14 +87,17 @@
     <div class="custom-file">
       <input #fileSmeta type="file" class="custom-file-input" id="inputGroupFile02"
              aria-describedby="inputGroupFileAddon01"
-             (change)="AddFile(2)">
-      <label class="custom-file-label" for="inputGroupFile02" data-browse="Обзор">{{ NameSMETA }}</label>
+             (change)="AddFile(1)">
+      <label class="custom-file-label" for="inputGroupFile02" data-browse="Локальная смета">{{ NameSMETA }}</label>
     </div>
   </div>
 
 
   <hr>
-  <button type="button" class="btn btn-outline-success" style="width: 150px; alignment: right" (click)="saveDocument()">Сохранить</button>
+  <button type="button" class="btn btn-outline-success" style="width: 150px; alignment: right"
+          (click)="saveDocument()"
+          [disabled]="!valid()"
+  >Сохранить</button>
   <button type="button" class="btn btn-outline-danger" style="width: 150px; margin-left: 5px; alignment: right" (click)="closeForm()">Отмена</button>
 </div>
 
