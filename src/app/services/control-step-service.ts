@@ -22,11 +22,11 @@ export class ControlStepService {
     return this.http.get<Array<ControlStepJobModel>>(`${api}/controlStepJobs`, {params: httpParams});
   }
 
-  public createTitulControlSteps(titulId: number, controlStepTemplateId: number) {
+  public createTitulControlSteps(titulId: number, controlStepTemplateId: number): Observable<Array<ControlStepTitulModel>> {
     let httpParams = new HttpParams();
     httpParams = httpParams.append('templateId', controlStepTemplateId.toString());
     httpParams = httpParams.append('titulId', titulId.toString());
-    return this.http.post(`${api}/titulControlSteps`, httpParams);
+    return this.http.post<Array<ControlStepTitulModel>>(`${api}/titulControlSteps`, {params: httpParams});
   }
 
   public getTitulControlStepJobs(titulId: number, controlStepTemplateId: number): Observable<Array<ControlStepTitulModel>> {
