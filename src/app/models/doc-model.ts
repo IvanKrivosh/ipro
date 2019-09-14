@@ -18,4 +18,5 @@ export interface DocInfo {
   documentKindId: number; // Вид документа
   idFile: number;       // ID файла
   stringKey: string;    // ключ Рутокена
+  mainFileName: string; // Наименование файла
 }

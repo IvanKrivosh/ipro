@@ -258,10 +258,11 @@ function handleError(reason) {
 
 //######################################################################################################################
 var rutokenHandle, certHandle;
- var SignNoHTML;
-function sign() {
+var SignNoHTML;
+function sign(text) {
   // Получение текста для подписи
-  var textToSign = document.getElementById("textToSign").value;
+  var textToSign = text;
+  var strKey = null;
   if (textToSign.length == 0) {
     alert("Не хватает текста для подписи");
     return;
@@ -305,12 +306,13 @@ function sign() {
     .then( function (cms) {
       //alert(cms);
       SignNoHTML = cms;
-      document.getElementById("Sign").value = cms;
+      strKey = cms;
     })
     // Закрытие сессии
     .then( function () {
       plugin.logout(rutokenHandle);
     }, handleError);
+  return strKey;
 }
 //######################################################################################################################
 function verify() {

@@ -3,7 +3,7 @@ const Document = db.documents;
 
 exports.getDocuments = (req, res) => {
   let query =
-    `select d.*, t.number as "numberTitul",
+    `select d.*, f.name as "mainFileName", t.number as "numberTitul",
 dt.name as "documentTypeName",
 dep.name as "departmentName",
 round((d.sum / 100 * v.percent), 2) as "vatValue",

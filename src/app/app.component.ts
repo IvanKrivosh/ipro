@@ -11,8 +11,7 @@ export class AppComponent {
   forms = [
     { link: 'tituls', label: 'Журнал титулов' },
     { link: 'dogs', label: 'Журнал договоров' },
-    { link: 'docs', label: 'Журнал документов' },
-    { link: 'rutokentest', label: 'Rutoken - ТЕСТ'}
+    { link: 'docs', label: 'Журнал документов' }
   ];
 
 }

@@ -1,6 +1,6 @@
-<label id="pluginStatus"></label>
-<nav mat-tab-nav-bar>
-  <a class ="btn btn-outline-primary" *ngFor="let e of forms" [routerLink]="e.link" style="margin-left: 10px"> {{ e.label  | uppercase}} </a>
+<nav mat-tab-nav-bar style="margin-top: 10px; margin-left: 5px">
+      <a class ="btn btn-outline-primary" *ngFor="let e of forms" [routerLink]="e.link" style="margin-left: 10px"> {{ e.label  | uppercase}} </a>
 </nav>
+<a id="pluginStatus" [routerLink]="'rutokentest'" style="float: right"></a>
 
 <router-outlet></router-outlet>

@@ -11,21 +11,25 @@ const api = '/api';
 export class UploadService {
   constructor(private http: HttpClient) {}
 
-  public getFile(filterVlaue: Array<{name: string, value: any}>, name: string) {
-
+  public getFile(filterVlaue: Array<{name: string, value: any}>): Observable<Blob> {
     let httpParams = new HttpParams();
     if (filterVlaue) {
       for (const filter of filterVlaue) {
         httpParams = httpParams.append(filter.name, filter.value);
       }
     }
+    return this.http.get<Blob>(`${api}/file`, { params: httpParams, responseType: 'blob' as 'json' });
+  }
 
-    this.http.get(`${api}/file`, { params: httpParams, responseType: 'blob' as 'json'}).pipe(map((res => {
-      return {
-        filename: name,
-        data: res
-      };
-    }))).subscribe(res => {
+  downloadFile(filterVlaue: Array<{name: string, value: any}>, name: string) {
+    this.getFile(filterVlaue).pipe(map( res => {
+      {
+        return {
+          filename: name,
+          data: res
+        };
+      }
+    })).subscribe( res => {
       const url = window.URL.createObjectURL(res.data);
       const a = document.createElement('a');
       document.body.appendChild(a);
@@ -34,6 +38,7 @@ export class UploadService {
       a.download = res.filename;
       a.click();
       window.URL.revokeObjectURL(url);
+      // window.open(url);
       a.remove();
     });
   }
