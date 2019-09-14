@@ -208,7 +208,7 @@ export class DocFormComponent implements OnInit, AfterViewInit, OnDestroy {
   GenSignKey(value: Blob) {
     new Response(value).arrayBuffer().then( res => {
       const bytes = new Uint8Array( res );
-      const Key = sign(bytes);
+      const Key = sign(bytes); // Передача на подпись Uint8Array полученного из Blob
       if (Key && String(Key).length > 0) {
         const stringKey = String(Key);
         this.uploadservice.updateFile(this.docInfo.idFile, stringKey).subscribe(data => {
