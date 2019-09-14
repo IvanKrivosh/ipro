@@ -1,4 +1,4 @@
-import {AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {DocInfo} from '../../../models/doc-model';
 import {MatDialog, MatTableDataSource} from '@angular/material';
 import {UploadFileComponent} from '../upload-file/upload-file.component';
@@ -8,7 +8,7 @@ import {DictionaryService} from '../../../services/dictionary-service';
 import {UploadService} from '../../../services/upload-service';
 import {FileInfo} from '../../../models/file-service';
 
-declare function sign(): any;
+declare function sign(value: Uint8Array): any;
 declare function verify(): any;
 
 @Component({
@@ -18,7 +18,7 @@ declare function verify(): any;
   providers: [DocumentService, DictionaryService, UploadService],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class DocFormComponent implements OnInit, AfterViewInit {
+export class DocFormComponent implements OnInit, AfterViewInit, OnDestroy {
   imageSource = 'assets/images/iconEye.png';
   docInfo: DocInfo = new class implements DocInfo {
     comments: string;
@@ -40,6 +40,7 @@ export class DocFormComponent implements OnInit, AfterViewInit {
     vatValue: number;
     idFile: number;
     stringKey: string;
+    mainFileName: string;
   };
 
   ID = 0;
@@ -122,7 +123,7 @@ export class DocFormComponent implements OnInit, AfterViewInit {
       window.URL.revokeObjectURL(url);
       a.remove();
     } else {
-      this.uploadservice.getFile([{name: 'id', value: id}], name);
+      this.uploadservice.downloadFile([{name: 'id', value: id}], name);
     }
   }
 
@@ -157,7 +158,13 @@ export class DocFormComponent implements OnInit, AfterViewInit {
 
   AddFile() {
     this.FileDoc = this.fileDoc.nativeElement.files[0];
-    this.docInfo.filePath = this.FileDoc.name;
+    this.docInfo.mainFileName = this.FileDoc.name;
+    this.docInfo.stringKey = null;
+    if (this.FileDoc) {
+      this.files = new Set<File>();
+      this.files.add(this.FileDoc);
+      this.uploadservice.upload(this.files, [{name: 'mainDocId', value: this.docInfo.id}]);
+    }
   }
 
   Return() {
@@ -166,11 +173,6 @@ export class DocFormComponent implements OnInit, AfterViewInit {
 
   saveDoc() {
     this.documentservice.updateDocs(this.docInfo.id, this.docInfo).subscribe(data => {
-      if (this.FileDoc) {
-        this.files = new Set<File>();
-        this.files.add(this.FileDoc);
-        this.uploadservice.upload(this.files, [{name: 'mainDocId', value: this.docInfo.id}]);
-      }
     },error => {
       alert('error');
       console.log(error);
@@ -195,13 +197,36 @@ export class DocFormComponent implements OnInit, AfterViewInit {
   }
 
   SigFile() {
-    // sign();
-    const stringKey = 'gen key rutoken';
-    this.uploadservice.updateFile(this.docInfo.idFile, stringKey).subscribe(data => {
+    if (!this.FileDoc) {
+      this.uploadservice.getFile([{name: 'id', value: this.docInfo.idFile}]).subscribe( data => {
+        this.GenSignKey(data);
+      });
+    } else {
+      this.GenSignKey(this.FileDoc as Blob);  }
+  }
+
+  GenSignKey(value: Blob) {
+    new Response(value).arrayBuffer().then( res => {
+      const bytes = new Uint8Array( res );
+      const Key = sign(bytes); // Передача на подпись Uint8Array полученного из Blob
+      if (Key && String(Key).length > 0) {
+        const stringKey = String(Key);
+        this.uploadservice.updateFile(this.docInfo.idFile, stringKey).subscribe(data => {
+          this.docInfo.isClosed = true;
+          alert('Файл успешно подписан');
+          this.documentservice.updateDocs(this.docInfo.id, this.docInfo).subscribe(file => {
+            this.RefresData();
+          });
+        });
+      }
     });
   }
 
   VerifySign() {
     verify();
+  }
+
+  ngOnDestroy(): void {
+    if (this.fileDoc) { this.fileDoc = null; }
   }
 }
