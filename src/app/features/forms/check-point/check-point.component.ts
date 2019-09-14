@@ -1,68 +1,16 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {ChangeDetectorRef, Component, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {MatSort} from '@angular/material/sort';
-import {MatTableDataSource} from '@angular/material/table';
 import {FormControl} from '@angular/forms';
 import {TooltipPosition} from '@angular/material/tooltip';
-
-export interface CheckPointElement {
-  pp: string;
-  vd: string;
-  nm: string;
-  pb: Date;
-  pe: Date;
-  pd: number;
-  fb: Date;
-  fe: Date;
-  fd: number;
-  ot: number;
-  pr: string;
-  kr: string;
-  ps: number;
-  fs: number;
-  pv: string;
-  sd: string;
-}
-
-const ELEMENT_DATA: CheckPointElement[] = [
-  {
-    pp: '1', vd: 'текст', nm: 'текст',
-    pb: randomDate(new Date(2000, 1, 1), new Date()),
-    pe: randomDate(new Date(2000, 1, 1), new Date()), pd: 0,
-    fb: randomDate(new Date(2000, 1, 1), new Date()),
-    fe: randomDate(new Date(2000, 1, 1), new Date()), fd: 0,
-    ot: 0, pr: 'текст', kr: 'текст', ps: 0, fs: 0, pv: 'текст', sd: 'текст'
-  },
-  {
-    pp: '1.1', vd: 'текст', nm: 'текст',
-    pb: randomDate(new Date(2000, 1, 1), new Date()),
-    pe: randomDate(new Date(2000, 1, 1), new Date()), pd: 0,
-    fb: randomDate(new Date(2000, 1, 1), new Date()),
-    fe: randomDate(new Date(2000, 1, 1), new Date()), fd: 0,
-    ot: 0, pr: 'текст', kr: 'текст', ps: 0, fs: 0, pv: 'текст', sd: 'текст'
-  },
-  {
-    pp: '1.2', vd: 'текст', nm: 'текст',
-    pb: randomDate(new Date(2000, 1, 1), new Date()),
-    pe: randomDate(new Date(2000, 1, 1), new Date()), pd: 0,
-    fb: randomDate(new Date(2000, 1, 1), new Date()),
-    fe: randomDate(new Date(2000, 1, 1), new Date()), fd: 0,
-    ot: 0, pr: 'текст', kr: 'текст', ps: 0, fs: 0, pv: 'текст', sd: 'текст'
-  },
-  {
-    pp: '2', vd: 'текст', nm: 'текст',
-    pb: randomDate(new Date(2000, 1, 1), new Date()),
-    pe: randomDate(new Date(2000, 1, 1), new Date()), pd: 0,
-    fb: randomDate(new Date(2000, 1, 1), new Date()),
-    fe: randomDate(new Date(2000, 1, 1), new Date()), fd: 0,
-    ot: 0, pr: 'текст', kr: 'текст', ps: 0, fs: 0, pv: 'текст', sd: 'текст'
-  }
-];
+import {ControlStepService} from '../../../services/control-step-service';
+import {ControlStepTitulModel} from '../../../models/control-step-titul-model';
 
 @Component({
   selector: 'app-check-point',
   templateUrl: './check-point.component.html',
-  styleUrls: ['./check-point.component.scss']
+  styleUrls: ['./check-point.component.scss'],
+  providers: [ControlStepService]
 })
 export class CheckPointComponent implements OnInit {
   checkpointsh = 'checkpointsh';
@@ -70,20 +18,23 @@ export class CheckPointComponent implements OnInit {
   positionOptions: TooltipPosition[] = ['Шаблон №1', 'Шаблон №2'];
   position = new FormControl(this.positionOptions[0]);
 
-  displayedColumns: string[] = ['pp', 'vd', 'nm', 'pb', 'pe', 'pd', 'fb', 'fe', 'fd', 'ot', 'pr', 'kr', 'ps', 'fs', 'pv', 'sd'];
-  dataSource = new MatTableDataSource(ELEMENT_DATA);
+  displayedColumns: string[] = ['jobNumber', 'jobType', 'jobName', 'planStartDate', 'planEndDate', 'pd', 'factStartDate', 'factEndDate',
+    'fd', 'ot', 'defaultReason', 'suggestions', 'planCost', 'factCost', 'completionPercent', 'sd'];
+  dataSource: Array<ControlStepTitulModel>;
 
   @ViewChild(MatSort, {static: true}) sort: MatSort;
-
-  constructor(private activatedRoute: ActivatedRoute, private router: Router) {
-  }
-
   ID;
   format = 'dd/MM/yyyy';
 
+  constructor(private controlStepService: ControlStepService, private activatedRoute: ActivatedRoute,
+              private router: Router, private changeDetectorRefs: ChangeDetectorRef) {
+  }
+
   ngOnInit() {
     this.ID = this.activatedRoute.snapshot.paramMap.get('id');
-    this.dataSource.sort = this.sort;
+    this.controlStepService.getTitulControlStepJobs(this.ID, 1).subscribe(data => {
+      this.dataSource = data;
+    });
   }
 
   Return() {

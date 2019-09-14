@@ -81,7 +81,7 @@ exports.getTitulControlStepJobs = async (req, res) => {
 };
 
 async function getTitulControlStepJobs(titulId, templateId) {
-  let query = `SELECT tj.*, j."name" AS "jobName", j."type" AS "jobType", j."number" AS "jobNumber" 
+  let query = `SELECT tj.*, j."name" AS "jobName", j."type" AS "jobType", j."number" AS "jobNumber", \'\' AS pd, \'\' AS fd, \'\' AS ot, \'\' AS sd
   FROM "titulControlStepJobs" tj 
   JOIN "controlStepJobs" j ON j."id" = tj."controlStepJobId"
   JOIN "titulControlSteps" s ON s."id" = tj."titulControlStepId"
