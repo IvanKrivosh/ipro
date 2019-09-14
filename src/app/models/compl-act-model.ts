@@ -1,4 +1,5 @@
 export interface ComplActModel {
+    id: number;
     contractId: number;       // Договор
     documentNumber: string;   // Номер документа
     documentTypeId: number;   // Тип документа

@@ -8,13 +8,14 @@ import {CostTypeInfo} from '../../../models/cost-type-model';
 import {DocumentTypeInfo} from '../../../models/document-type-model';
 import {ObjectModel} from '../../../models/object-model';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {UploadService} from '../../../services/upload-service';
 
 
 @Component({
   selector: 'app-new-akt',
   templateUrl: './new-akt.component.html',
   styleUrls: ['./new-akt.component.scss'],
-  providers: [ContractService, DictionaryService]
+  providers: [ContractService, DictionaryService, UploadService]
 })
 export class NewAktComponent implements OnInit, AfterViewInit {
 
@@ -34,6 +35,7 @@ export class NewAktComponent implements OnInit, AfterViewInit {
   @ViewChild('fileSmeta', {static: true}) fileSmeta;
   constructor(
     private fb: FormBuilder,
+    private uploadservice: UploadService,
     private contractservoce: ContractService,
     private dictionaryservice: DictionaryService,
     public dialogRef: MatDialogRef<NewAktComponent>,
@@ -46,6 +48,7 @@ export class NewAktComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     this.initForm();
     this.comlAkt = {
+      id: null,
       contractId: this.data.idContract,
       documentNumber: null,
       documentTypeId: 19,
@@ -92,7 +95,17 @@ export class NewAktComponent implements OnInit, AfterViewInit {
   }
   saveDocument() {
     this.contractservoce.postAkt(this.comlAkt).subscribe(res => {
-      this.dialogRef.close(res);
+      if (this.FileKS2) {
+        const files = new Set<File>();
+        files.add(this.FileKS2);
+        this.uploadservice.upload(files, [{name: 'Id', value: res.ks2FileId}]);
+      }
+      if (this.FileSmet) {
+        const files = new Set<File>();
+        files.add(this.FileSmet);
+        this.uploadservice.upload(files, [{name: 'Id', value: res.estimateFileId}]);
+      }
+      this.dialogRef.close(true);
     }, error => {
         alert('ERROR!');
         console.log(error);

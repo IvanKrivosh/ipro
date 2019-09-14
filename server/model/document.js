@@ -34,6 +34,7 @@ module.exports = (sequelize, DataTypes) => {
         key: 'id'
       }
     },
+    vat: {type: DataTypes.DECIMAL(10, 2)},  // Значение НДС
     isClosed: {type: DataTypes.BOOLEAN},    //Признак "Закрыт"
     comments: {type: DataTypes.STRING},      //Примечания
     documentKindId: {                       //Вид документа

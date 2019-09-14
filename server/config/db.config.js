@@ -37,5 +37,6 @@ db.objects = require('../model/object')(sequelize, Sequelize);
 db.financePlanSections = require('../model/financePlanSection.js')(sequelize, Sequelize);
 db.limits = require('../model/limit.js')(sequelize, Sequelize);
 db.limitTypes = require('../model/limitType.js')(sequelize, Sequelize);
+db.linkDocument = require('../model/linkDocument.js')(sequelize, Sequelize);
 
 module.exports = db;

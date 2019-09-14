@@ -9,7 +9,7 @@ exports.getFiles = (req, res) => {
     `select * from files f`;
 
   if (req.query.documentId != null) {
-    query += ` WHERE f."documentId" = ${req.query.documentId}`;
+    query += ` WHERE f.name is not null and f."documentId" = ${req.query.documentId}`;
   }
 
   db.sequelize.query(query, {type: db.sequelize.QueryTypes.SELECT})
@@ -58,34 +58,57 @@ exports.upload = (req, res) => {
   });
 
   form.on('file', (field, file) => {
+    console.log( req.query);
     _documentId = null;
     _mainDocId = null;
+    _Id = null;
+
     if(req.query.documentId)
       _documentId = req.query.documentId;
-    if(req.query.mainDocId)
+    else if(req.query.mainDocId)
       _mainDocId = req.query.mainDocId;
+    else if(req.query.Id)
+      _Id = req.query.Id;
 
-    tmpfile = {
-      documentId: _documentId,
-      uid: uid,
-      name: file.name,
-      path: file.path };
+    if(_Id) {
+      tmpfile = {
+        uid: uid,
+        name: file.name,
+        path: file.path };
 
-    File.create(tmpfile).then(_file => {
-      if(_mainDocId) {
-        const id = _mainDocId;
-        Document.update( { idFile: _file.id },
-          {
-            where: {id: id} }).then(() => {
-        }).catch(err => {
-          console.log(err);
-          res.status(500).json({msg: "error", details: err});
-        });
-      }
-    }).catch(err => {
-      console.log(err);
-      res.status(500).json({msg: "error", details: err});
-    });
+      File.update(tmpfile,
+        {
+          where: {id: _Id}
+        }).then(() => {
+      }).catch(err => {
+        console.log(err);
+        res.status(500).json({msg: "error", details: err});
+      });
+    }
+    else {
+      tmpfile = {
+        documentId: _documentId,
+        uid: uid,
+        name: file.name,
+        path: file.path };
+
+      File.create(tmpfile).then(_file => {
+        if (_mainDocId) {
+          const id = _mainDocId;
+          Document.update({idFile: _file.id},
+            {
+              where: {id: id}
+            }).then(() => {
+          }).catch(err => {
+            console.log(err);
+            res.status(500).json({msg: "error", details: err});
+          });
+        }
+      }).catch(err => {
+        console.log(err);
+        res.status(500).json({msg: "error", details: err});
+      });
+    }
   });
 
   form.on('progress', function (bytesReceived, bytesExpected) {

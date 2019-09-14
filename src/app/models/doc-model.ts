@@ -12,7 +12,7 @@ export interface DocInfo {
   filePath: string;     // Путь к основному файлу
   sum: number;       // Сумма документа
   vatPercentId: number; // Процент НДС
-  vatValue: number; // Значение процента НДС
+  vat: number; // Значение процента НДС
   isClosed: boolean;    // Признак "Закрыт"
   comments: string;      // Примечания
   documentKindId: number; // Вид документа

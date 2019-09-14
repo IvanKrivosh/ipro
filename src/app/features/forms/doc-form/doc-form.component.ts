@@ -37,7 +37,7 @@ export class DocFormComponent implements OnInit, AfterViewInit, OnDestroy {
     sum: number;
     titulId: number;
     vatPercentId: number;
-    vatValue: number;
+    vat: number;
     idFile: number;
     stringKey: string;
     mainFileName: string;
@@ -163,7 +163,10 @@ export class DocFormComponent implements OnInit, AfterViewInit, OnDestroy {
     if (this.FileDoc) {
       this.files = new Set<File>();
       this.files.add(this.FileDoc);
-      this.uploadservice.upload(this.files, [{name: 'mainDocId', value: this.docInfo.id}]);
+      if (this.docInfo.idFile) {
+        this.uploadservice.upload(this.files, [{name: 'Id', value: this.docInfo.idFile}]);
+      } else {
+        this.uploadservice.upload(this.files, [{name: 'mainDocId', value: this.docInfo.id}]); }
     }
   }
 
@@ -213,8 +216,8 @@ export class DocFormComponent implements OnInit, AfterViewInit, OnDestroy {
         const stringKey = String(Key);
         this.uploadservice.updateFile(this.docInfo.idFile, stringKey).subscribe(data => {
           this.docInfo.isClosed = true;
-          alert('Файл успешно подписан');
           this.documentservice.updateDocs(this.docInfo.id, this.docInfo).subscribe(file => {
+            alert('Файл успешно подписан!');
             this.RefresData();
           });
         });
@@ -229,4 +232,12 @@ export class DocFormComponent implements OnInit, AfterViewInit, OnDestroy {
   ngOnDestroy(): void {
     if (this.fileDoc) { this.fileDoc = null; }
   }
+
+  onChangeVat(newValue) {
+    if (this.docInfo.sum) {
+      this.docInfo.vat = Number((this.docInfo.sum / 100 * this.procNds[newValue - 1].percent).toFixed(2));
+    }
+  }
+
+
 }
