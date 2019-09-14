@@ -48,6 +48,10 @@ export class CheckPointComponent implements OnInit {
 
   changePosition(position: number) {
     this.sh = position;
+    this.controlStepService.getTitulControlStepJobs(this.ID, this.sh).subscribe(data => {
+      this.dataSource = data;
+      this.changeDetectorRefs.detectChanges();
+    });
   }
 
   createTitulControlSteps() {
