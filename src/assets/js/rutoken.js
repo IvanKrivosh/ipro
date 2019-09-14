@@ -252,16 +252,17 @@ function handleError(reason) {
   }
   switch (parseInt(reason.message)) {
     case errorCodes.PIN_INCORRECT: alert("Неверный PIN"); break;
-    default: alert("Неизвестная ошибка");
+    default: alert("Неизвестная ошибка "+ reason.message.toString());
   }
 }
 
 //######################################################################################################################
 var rutokenHandle, certHandle;
-var SignNoHTML;
-function sign(text) {
+function sign(){ //text) {
   // Получение текста для подписи
-  var textToSign = text;
+//  var textToSign = 'тест'; //text;
+  var textToSign = document.getElementById("textToSign").value;
+
   var strKey = null;
   if (textToSign.length == 0) {
     alert("Не хватает текста для подписи");
@@ -297,7 +298,7 @@ function sign(text) {
     .then( function (certs) {
       if (certs.length > 0) {
         certHandle = certs[0];
-        return plugin.sign(rutokenHandle, certHandle, textToSign, false, {});
+        return plugin.sign(rutokenHandle, certHandle, textToSign, false, {detached:true});
       } else {
         return Promise.reject("Сертификат на Рутокен не обнаружен");
       }
@@ -305,8 +306,8 @@ function sign(text) {
     // Отображение подписанных данных в формате CMS
     .then( function (cms) {
       //alert(cms);
-      SignNoHTML = cms;
       strKey = cms;
+      document.getElementById("Sign").value = cms;
     })
     // Закрытие сессии
     .then( function () {
@@ -359,7 +360,7 @@ function verify() {
       if (certs.length > 0) {
         certHandle = certs[0];
          //return plugin.verify(rutokenHandle, Sign, {data:textToSign,base64:true,certificates:{},CA:{},CRL:{},useHardwareHash:false,verifyCertificate:true});
-        return plugin.verify(rutokenHandle, SignNoHTML, {});
+        return plugin.verify(rutokenHandle, Sign, {data:textToSign, base64:false, verifyCertificate:false});
         //return plugin.verify(rutokenHandle, Sign, {"data":textToSign});
       } else {
         return Promise.reject("Сертификат на Рутокен не обнаружен");
@@ -368,9 +369,9 @@ function verify() {
     // Отображение подписанных данных в формате CMS
     .then( function (result) {
       if (result) {
-        return alert("123");
+        return alert("ПОДПИСЬ ВАЛИДНА");
       } else {
-        throw "Rutoken Plugin wasn't found";
+        throw "Ошибка проверки подписи";
       }
     })
     // Закрытие сессии
