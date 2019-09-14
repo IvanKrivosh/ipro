@@ -26,7 +26,7 @@ export class ControlStepService {
     let httpParams = new HttpParams();
     httpParams = httpParams.append('templateId', controlStepTemplateId.toString());
     httpParams = httpParams.append('titulId', titulId.toString());
-    return this.http.post<Array<ControlStepTitulModel>>(`${api}/titulControlSteps`, {params: httpParams});
+    return this.http.post<Array<ControlStepTitulModel>>(`${api}/titulControlSteps`, null, {params: httpParams});
   }
 
   public getTitulControlStepJobs(titulId: number, controlStepTemplateId: number): Observable<Array<ControlStepTitulModel>> {
