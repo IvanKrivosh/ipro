@@ -5,7 +5,7 @@
 
 <p>&#8195;</p>
 <mat-form-field class="example-user-input">
-  <mat-select placeholder="Выберите шаблон" [formControl]="position">
+  <mat-select placeholder="Выберите шаблон" [formControl]="position" (selectionChange)="changePosition($event.value)">
     <mat-option *ngFor="let positionOption of positionOptions" [value]="positionOption">
       {{positionOption}}
     </mat-option>
@@ -14,7 +14,7 @@
 
 <button mat-raised-button
         matTooltip="Создать контрольные этапы на основе выбранного шаблона"
-        [matTooltipPosition]="'right'">
+        [matTooltipPosition]="'right'" (click)="createTitulControlSteps()">
   Создать
 </button>
 

@@ -24,6 +24,7 @@ export class CheckPointComponent implements OnInit {
 
   @ViewChild(MatSort, {static: true}) sort: MatSort;
   ID;
+  sh = 1;
   format = 'dd/MM/yyyy';
 
   constructor(private controlStepService: ControlStepService, private activatedRoute: ActivatedRoute,
@@ -32,7 +33,7 @@ export class CheckPointComponent implements OnInit {
 
   ngOnInit() {
     this.ID = this.activatedRoute.snapshot.paramMap.get('id');
-    this.controlStepService.getTitulControlStepJobs(this.ID, 1).subscribe(data => {
+    this.controlStepService.getTitulControlStepJobs(this.ID, this.sh).subscribe(data => {
       this.dataSource = data;
     });
   }
@@ -43,6 +44,17 @@ export class CheckPointComponent implements OnInit {
 
   redirect() {
     this.router.navigateByUrl('/checkpointsh');
+  }
+
+  changePosition(position: number) {
+    this.sh = position;
+  }
+
+  createTitulControlSteps() {
+    this.controlStepService.createTitulControlSteps(this.ID, this.sh).subscribe(data => {
+      this.dataSource = data;
+      this.changeDetectorRefs.detectChanges();
+    });
   }
 }
 
