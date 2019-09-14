@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Rutoken Plugin</title>
+  <base href="/">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+</head>
+<body>
+<div #parent id="parent">
+  <div #script style.display="none" id ="script">
+  </div>
+</div>
+<pre>
+ - - - - - - - - - - - - - - - - подготовьте Рутокен- - - - - - - - - - - - - - - - - - - - - -
+| |
+  Для работы этой странички требуется ключевая пара и сертификат. <a href="http://ra.rutoken.ru">Создайте их на ra.rutoken.ru</a>
+  Также необходимо установить расширение для Хром <a href="https://chrome.google.com/webstore/detail/%D0%B0%D0%B4%D0%B0%D0%BF%D1%82%D0%B5%D1%80-%D1%80%D1%83%D1%82%D0%BE%D0%BA%D0%B5%D0%BD-%D0%BF%D0%BB%D0%B0%D0%B3%D0%B8%D0%BD/ohedcglhbbfdgaogjhcclacoccbagkjg">Адаптер Рутокен Плагин</a>
+| |
+ - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ </pre>
+<div id="pluginStatus"><pre>Загрузка Плагина...</pre></div>
+<textarea rows="5" cols="95" id="textToSign" placeholder="Введите текст для подписи"></textarea><br/>
+<textarea rows="5" cols="95" id="Sign" placeholder="Подпись"></textarea><br/>
+<button id="signButton" (click)="signDoc()" style="display: block; background: none; border: 4px solid black; font-family: monospace; width: 20em; height: 3em; text-align: center; cursor: pointer;">Подписать текст</button>
+<button id="verifyButton" (click)="verifyDoc()" style="display: block; background: none; border: 4px solid black; font-family: monospace; width: 20em; height: 3em; text-align: center; cursor: pointer;">Верифицировать текст</button>
+
+</body>
+</html>
