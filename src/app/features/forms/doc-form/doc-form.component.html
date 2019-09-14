@@ -115,7 +115,7 @@
             <button
               class="btn btn-outline-dark"
               matTooltip="Подписать файл с помощью Рутокена"
-              [disabled]="docInfo.filePath === null || docInfo.stringKey !== null"
+              [disabled]="docInfo.mainFileName === null || docInfo.stringKey !== null"
               style="width: 100%;"
               (click)="SigFile()">
               Подписать
