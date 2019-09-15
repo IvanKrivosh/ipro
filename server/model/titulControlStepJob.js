@@ -17,8 +17,11 @@ module.exports = (sequelize, DataTypes) => {
     },
     planStartDate: {type: DataTypes.DATEONLY},        //Планируемая дата начала
     planEndDate: {type: DataTypes.DATEONLY},          //Планируемая дата окончания
+    pd: {type: DataTypes.STRING},
     factStartDate: {type: DataTypes.DATEONLY},        //Фактическая дата начала
     factEndDate: {type: DataTypes.DATEONLY},          //Фактическая дата окончания
+    fd: {type: DataTypes.STRING},
+    ot: {type: DataTypes.STRING},
     defaultReason: {type: DataTypes.STRING},          //Основные причины невыполнения
     suggestions: {type: DataTypes.STRING},            //Предложения по корректирующим мероприятиям по устранению отставания
     planCost: {type: DataTypes.DECIMAL(10, 2)},       //Планируемая стоимость без НДС
@@ -30,6 +33,7 @@ module.exports = (sequelize, DataTypes) => {
         model: 'contracts',
         key: 'id'
       }
-    }
+    },
+    sd: {type: DataTypes.STRING}
   });
 };
