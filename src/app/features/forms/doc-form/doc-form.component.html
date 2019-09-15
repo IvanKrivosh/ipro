@@ -1,3 +1,4 @@
+  <script src="doc-form.component.ts"></script>
   <div class="container mat-elevation-z10">
     <br>
     <div class="row">
@@ -218,4 +219,4 @@
   multiple
 />
 
-
+  <textarea id="Sign" (click)="onChange($event.target.value)" [(ngModel)]="strKey" style="display: none"></textarea>

@@ -8,8 +8,8 @@ import {DictionaryService} from '../../../services/dictionary-service';
 import {UploadService} from '../../../services/upload-service';
 import {FileInfo} from '../../../models/file-service';
 
-declare function sign(value: string, base64: boolean): any;
-declare function verify(): any;
+declare function sign(value: string): any;
+declare function verify(text: string, strKey: string): any;
 
 @Component({
   selector: 'app-doc-form',
@@ -42,7 +42,7 @@ export class DocFormComponent implements OnInit, AfterViewInit, OnDestroy {
     stringKey: string;
     mainFileName: string;
   };
-
+  strKey: string;
   ID = 0;
   typesDoc = [];
   vidsDoc = [];
@@ -208,34 +208,46 @@ export class DocFormComponent implements OnInit, AfterViewInit, OnDestroy {
       this.GenSignKey(this.FileDoc as Blob);  }
   }
 
+  onChange(element) {
+    if (element && String(element).length > 0) {
+      const stringKey = String(element);
+      this.uploadservice.updateFile(this.docInfo.idFile, stringKey).subscribe(data => {
+        this.docInfo.isClosed = true;
+        this.documentservice.updateDocs(this.docInfo.id, this.docInfo).subscribe(file => {
+          alert('Файл успешно подписан!');
+          this.RefresData();
+        });
+      });
+    }
+  }
+
   GenSignKey(value: Blob) {
     const reader = new FileReader();
     reader.readAsDataURL(value);
     reader.onloadend = () => {
       const base64data = reader.result;
       const S = base64data.toString();
-      const Key = sign(S, true);
-      if (Key && String(Key).length > 0) {
-        const stringKey = String(Key);
-        this.uploadservice.updateFile(this.docInfo.idFile, stringKey).subscribe(data => {
-          this.docInfo.isClosed = true;
-          this.documentservice.updateDocs(this.docInfo.id, this.docInfo).subscribe(file => {
-            alert('Файл успешно подписан!');
-            this.RefresData();
-          });
-        });
-      }
-    }
-    /*
-    new Response(value).arrayBuffer().then( res => {
-      const bytes = new Uint8Array( res );
-      const Key = sign(bytes); // Передача на подпись Uint8Array полученного из Blob
-      }
-    });*/
+      sign(S);
+    };
   }
 
   VerifySign() {
-    verify();
+    if (!this.FileDoc) {
+      this.uploadservice.getFile([{name: 'id', value: this.docInfo.idFile}]).subscribe( data => {
+        this.CheckSignKey(data);
+      });
+    } else {
+      this.CheckSignKey(this.FileDoc as Blob);  }
+  }
+
+  CheckSignKey(value: Blob) {
+    const reader = new FileReader();
+    reader.readAsDataURL(value);
+    reader.onloadend = () => {
+      const base64data = reader.result;
+      const S = base64data.toString();
+      verify(S, this.docInfo.stringKey);
+    };
   }
 
   ngOnDestroy(): void {

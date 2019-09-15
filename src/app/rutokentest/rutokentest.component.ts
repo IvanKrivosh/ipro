@@ -1,5 +1,6 @@
 import {AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
 import {Router} from '@angular/router';
+import {subscribeTo} from "rxjs/internal-compatibility";
 
 declare function sign(sourrce: string, b: boolean): any;
 declare function verify(): any;
@@ -23,7 +24,7 @@ export class RutokentestComponent implements OnInit, AfterViewInit {
   }
 
   signDoc() {
-    this.strKey = sign( this.src, false);
+    sign( this.src, false);
   }
 
   ngAfterViewInit() {

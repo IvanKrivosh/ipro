@@ -258,7 +258,7 @@ function handleError(reason) {
 
 //######################################################################################################################
 var rutokenHandle, certHandle;
-function sign(text, b_base64) {
+function sign(text) {
   // Получение текста для подписи
   var textToSign = text;
 //  var textToSign = document.getElementById("textToSign").value;
@@ -298,7 +298,7 @@ function sign(text, b_base64) {
     .then( function (certs) {
       if (certs.length > 0) {
         certHandle = certs[0];
-        return plugin.sign(rutokenHandle, certHandle, textToSign, b_base64, {detached:true});
+        return plugin.sign(rutokenHandle, certHandle, textToSign, false, {detached:true});
       } else {
         return Promise.reject("Сертификат на Рутокен не обнаружен");
       }
@@ -308,18 +308,19 @@ function sign(text, b_base64) {
       //alert(cms);
       strKey = cms;
       document.getElementById("Sign").value = cms;
+      document.getElementById("Sign").click();
+      console.log(strKey);
     })
     // Закрытие сессии
     .then( function () {
       plugin.logout(rutokenHandle);
     }, handleError);
-  return strKey;
 }
 //######################################################################################################################
-function verify() {
+function verify(text, strKey) {
   // Получение текста для подписи
-  var textToSign = document.getElementById("textToSign").value;
-  var Sign = document.getElementById("Sign").value;
+  var textToSign = text;
+  var Sign = strKey;
 
   if (textToSign.length == 0) {
     alert("Не хватает текста для подписи");
@@ -335,7 +336,8 @@ function verify() {
       if (devices.length > 0) {
         return Promise.resolve(devices[0]);
       } else {
-        return Promise.reject("Рутокен не обнаружен");
+        return alert("Рутокен не обнаружен")
+        //return Promise.reject("Рутокен не обнаружен");
       }
     })
     // Проверка залогиненности
@@ -371,7 +373,7 @@ function verify() {
       if (result) {
         return alert("ПОДПИСЬ ВАЛИДНА");
       } else {
-        throw "Ошибка проверки подписи";
+        return alert("Ошибка проверки подписи");
       }
     })
     // Закрытие сессии
