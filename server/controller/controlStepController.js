@@ -85,7 +85,7 @@ async function getTitulControlStepJobs(titulId, templateId) {
   FROM "titulControlStepJobs" tj 
   JOIN "controlStepJobs" j ON j."id" = tj."controlStepJobId"
   JOIN "titulControlSteps" s ON s."id" = tj."titulControlStepId"
-  WHERE s."titulId" = ${titulId} AND j."templateId" = ${templateId} ORDER BY j."number"`;
+  WHERE s."titulId" = ${titulId} AND j."templateId" = ${templateId} ORDER BY j."id"`;
 
   return await db.sequelize.query(query, {type: db.sequelize.QueryTypes.SELECT});
 }
