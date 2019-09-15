@@ -247,7 +247,7 @@ function handleError(reason) {
   var errorCodes = plugin.errorCodes;
   var isErrCode = !isNaN(parseInt(reason.message));
   if(!isErrCode) {
-    alert(reason);
+    alert(reason.message.toString());
     return;
   }
   switch (parseInt(reason.message)) {
@@ -258,10 +258,10 @@ function handleError(reason) {
 
 //######################################################################################################################
 var rutokenHandle, certHandle;
-function sign(){ //text) {
+function sign(text) {
   // Получение текста для подписи
-//  var textToSign = 'тест'; //text;
-  var textToSign = document.getElementById("textToSign").value;
+  var textToSign = text;
+//  var textToSign = document.getElementById("textToSign").value;
 
   var strKey = null;
   if (textToSign.length == 0) {
