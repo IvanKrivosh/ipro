@@ -1,7 +1,7 @@
 import {AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
 import {Router} from '@angular/router';
 
-declare function sign(elementById: HTMLElement, b: boolean): any;
+declare function sign(sourrce: string, b: boolean): any;
 declare function verify(): any;
 @Component({
   selector: 'app-rutoken',
@@ -22,7 +22,7 @@ export class RutokentestComponent implements OnInit, AfterViewInit {
   }
 
   signDoc() {
-    sign(document.getElementById("textToSign").value, false);
+    sign( this.src, false);
   }
 
   ngAfterViewInit() {
