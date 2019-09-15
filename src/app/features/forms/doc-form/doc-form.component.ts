@@ -8,7 +8,7 @@ import {DictionaryService} from '../../../services/dictionary-service';
 import {UploadService} from '../../../services/upload-service';
 import {FileInfo} from '../../../models/file-service';
 
-declare function sign(value: Uint8Array): any;
+declare function sign(value: string, base64: boolean): any;
 declare function verify(): any;
 
 @Component({
@@ -209,9 +209,12 @@ export class DocFormComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   GenSignKey(value: Blob) {
-    new Response(value).arrayBuffer().then( res => {
-      const bytes = new Uint8Array( res );
-      const Key = sign(bytes); // Передача на подпись Uint8Array полученного из Blob
+    const reader = new FileReader();
+    reader.readAsDataURL(value);
+    reader.onloadend = () => {
+      const base64data = reader.result;
+      const S = base64data.toString();
+      const Key = sign(S, true);
       if (Key && String(Key).length > 0) {
         const stringKey = String(Key);
         this.uploadservice.updateFile(this.docInfo.idFile, stringKey).subscribe(data => {
@@ -222,7 +225,13 @@ export class DocFormComponent implements OnInit, AfterViewInit, OnDestroy {
           });
         });
       }
-    });
+    }
+    /*
+    new Response(value).arrayBuffer().then( res => {
+      const bytes = new Uint8Array( res );
+      const Key = sign(bytes); // Передача на подпись Uint8Array полученного из Blob
+      }
+    });*/
   }
 
   VerifySign() {
