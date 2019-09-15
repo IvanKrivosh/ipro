@@ -8,6 +8,7 @@ import {DogovorsComponent} from './features/forms/dogovors/dogovors.component';
 import {CheckPointComponent} from './features/forms/check-point/check-point.component';
 import {CheckPointShComponent} from './features/forms/check-point-sh/check-point-sh.component';
 import {RutokentestComponent} from './rutokentest/rutokentest.component';
+import {LimitFormComponent} from './features/forms/limit-form/limit-form.component';
 
 const routes: Routes = [
   { path: '',   redirectTo: '/tituls', pathMatch: 'full' },
@@ -18,7 +19,8 @@ const routes: Routes = [
   { path: 'dogs', component: DogovorsComponent },
   { path: 'tituls/:id/checkpoint', component: CheckPointComponent },
   { path: 'checkpointsh', component: CheckPointShComponent },
-  { path: 'rutokentest', component: RutokentestComponent }
+  { path: 'rutokentest', component: RutokentestComponent },
+  { path: 'limit', component: LimitFormComponent }
 ];
 
 @NgModule({

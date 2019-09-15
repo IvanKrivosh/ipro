@@ -26,7 +26,7 @@ table {
 }
 
 .mat-column-id {
-  max-width: 40px;
+  min-width: 40px;
 }
 
 .mat-column-num_titul {
@@ -63,8 +63,8 @@ table {
 .mat-column-sum,
 .mat-column-sum_nds
 {
-  min-width: 40px;
-  max-width: 60px;
+  min-width: 60px;
+  max-width: 70px;
 }
 
 .left_group {

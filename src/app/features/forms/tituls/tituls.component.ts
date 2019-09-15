@@ -21,7 +21,7 @@ export class TitulsComponent implements OnInit {
   IdOrg: number;
   TypeOrg = 1;
 
-  displayedColumns: string[] = ['id', 'number', 'type', 'name', 'direct_customer', 'direct_executor', 'begin', 'end'];
+  displayedColumns: string[] = ['id', 'number', 'name', 'direct_customer', 'direct_executor', 'begin', 'end'];
   activePageDataChunk = [];
   tituls: TitulInfo[];
   dataSource = new MatTableDataSource(this.tituls);
@@ -76,6 +76,10 @@ export class TitulsComponent implements OnInit {
   }
 
   clearFilter() {
+    this.Year = null;
+    this.IdOrg = null;
+    this.NameProject = null;
+    this.NumProject = null;
   }
 
   getPaginatorData(event) {

@@ -38,7 +38,7 @@ export class DogovorsComponent implements OnInit, AfterViewInit {
   lowValue = 0;
   highValue = 15;
 
-  displayedColumns: string[] = ['id_dog', 'num_dog', 'worker', 'subject', 'date_sig', 'date_begin', 'date_end', 'sum', 'sum_compl', 'sum_opl', 'sum_dolg_kred', 'sum_dolg_deb', 'id_status'];
+  displayedColumns: string[] = ['id_dog', 'numberTitul', 'num_dog', 'worker', 'subject', 'date_sig', 'date_begin', 'date_end', 'sum', 'sum_compl', 'sum_opl', 'sum_dolg_kred', 'sum_dolg_deb', 'id_status'];
   displayedColumnsRNO: string[] = ['Number', 'CostTypeName', 'PaymentType', 'PaymentDate', 'Sum', 'Vat'];
   displayedColumnsAkts: string[] = ['documentNumber', 'documentTypeName', 'costTypeName', 'documentDate', 'sum', 'vat', 'contractId'];
 

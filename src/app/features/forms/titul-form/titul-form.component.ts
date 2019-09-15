@@ -1,18 +1,23 @@
 import { Component, OnInit } from '@angular/core';
 import {TitulInfo} from '../../../models/titul-model';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {TitulService} from '../../../services/titul-service';
+import {DocumentService} from "../../../services/document-service";
 
 @Component({
   selector: 'app-titul-form',
   templateUrl: './titul-form.component.html',
   styleUrls: ['./titul-form.component.scss'],
-  providers: [TitulService]
+  providers: [TitulService, DocumentService]
 })
 export class TitulFormComponent implements OnInit {
   titul: TitulInfo;
   ID = 0;
-  constructor(private activatedRoute: ActivatedRoute, private titulservice: TitulService) { }
+  constructor(
+              private activatedRoute: ActivatedRoute,
+              private titulservice: TitulService,
+              private router: Router,
+              private documentservice: DocumentService) { }
   checkpoint = 'checkpoint';
   orgs = [{name: 'Подразделение №1', id : 1}, {name: 'Подразделение №2', id : 2}, {name: 'Подразделение №3', id : 3}];
   typesIPR = [{name: 'Раздел №1', id : 1}, {name: 'Раздел №2', id : 2}, {name: 'Раздел №3', id : 3}];
@@ -35,10 +40,25 @@ export class TitulFormComponent implements OnInit {
 
   ngOnInit() {
     this.ID = Number(this.activatedRoute.snapshot.paramMap.get('id'));
+    console.log(this.ID);
+    this.RefresData();
+  }
+
+  RefresData() {
     const filterVlaue: Array<{name: string, value: any}> = new Array<{name: string, value: string}>();
     filterVlaue.push({name: 'id', value: this.ID});
     this.titulservice.getTituls(filterVlaue).subscribe( data => {
       this.titul = data[0];
+    });
+  }
+
+  Return() {
+    this.router.navigateByUrl('/tituls');
+  }
+
+  CreateDocument() {
+    this.documentservice.createDoc(this.ID).subscribe( data => {
+      this.router.navigate(['/docs/', data.id]);
     });
   }
 

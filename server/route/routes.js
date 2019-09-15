@@ -41,6 +41,7 @@ router.get('/titulControlStepJobs', controlStepController.getTitulControlStepJob
 
 router.get('/documents', documentController.getDocuments);
 router.put('/document', documentController.updateDocument);
+router.post('/document', documentController.postDocument);
 
 
 module.exports = router;

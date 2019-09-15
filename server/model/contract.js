@@ -19,6 +19,7 @@ module.exports = (sequelize, DataTypes) => {
     payment: {type: DataTypes.DECIMAL(10, 2)},        //Оплата с учетом аванса и возврата
     debtor: {type: DataTypes.DECIMAL(10, 2)},         //Задолженность дебиторская
     creditor: {type: DataTypes.DECIMAL(10, 2)},       //Задолженность кредиторская
-    status: {type: DataTypes.STRING}                  //Статус
+    status: {type: DataTypes.STRING},                  //Статус
+    idStatus: {type: DataTypes.INTEGER}               // id статуса
   });
 };

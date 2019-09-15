@@ -13,5 +13,7 @@ export interface DogInfo {
   debtor: number;       // Задолженность дебиторская
   creditor: number;     // Задолженность кредиторская
   status: string;       // Статус
+  idStatus: number;
+  nameStatus: string;
 }
 

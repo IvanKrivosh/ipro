@@ -1,11 +1,22 @@
-<div>
+<div >
 <hr>
-  <a class ="btn btn-outline-primary"  [routerLink]="checkpoint"> Контрольные этапы </a>
+
   <div class="container mat-elevation-z10" style="height: 85vh; overflow: auto;" *ngIf="titul">
-    <br>
+    <div class="row">
+      <div class="col col-lg-7">
+        <br>
+        <a class="btn btn-outline-primary" matTooltip="Вернуться к журналу документов" (click)="Return()"> Назад </a>
+        <button class="btn btn-outline-warning" matTooltip="Обновить карточку документа" (click)="RefresData()" style="margin-left: 10px"> Обновить </button>
+        <a class ="btn btn-outline-primary"  [routerLink]="checkpoint" style="margin-left: 10px"> Контрольные этапы </a>
+        <button class="btn btn-outline-success" matTooltip="Создать документ" (click)="CreateDocument()" style="margin-left: 10px"> Создать документ </button>
+      </div>
+      <div class="col">
+      </div>
+    </div>
+    <hr>
     <div class="row">
       <div class="col">
-        <label for="titul_num"> № титула </label>
+        <label for="titul_num"> <b>№ титула</b> </label>
         <input [(ngModel)]="titul.number" type="text" class="inputText" id="titul_num" style="width: 120px; margin-left: 5px">
         <label for="titul_status" style="margin-left: 5px"> Статус </label>
         <input [(ngModel)]="titul.statusId" type="text" class="inputText" id="titul_status" style="width: 120px; margin-left: 5px" readonly="true">

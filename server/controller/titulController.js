@@ -16,18 +16,27 @@ exports.getTitulById = (req, res) => {
 
 exports.getTituls = (req, res) => {
   let query =
-    'SELECT t.*, e."name" as "entityName", c."name" as "customerName", p."name" as "performerName", ' +
-    'to_char(to_timestamp("startMonth"::text, \'MM\'), \'TMmonth\') || \' \' || "startYear" as "start",' +
-    'to_char(to_timestamp("endMonth"::text, \'MM\'), \'TMmonth\') || \' \' || "endYear" as "end" ' +
-    'FROM "tituls" t ' +
-    'LEFT JOIN "departments" c ' +
-    'ON c."id" = t."customerId" ' +
-    'LEFT JOIN "departments" p ' +
-    'ON p."id" = t."performerId" ' +
-    'LEFT JOIN "federationEntities" e ' +
-    'ON e."id" = t."federationEntityId"';
+    `SELECT 
+t.*, 
+e."name" as "entityName", 
+c."name" as "customerName", 
+p."name" as "performerName",
+to_char(to_timestamp(t."startMonth"::text, 'MM'), 'TMmonth') as "beginStrMonth",
+to_char(to_timestamp(t."endMonth"::text, 'MM'), 'TMmonth') as "endStrMonth"
+    FROM "tituls" t 
+    LEFT JOIN "departments" c 
+    ON c."id" = t."customerId" 
+    LEFT JOIN "departments" p 
+    ON p."id" = t."performerId" 
+    LEFT JOIN "federationEntities" e 
+    ON e."id" = t."federationEntityId"`;
+
 
   let clauses = [];
+
+  if (req.query.id != null) {
+    clauses.push(`t."id" = ${req.query.id}` );
+  }
 
   if (req.query.number != null) {
     clauses.push(`t."number" LIKE \'${req.query.number}%\'`);

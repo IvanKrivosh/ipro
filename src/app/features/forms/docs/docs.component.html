@@ -1,4 +1,60 @@
-<div>
+<div class="left_group">
+  <h4>Панель фильтров</h4>
+  <div class="mat-elevation-z10 container" style="height: 85vh">
+    <input [(ngModel)]="NumTitul" style="margin-left: 5px; margin-top: 5px; width: 100%;" type="text" class="inputText" placeholder="№ титула" id="NumTitul">
+    <input [(ngModel)]="NumDoc" style="margin-left: 5px; margin-top: 5px; width: 100%;" type="text" class="inputText" placeholder="№ документа" id="NumDoc">
+
+    <div class="row" style="margin-top: 5px">
+      <div class="col col-lg-4">
+        <label for="idType"> Тип </label>
+      </div>
+      <div class="col">
+
+        <select class="browser-default custom-select inputText" id ="idType" [(ngModel)]="idType">
+          <option *ngFor="let title of typesDoc" [value]="title.id">
+            {{title.name}}
+          </option>
+        </select>
+
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col">
+        <input [(ngModel)]="sumStart" style="margin-left: 5px; margin-top: 5px; width: 100%;" type="number" class="inputText" placeholder="Сумма от" id="sumStart">
+      </div>
+      <div class="col">
+        <input [(ngModel)]="sumEnd" style="margin-left: 5px; margin-top: 5px; width: 100%;" type="number" class="inputText" placeholder="Сумма до" id="sumEnd">
+      </div>
+    </div>
+
+    <div class="row" style="margin-left: 5px;">
+      <div style="margin-left: 5px; margin-top: 10px">
+        <label for="dateStart">Дата от</label>
+      </div>
+      <div class="col">
+        <input [(ngModel)]="dateStart" style="margin-left: 5px; margin-top: 5px; width: 100%;" type="date"  class="form-control" placeholder="Дата документа от" id="dateStart">
+      </div>
+    </div>
+
+    <div class="row" style="margin-left: 5px;">
+      <div style="margin-left: 5px; margin-top: 10px">
+        <label for="dateEnd">Дата до</label>
+      </div>
+      <div class="col">
+        <input [(ngModel)]="dateEnd" style="margin-left: 5px; margin-top: 5px; width: 100%;" type="date"  class="form-control" placeholder="Дата документа от" id="dateEnd">
+      </div>
+    </div>
+
+    <input [(ngModel)]="description" style="margin-left: 5px; margin-top: 5px; width: 100%;" type="text" class="inputText" placeholder="Описание" id="description">
+       <br>
+    <hr>
+    <button class ="btn btn-outline-success" type="button" style="margin-top: 5px; margin-left: 5px; margin-right: 5px; width: 47%; float: left;" (click)="applyFilter()">Применить фильтр</button>
+    <button class ="btn btn-outline-secondary" type="button" style="margin-top: 5px; margin-left: 5px; margin-right: 5px; width: 47%; float: right;" (click)="clearFilter()">Сбросить фильтры</button>
+  </div>
+</div>
+
+<div class="right_group">
   <h4>Список документов</h4>
   <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
 
