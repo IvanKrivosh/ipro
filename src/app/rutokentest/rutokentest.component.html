@@ -23,6 +23,7 @@
  </pre>
 <div id="pluginStatus"><pre>Загрузка Плагина...</pre></div>
 <textarea rows="5" cols="95" id="textToSign" placeholder="Введите текст для подписи" [(ngModel)] ="src"></textarea><br/>
+<textarea rows="5" cols="95" placeholder="Результат подписи" [(ngModel)] ="strKey"></textarea><br/>
 <textarea rows="5" cols="95" id="Sign" placeholder="Подпись"></textarea><br/>
 <button id="signButton" (click)="signDoc()" style="display: block; background: none; border: 4px solid black; font-family: monospace; width: 20em; height: 3em; text-align: center; cursor: pointer;">Подписать текст</button>
 <button id="verifyButton" (click)="verifyDoc()" style="display: block; background: none; border: 4px solid black; font-family: monospace; width: 20em; height: 3em; text-align: center; cursor: pointer;">Верифицировать текст</button>

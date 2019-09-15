@@ -12,6 +12,7 @@ declare function verify(): any;
 export class RutokentestComponent implements OnInit, AfterViewInit {
 
   src: string;
+  strKey: string;
 
   @Input() type: string;
 
@@ -22,7 +23,7 @@ export class RutokentestComponent implements OnInit, AfterViewInit {
   }
 
   signDoc() {
-    sign( this.src, false);
+    this.strKey = sign( this.src, false);
   }
 
   ngAfterViewInit() {
