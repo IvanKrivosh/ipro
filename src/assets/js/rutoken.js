@@ -258,7 +258,7 @@ function handleError(reason) {
 
 //######################################################################################################################
 var rutokenHandle, certHandle;
-function sign(text) {
+function sign(text, b_base64) {
   // Получение текста для подписи
   var textToSign = text;
 //  var textToSign = document.getElementById("textToSign").value;
@@ -298,7 +298,7 @@ function sign(text) {
     .then( function (certs) {
       if (certs.length > 0) {
         certHandle = certs[0];
-        return plugin.sign(rutokenHandle, certHandle, textToSign, false, {detached:true});
+        return plugin.sign(rutokenHandle, certHandle, textToSign, b_base64, {detached:true});
       } else {
         return Promise.reject("Сертификат на Рутокен не обнаружен");
       }
